@@ -1,6 +1,8 @@
 export interface Product {
     id: number;
     name: string;
+    slug: string;
+    category: string;
     price: number;
     image: string;
     type: string;
@@ -18,6 +20,8 @@ export const PRODUCTS: Product[] = [
     {
         id: 1,
         name: "Chardonnay Reserva",
+        slug: "chardonnay-reserva",
+        category: "Vinos Blancos",
         price: 9000,
         image: "/images/bottles/chardonnay-reserva.webp",
         type: "Blanco",
@@ -32,6 +36,8 @@ export const PRODUCTS: Product[] = [
     {
         id: 2,
         name: "Cabernet Sauvignon Reserva Especial",
+        slug: "cabernet-sauvignon-reserva-especial",
+        category: "Vinos Tintos",
         price: 12900,
         image: "https://placehold.co/300x500/500000/FFFFFF.png?text=Cabernet",
         type: "Tinto",
@@ -46,6 +52,8 @@ export const PRODUCTS: Product[] = [
     {
         id: 3,
         name: "Syrah Reserva Especial",
+        slug: "syrah-reserva-especial",
+        category: "Vinos Tintos",
         price: 12900,
         image: "https://placehold.co/300x500/500000/FFFFFF.png?text=Syrah",
         type: "Tinto",
@@ -59,6 +67,8 @@ export const PRODUCTS: Product[] = [
     {
         id: 4,
         name: "Reserva Privada (Carmenere-Syrah)",
+        slug: "reserva-privada-carmenere-syrah",
+        category: "Vinos Iconos",
         price: 18900,
         image: "https://placehold.co/300x500/000000/D4AF37.png?text=Reserva+Privada",
         type: "Alta Gama",
@@ -72,6 +82,8 @@ export const PRODUCTS: Product[] = [
     {
         id: 5,
         name: "Gran Reserva",
+        slug: "gran-reserva",
+        category: "Vinos Iconos",
         price: 24900,
         image: "https://placehold.co/300x500/000000/D4AF37.png?text=Gran+Reserva",
         type: "Icono",
@@ -86,6 +98,8 @@ export const PRODUCTS: Product[] = [
     {
         id: 6,
         name: "Pack Degustación",
+        slug: "pack-degustacion",
+        category: "Packs",
         price: 35000,
         image: "https://placehold.co/500x300?text=Pack+Degustacion",
         type: "Pack",

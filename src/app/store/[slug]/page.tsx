@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation"
 import Link from "next/link"
-import { products } from "@/data/products"
+import { PRODUCTS as products } from "@/data/products"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, Minus, Plus, ShoppingCart, Star } from "lucide-react"
 import { useState } from "react"

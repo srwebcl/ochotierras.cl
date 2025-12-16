@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { products } from "@/data/products"
+import { PRODUCTS as products } from "@/data/products"
 import { ProductCard } from "@/components/ProductCard"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"

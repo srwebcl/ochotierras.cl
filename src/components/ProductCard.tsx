@@ -2,15 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart } from "lucide-react"
 
-export interface Product {
-    id: string
-    name: string
-    slug: string
-    description: string
-    price: number
-    image: string
-    category: string
-}
+import { Product } from "@/data/products"
 
 interface ProductCardProps {
     product: Product
