@@ -27,7 +27,7 @@ const DEFAULT_WINES: Wine[] = [
         subtitle: "Reserva",
         type: "Blanco",
         price: 9000,
-        image: "/images/bottles/vino-carmenere-reserva-chile.png",
+        image: "/images/bottles/chardonnay-reserva.webp",
         bgGradient: "radial-gradient(circle at center, #ffd700 0%, transparent 70%)",
         accentColorHex: "#D4AF37",
         description: "Fresco, mineral y elegante. La expresión pura del Limarí."
