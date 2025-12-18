@@ -17,22 +17,22 @@ export function SmartWhatsApp() {
 
         switch (pathname) {
             case "/":
-                setMessage("Bienvenido. ¿Conoces nuestra historia?")
+                setMessage("¿Buscas vinos exclusivos? Te asesoro.")
                 break
             case "/nuestros-vinos":
-                setMessage("¿Buscas una recomendación?")
+                setMessage("Cotiza precios especiales aquí.")
                 break
             case "/bodega-y-vinedos":
-                setMessage("Agenda tu visita privada.")
+                setMessage("Reserva tu visita hoy mismo.")
                 break
             case "/tienda":
-                setMessage("¿Ayuda con tu pedido?")
+                setMessage("¿Dudas con el pago o envío?")
                 break
             case "/contacto":
-                setMessage("Hablemos.")
+                setMessage("Atención comercial directa.")
                 break
             default:
-                setMessage("¿En qué podemos ayudarte?")
+                setMessage("¿En qué te puedo ayudar?")
         }
 
         return () => clearTimeout(timer)
@@ -51,14 +51,14 @@ export function SmartWhatsApp() {
                         initial={{ opacity: 0, y: 10, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
-                        className="bg-white text-brand-dark px-3 py-2 rounded-lg shadow-xl max-w-[180px] relative pointer-events-auto cursor-pointer border border-brand-gold/20"
+                        className="backdrop-blur-md bg-neutral-900/80 text-white px-4 py-3 rounded-xl shadow-2xl max-w-[200px] relative pointer-events-auto cursor-pointer border border-white/10"
                         onClick={() => window.open(whatsappUrl, '_blank')}
                     >
-                        <p className="text-xs font-serif italic leading-relaxed">
-                            "{message}"
+                        <p className="text-xs font-sans font-medium leading-relaxed tracking-wide">
+                            {message}
                         </p>
                         {/* Little triangle pointer */}
-                        <div className="absolute -bottom-1 right-6 w-2 h-2 bg-white rotate-45 border-r border-b border-brand-gold/20" />
+                        <div className="absolute -bottom-1 right-6 w-2 h-2 bg-neutral-900/80 rotate-45 border-r border-b border-white/10" />
 
                         {/* Close Bubble Button */}
                         <button
@@ -66,7 +66,7 @@ export function SmartWhatsApp() {
                                 e.stopPropagation()
                                 setShowBubble(false)
                             }}
-                            className="absolute -top-1.5 -left-1.5 bg-gray-100 hover:bg-gray-200 rounded-full p-0.5 text-gray-500 shadow-sm"
+                            className="absolute -top-2 -left-2 bg-neutral-800 hover:bg-neutral-700 rounded-full p-0.5 text-white/70 shadow-md border border-white/10 transition-colors"
                         >
                             <X size={10} />
                         </button>
@@ -79,7 +79,7 @@ export function SmartWhatsApp() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pointer-events-auto relative group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-brand-dark hover:bg-brand-gold text-white shadow-2xl transition-colors duration-300"
+                className="pointer-events-auto relative group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-brand-dark hover:bg-brand-gold text-white shadow-2xl transition-colors duration-300 border border-white/10"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onMouseEnter={() => setShowBubble(true)}
