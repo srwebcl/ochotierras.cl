@@ -80,7 +80,8 @@ export function CartSidebar() {
                                                 src={item.image}
                                                 alt={item.name}
                                                 fill
-                                                className="object-contain p-2"
+                                                className="object-cover"
+                                                sizes="64px"
                                             />
                                         </div>
                                         <div className="flex-1 flex flex-col justify-between">

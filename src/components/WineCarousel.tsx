@@ -7,16 +7,29 @@ import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
-const WINES = [
+interface Wine {
+    id: number;
+    name: string;
+    subtitle?: string;
+    type?: string;
+    price: number;
+    image?: string;
+    bgGradient?: string;
+    accentColor?: string;
+    accentColorHex?: string;
+    description?: string;
+}
+
+const DEFAULT_WINES: Wine[] = [
     {
         id: 1,
         name: "Chardonnay",
         subtitle: "Reserva",
         type: "Blanco",
         price: 9000,
-        image: "/images/bottles/vino-carmenere-reserva-chile.png", // Using placeholder if specific chardonnay img missing
+        image: "/images/bottles/vino-carmenere-reserva-chile.png",
         bgGradient: "radial-gradient(circle at center, #ffd700 0%, transparent 70%)",
-        accentColor: "text-brand-gold",
+        accentColorHex: "#D4AF37",
         description: "Fresco, mineral y elegante. La expresión pura del Limarí."
     },
     {
@@ -26,8 +39,8 @@ const WINES = [
         type: "Alta Gama",
         price: 18900,
         image: "/images/bottles/reserva-privada-syrah.webp",
-        bgGradient: "radial-gradient(circle at center, #5e0916 0%, transparent 70%)", // Deep red for Syrah
-        accentColor: "text-brand-red",
+        bgGradient: "radial-gradient(circle at center, #5e0916 0%, transparent 70%)",
+        accentColorHex: "#b91c1c",
         description: "Elegancia estructural. Un tinto con carácter y profundidad inigualable."
     },
     {
@@ -37,35 +50,40 @@ const WINES = [
         type: "Icono",
         price: 24900,
         image: "/images/bottles/vino-gran-reserva-24-barricas.webp",
-        bgGradient: "radial-gradient(circle at center, #2a2a2a 0%, transparent 70%)", // Dark/Black for Icono
-        accentColor: "text-brand-dark",
+        bgGradient: "radial-gradient(circle at center, #2a2a2a 0%, transparent 70%)",
+        accentColorHex: "#1a1a1a",
         description: "24 meses en barrica. Nuestra obra maestra de ensamblaje."
     }
 ]
 
-export function WineCarousel() {
-    const [activeIndex, setActiveIndex] = useState(1) // Start with middle item (Reserva Privada)
+interface WineCarouselProps {
+    wines?: Wine[];
+}
+
+export function WineCarousel({ wines }: WineCarouselProps) {
+    const data = wines && wines.length > 0 ? wines : DEFAULT_WINES;
+    const [activeIndex, setActiveIndex] = useState(0)
     const [direction, setDirection] = useState(0)
 
     const paginate = (newDirection: number) => {
         setDirection(newDirection)
         let newIndex = activeIndex + newDirection
-        if (newIndex < 0) newIndex = WINES.length - 1
-        if (newIndex >= WINES.length) newIndex = 0
+        if (newIndex < 0) newIndex = data.length - 1
+        if (newIndex >= data.length) newIndex = 0
         setActiveIndex(newIndex)
     }
 
-    const activeWine = WINES[activeIndex]
+    const activeWine = data[activeIndex]
 
     return (
 
-        <section className="relative py-20 md:py-32 bg-[#F5F5F7] overflow-hidden min-h-[85vh] md:min-h-[90vh] flex items-center justify-center">
+        <section className="relative py-16 md:py-32 bg-[#F5F5F7] overflow-hidden min-h-[85vh] md:min-h-[90vh] flex items-center justify-center">
 
             {/* Background Dynamic Ambience */}
             <motion.div
                 className="absolute inset-0 transition-colors duration-700 ease-in-out"
                 animate={{
-                    background: activeIndex === 0 ? "#F9F9F9" : activeIndex === 1 ? "#F0F0F0" : "#EBEBEB"
+                    background: activeIndex % 2 === 0 ? "#F9F9F9" : "#F0F0F0"
                 }}
             />
 
@@ -89,7 +107,7 @@ export function WineCarousel() {
                 <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-6 md:px-12 py-8 z-20">
                     <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-gray-400">Colección Exclusiva</span>
                     <div className="flex gap-2">
-                        {WINES.map((_, idx) => (
+                        {data.map((_, idx) => (
                             <div
                                 key={idx}
                                 className={`h-1 w-8 md:w-12 rounded-full transition-all duration-300 ${idx === activeIndex ? "bg-brand-dark" : "bg-gray-300"}`}
@@ -109,7 +127,7 @@ export function WineCarousel() {
                     </button>
 
                     {/* Carousel Content */}
-                    <div className="flex items-center justify-center w-full h-full relative perspective-1000 min-h-[600px] md:min-h-full">
+                    <div className="flex items-center justify-center w-full h-full relative perspective-1000 min-h-[500px] md:min-h-full">
                         <AnimatePresence initial={false} custom={direction} mode="popLayout">
                             <motion.div
                                 key={activeIndex}
@@ -122,7 +140,7 @@ export function WineCarousel() {
                             >
 
                                 {/* The Bottle (Hero) */}
-                                <div className="relative w-[200px] h-[400px] md:w-[400px] md:h-[650px] flex-shrink-0">
+                                <div className="relative w-[180px] h-[350px] md:w-[400px] md:h-[650px] flex-shrink-0">
                                     {/* Spotlight behind bottle */}
                                     <motion.div
                                         className="absolute inset-0 opacity-40 blur-3xl rounded-full"
@@ -130,22 +148,27 @@ export function WineCarousel() {
                                         animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.4, 0.6, 0.4] }}
                                         transition={{ duration: 5, repeat: Infinity }}
                                     />
-                                    <Image
-                                        src={activeWine.image}
-                                        alt={activeWine.name}
-                                        fill
-                                        className="object-contain drop-shadow-2xl z-10"
-                                        priority
-                                    />
+                                    {activeWine.image && (
+                                        <Image
+                                            src={activeWine.image}
+                                            alt={activeWine.name}
+                                            fill
+                                            className="object-contain drop-shadow-2xl z-10"
+                                            priority
+                                            sizes="(max-width: 768px) 180px, (max-width: 1200px) 400px, 400px"
+                                            unoptimized
+                                        />
+                                    )}
                                 </div>
 
                                 {/* Info Card (Floating) */}
-                                <div className="flex-1 text-center md:text-left pt-2 md:pt-0 max-w-lg w-full">
+                                <div className="flex-1 text-center md:text-left pt-2 md:pt-0 max-w-lg w-full z-20">
                                     <motion.span
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.2 }}
-                                        className={`text-[10px] items-center justify-center md:justify-start flex gap-2 font-bold tracking-[0.2em] uppercase ${activeWine.accentColor} mb-2`}
+                                        style={{ color: activeWine.accentColorHex }}
+                                        className={`text-[10px] items-center justify-center md:justify-start flex gap-2 font-bold tracking-[0.2em] uppercase mb-2`}
                                     >
                                         <span className="w-8 h-[1px] bg-current opacity-50 block md:hidden" /> {/* Decorative line mobile */}
                                         {activeWine.subtitle}
@@ -165,7 +188,7 @@ export function WineCarousel() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.4 }}
-                                        className="text-gray-500 text-sm md:text-xl font-serif italic mb-6 md:mb-8 md:pr-12 max-w-xs mx-auto md:max-w-none"
+                                        className="text-gray-500 text-sm md:text-xl font-serif italic mb-6 md:mb-8 md:pr-12 max-w-xs mx-auto md:max-w-none line-clamp-3 md:line-clamp-none"
                                     >
                                         {activeWine.description}
                                     </motion.p>
@@ -207,7 +230,7 @@ export function WineCarousel() {
                     </button>
 
                     {/* Mobile Controls (Improved placement) */}
-                    <div className="flex gap-12 md:hidden mt-8 z-30 pb-8">
+                    <div className="flex gap-12 md:hidden mt-4 z-30 pb-4">
                         <button onClick={() => paginate(-1)} className="p-3 bg-white border border-gray-100 rounded-full shadow-md active:scale-95 transition-transform"><ChevronLeft className="w-5 h-5 text-brand-dark" /></button>
                         <button onClick={() => paginate(1)} className="p-3 bg-white border border-gray-100 rounded-full shadow-md active:scale-95 transition-transform"><ChevronRight className="w-5 h-5 text-brand-dark" /></button>
                     </div>

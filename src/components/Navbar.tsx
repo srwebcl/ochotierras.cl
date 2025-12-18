@@ -59,6 +59,7 @@ export function Navbar() {
                             fill
                             className="object-contain object-left"
                             priority
+                            sizes="(max-width: 768px) 120px, 160px"
                         />
                     </Link>
 

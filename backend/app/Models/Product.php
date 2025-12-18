@@ -8,11 +8,16 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
+        'subtitle',
+        'type',
         'slug',
         'description',
+        'featured_description',
         'price',
         'image',
+        'accent_color',
         'is_active',
+        'is_featured',
     ];
 
     protected $casts = [

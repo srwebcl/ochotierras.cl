@@ -21,6 +21,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 import { SmartWhatsApp } from "@/components/SmartWhatsApp";
+import { AgeVerification } from "@/components/AgeVerification";
 
 import { CartProvider } from "@/context/CartContext";
 import { CartSidebar } from "@/components/CartSidebar";
@@ -36,13 +37,14 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} antialiased bg-brand-dark text-white`}
       >
         <CartProvider>
-            <Navbar />
-            <CartSidebar />
-            <main className="min-h-screen">
-              {children}
-            </main>
-            <Footer />
-            <SmartWhatsApp />
+          <Navbar />
+          <CartSidebar />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+          <SmartWhatsApp />
+          <AgeVerification />
         </CartProvider>
       </body>
     </html>

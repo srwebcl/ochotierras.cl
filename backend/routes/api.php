@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Models\HeroSection;
+
+Route::get('/hero', function () {
+    return HeroSection::where('is_active', true)->latest()->get();
+});
+
+Route::get('/collection-wines', function () {
+    return \App\Models\Product::where('is_active', true)
+        ->where('is_featured', true)
+        ->get()
+        ->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'subtitle' => $product->subtitle,
+                'type' => $product->type,
+                'price' => (int) $product->price,
+                'image' => $product->image ? url('storage/' . $product->image) : null,
+                'bgGradient' => $product->type === 'Tinto'
+                    ? "radial-gradient(circle at center, #5e0916 0%, transparent 70%)"
+                    : ($product->type === 'Blanco'
+                        ? "radial-gradient(circle at center, #ffd700 0%, transparent 70%)"
+                        : "radial-gradient(circle at center, #2a2a2a 0%, transparent 70%)"),
+                'accentColor' => 'text-brand-gold', // Using class for now or could send color hex to be used in inline style
+                'accentColorHex' => $product->accent_color ?? '#D4AF37',
+                'description' => $product->featured_description ?? strip_tags($product->description),
+            ];
+        });
+});

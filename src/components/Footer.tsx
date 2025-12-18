@@ -20,6 +20,7 @@ export function Footer() {
                                 alt="OchoTierras Logo"
                                 fill
                                 className="object-contain object-left"
+                                sizes="200px"
                             />
                         </Link>
                         <p className="text-gray-400 text-sm leading-relaxed mb-6">

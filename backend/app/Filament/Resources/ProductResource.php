@@ -21,31 +21,63 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Tienda';
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255)
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255)
-                    ->unique(ignoreRecord: true),
-                Forms\Components\RichEditor::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->directory('products'),
-                Forms\Components\Toggle::make('is_active')
-                    ->required()
-                    ->default(true),
+                Forms\Components\Tabs::make('Tabs')
+                    ->tabs([
+                        Forms\Components\Tabs\Tab::make('Información Tienda')
+                            ->schema([
+                                Forms\Components\FileUpload::make('image')
+                                    ->image()
+                                    ->directory('products')
+                                    ->columnSpanFull(),
+                                Forms\Components\TextInput::make('name')
+                                    ->label('Nombre del Producto')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                                Forms\Components\TextInput::make('slug')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->unique(ignoreRecord: true),
+                                Forms\Components\RichEditor::make('description')
+                                    ->label('Descripción Completa (Tienda)')
+                                    ->columnSpanFull(),
+                                Forms\Components\TextInput::make('price')
+                                    ->required()
+                                    ->numeric()
+                                    ->prefix('$'),
+                                Forms\Components\Toggle::make('is_active')
+                                    ->label('Activo')
+                                    ->required()
+                                    ->default(true),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('Destacado / Colección')
+                            ->schema([
+                                Forms\Components\Toggle::make('is_featured')
+                                    ->label('Destacado en Colección')
+                                    ->default(false),
+                                Forms\Components\TextInput::make('subtitle')
+                                    ->label('Subtítulo (ej: Reserva)')
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('type')
+                                    ->label('Tipo (ej: Blanco, Tinto)')
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('featured_description')
+                                    ->label('Descripción Corta (Para el Slider)')
+                                    ->rows(3)
+                                    ->columnSpanFull(),
+                                Forms\Components\ColorPicker::make('accent_color')
+                                    ->label('Color de Acento (Texto/Detalles)')
+                                    ->default('#D4AF37'),
+                            ]),
+                    ])->columnSpanFull(),
             ]);
     }
 
@@ -56,10 +88,14 @@ class ProductResource extends Resource
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->description(fn(Product $record): string => $record->subtitle ?? ''),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money('CLP')
                     ->sortable(),
+                Tables\Columns\IconColumn::make('is_featured')
+                    ->label('Colección')
+                    ->boolean(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')

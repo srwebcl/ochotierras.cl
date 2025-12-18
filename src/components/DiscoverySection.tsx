@@ -167,6 +167,7 @@ export function DiscoverySection() {
                                         alt={item.title}
                                         fill
                                         className="object-cover transition-all duration-700 group-hover/card:scale-110 grayscale-0 group-hover/card:grayscale" // INVERTED: Color -> Grayscale
+                                        sizes="(max-width: 768px) 100vw, 33vw"
                                     />
                                     {/* Overlay: Visible on hover to boost text readability over grayscale */}
                                     <div className="absolute inset-0 bg-brand-dark/0 group-hover/card:bg-brand-dark/40 transition-colors duration-500" />
