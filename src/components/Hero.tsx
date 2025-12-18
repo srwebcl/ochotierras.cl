@@ -1,26 +1,46 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
+const heroImages = [
+    "/images/general/vineyard-hero.webp",
+    "/images/general/bodega.webp",
+    "/images/general/vina-ochotierras-1.webp"
+]
+
 export function Hero() {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
+        }, 5000)
+        return () => clearInterval(timer)
+    }, [])
+
     return (
         <section className="relative h-screen w-full overflow-hidden">
-            {/* Background Image with Parallax Effect */}
-            <motion.div
-                className="absolute inset-0 z-0"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-            >
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{
-                        backgroundImage: `url('/images/general/vineyard-hero.webp')`
-                    }}
-                />
-            </motion.div>
+            {/* Background Image Slider */}
+            <AnimatePresence mode="popLayout">
+                <motion.div
+                    key={currentImageIndex}
+                    className="absolute inset-0 z-0"
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 2, ease: "easeInOut" }}
+                >
+                    <div
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                        style={{
+                            backgroundImage: `url('${heroImages[currentImageIndex]}')`
+                        }}
+                    />
+                </motion.div>
+            </AnimatePresence>
 
             {/* Gradients for text readability */}
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/60 via-black/20 to-brand-dark/90" />
@@ -31,12 +51,12 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <div className="flex items-center gap-4 mb-6">
-                        <div className="h-[1px] w-12 bg-brand-gold/60" />
-                        <h2 className="text-brand-gold font-sans uppercase tracking-[0.3em] text-xs md:text-sm font-medium">
-                            Valle del Limarí
+                    <div className="flex items-center gap-2 md:gap-4 mb-6">
+                        <div className="h-[1px] w-8 md:w-12 bg-brand-gold/60" />
+                        <h2 className="text-brand-gold font-sans uppercase tracking-[0.15em] md:tracking-[0.3em] text-[10px] md:text-sm font-medium whitespace-nowrap">
+                            En el corazón del Valle del Limarí
                         </h2>
-                        <div className="h-[1px] w-12 bg-brand-gold/60" />
+                        <div className="h-[1px] w-8 md:w-12 bg-brand-gold/60" />
                     </div>
                 </motion.div>
 
@@ -44,7 +64,7 @@ export function Hero() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-serif text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-8 tracking-tighter leading-[0.9]"
+                    className="font-serif text-5xl md:text-8xl lg:text-9xl font-bold text-white mb-8 tracking-tighter leading-[0.9]"
                 >
                     VIÑA
                     <br />
@@ -57,12 +77,12 @@ export function Hero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col sm:flex-row gap-6 mt-8"
+                    className="flex flex-col sm:flex-row gap-4 md:gap-6 mt-8"
                 >
-                    <Button size="lg" className="min-w-[200px] h-14 bg-brand-gold text-brand-dark hover:bg-white text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105" asChild>
+                    <Button size="lg" className="min-w-[180px] md:min-w-[200px] h-12 md:h-14 bg-brand-gold text-brand-dark hover:bg-white text-xs md:text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105" asChild>
                         <Link href="/nosotros">Nuestra Viña</Link>
                     </Button>
-                    <Button size="lg" variant="outline" className="min-w-[200px] h-14 border-white text-white hover:bg-white hover:text-brand-dark text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105 backdrop-blur-sm" asChild>
+                    <Button size="lg" variant="outline" className="min-w-[180px] md:min-w-[200px] h-12 md:h-14 border-white text-white hover:bg-white hover:text-brand-dark text-xs md:text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105 backdrop-blur-sm" asChild>
                         <Link href="/tienda">Tienda Online</Link>
                     </Button>
                 </motion.div>
