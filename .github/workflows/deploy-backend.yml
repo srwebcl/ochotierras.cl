@@ -36,9 +36,9 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
           
-          rsync -avz --delete --exclude='.env' --exclude='/storage/' --exclude='/vendor/' -e "ssh -p $SSH_PORT" backend/ $SSH_USER@$SSH_HOST:/home/$SSH_USER/public_html/api 
+          # Skip keyscan, use StrictHostKeyChecking=no for first connection
+          rsync -avz --delete --exclude='.env' --exclude='/storage/' --exclude='/vendor/' -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" backend/ $SSH_USER@$SSH_HOST:/home/$SSH_USER/public_html/api 
 
       - name: Run Artisan Commands on Server
         uses: appleboy/ssh-action@master
