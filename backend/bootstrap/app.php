@@ -12,7 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
+            'webhooks/*',
+        ]);
+
+        // Enable CORS for Vercel
+        $middleware->validateCsrfTokens(except: ['stripe/*']);
+
+        // Handle CORS manually or via config/cors.php if preferred, 
+        // but often in API-first setup we might need to be expansive:
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
