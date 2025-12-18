@@ -19,7 +19,8 @@ Route::get('/collection-wines', function () {
                 'subtitle' => $product->subtitle,
                 'type' => $product->type,
                 'price' => (int) $product->price,
-                'image' => $product->image ? url('storage/' . $product->image) : null,
+                'stock' => (int) $product->stock,
+                'image' => $product->image ? 'http://127.0.0.1:8000/storage/' . $product->image : null,
                 'bgGradient' => $product->type === 'Tinto'
                     ? "radial-gradient(circle at center, #5e0916 0%, transparent 70%)"
                     : ($product->type === 'Blanco'
@@ -31,3 +32,6 @@ Route::get('/collection-wines', function () {
             ];
         });
 });
+
+Route::post('/payment/init', [App\Http\Controllers\PaymentController::class, 'init']);
+Route::get('/payment/confirm-mock', [App\Http\Controllers\PaymentController::class, 'confirmMock']);

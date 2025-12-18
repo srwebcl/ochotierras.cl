@@ -53,6 +53,11 @@ class ProductResource extends Resource
                                     ->required()
                                     ->numeric()
                                     ->prefix('$'),
+                                Forms\Components\TextInput::make('stock')
+                                    ->label('Inventario / Stock')
+                                    ->required()
+                                    ->numeric()
+                                    ->default(0),
                                 Forms\Components\Toggle::make('is_active')
                                     ->label('Activo')
                                     ->required()

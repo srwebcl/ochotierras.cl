@@ -1,67 +1,35 @@
 import { NextResponse } from 'next/server';
-import { GetnetService } from '@/app/api/services/getnet';
-import { headers } from 'next/headers';
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { items, total, buyer } = body;
 
-        // Basic validation
-        if (!items || !total || !buyer) {
-            return NextResponse.json({ error: 'Missing required data' }, { status: 400 });
+        // Proxy to Laravel Backend
+        const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${backendUrl}/api/payment/init`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return NextResponse.json(
+                { error: data.error || 'Error en el backend' },
+                { status: response.status }
+            );
         }
 
-        const getnetService = new GetnetService();
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
-        // Generate unique reference
-        const reference = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-        // Expiration: 15 minutes from now
-        const expiration = new Date(Date.now() + 15 * 60 * 1000).toISOString();
-
-        const ip = (await headers()).get('x-forwarded-for') || '127.0.0.1';
-
-        const payload = {
-            locale: 'es_CL',
-            buyer: {
-                name: buyer.name,
-                surname: ' ', // Optional or split name
-                email: buyer.email,
-                document: '11111111-1', // Placeholder or ask user for RUT? For now, placeholder for test
-                documentType: 'RUT',
-                mobile: buyer.phone,
-                address: {
-                    street: buyer.address,
-                    city: buyer.city,
-                    country: 'CL'
-                }
-            },
-            payment: {
-                reference,
-                description: `Pedido OchoTierras ${reference}`,
-                amount: {
-                    currency: 'CLP',
-                    total: total
-                },
-                allowPartial: false
-            },
-            expiration,
-            returnUrl: `${baseUrl}/checkout/result?reference=${reference}`,
-            cancelUrl: `${baseUrl}/checkout`,
-            ipAddress: ip,
-            userAgent: (await headers()).get('user-agent') || 'Unknown'
-        };
-
-        const response = await getnetService.createSession(payload);
-
-        return NextResponse.json(response);
+        return NextResponse.json(data);
 
     } catch (error: any) {
-        console.error('Payment Init Error:', error);
+        console.error('Payment Proxy Error:', error);
         return NextResponse.json(
-            { error: error.message || 'Internal Server Error' },
+            { error: 'Error de conexión con el servidor de pedidos' },
             { status: 500 }
         );
     }

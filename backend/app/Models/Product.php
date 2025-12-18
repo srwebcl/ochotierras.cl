@@ -15,6 +15,7 @@ class Product extends Model
         'featured_description',
         'price',
         'image',
+        'stock',
         'accent_color',
         'is_active',
         'is_featured',

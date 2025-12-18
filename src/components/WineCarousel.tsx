@@ -18,6 +18,7 @@ interface Wine {
     accentColor?: string;
     accentColorHex?: string;
     description?: string;
+    stock?: number;
 }
 
 const DEFAULT_WINES: Wine[] = [
@@ -209,10 +210,27 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                             transition={{ delay: 0.6 }}
                                             className="w-full md:w-auto"
                                         >
-                                            <Button className="w-full md:w-auto h-12 md:h-14 px-8 bg-brand-dark text-white hover:bg-brand-red rounded-full uppercase tracking-widest text-xs md:text-sm font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                            <Button
+                                                disabled={activeWine.stock === 0}
+                                                className={`w-full md:w-auto h-12 md:h-14 px-8 rounded-full uppercase tracking-widest text-xs md:text-sm font-bold shadow-lg transition-all duration-300 ${activeWine.stock === 0
+                                                    ? 'bg-gray-400 cursor-not-allowed text-gray-200'
+                                                    : 'bg-brand-dark text-white hover:bg-brand-red hover:shadow-xl hover:scale-105'
+                                                    }`}
+                                            >
                                                 <ShoppingBag className="w-4 h-4 mr-2" />
-                                                Comprar
+                                                {activeWine.stock === 0 ? 'Agotado' : 'Comprar'}
                                             </Button>
+
+                                            {/* Stock Status Badge */}
+                                            {activeWine.stock !== undefined && activeWine.stock > 0 && activeWine.stock <= 5 && (
+                                                <motion.p
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    className="text-center md:text-left text-xs font-bold text-red-600 mt-2 uppercase tracking-tight"
+                                                >
+                                                    ¡Solo quedan {activeWine.stock} unidades!
+                                                </motion.p>
+                                            )}
                                         </motion.div>
                                     </div>
                                 </div>

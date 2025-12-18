@@ -1,14 +1,12 @@
-"use client"
-
 import { Section } from "@/components/ui/Section"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { PRODUCTS } from "@/data/products"
-import { useCart } from "@/context/CartContext"
+import { getCollectionWines } from "@/lib/collection-api"
+import { AddToCartButton } from "@/components/AddToCartButton"
 
-export default function Tienda() {
-    const { addToCart } = useCart()
+export default async function Tienda() {
+    const products = await getCollectionWines()
 
     return (
         <div className="pt-20">
@@ -39,32 +37,35 @@ export default function Tienda() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {PRODUCTS.map((product) => (
+                    {products.map((product) => (
                         <div key={product.id} className="group bg-white rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col">
                             <Link href={`/tienda/${product.id}`} className="relative h-[400px] w-full bg-gray-50 flex items-center justify-center p-8 overflow-hidden cursor-pointer">
-                                {product.tag && (
-                                    <span className="absolute top-4 left-4 bg-brand-gold text-white text-xs font-bold px-3 py-1 uppercase tracking-widest z-10">
-                                        {product.tag}
+                                {product.stock !== undefined && product.stock <= 5 && product.stock > 0 && (
+                                    <span className="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 uppercase tracking-widest z-10">
+                                        ¡Quedan pocos!
                                     </span>
                                 )}
-                                {product.soldOut && (
+                                {(product.stock === 0) && (
                                     <div className="absolute inset-0 bg-white/80 z-20 flex items-center justify-center backdrop-blur-sm">
                                         <span className="text-brand-dark font-bold text-xl uppercase tracking-widest border-2 border-brand-dark px-6 py-2">
                                             Agotado
                                         </span>
                                     </div>
                                 )}
-                                <Image
-                                    src={product.image}
-                                    alt={product.name}
-                                    width={200}
-                                    height={400}
-                                    className="object-contain drop-shadow-lg transform group-hover:scale-110 transition-transform duration-500"
-                                />
+                                <div className="relative w-full h-full">
+                                    <Image
+                                        src={product.image || '/images/bottles/placeholder.webp'}
+                                        alt={product.name}
+                                        fill
+                                        unoptimized
+                                        className="object-contain drop-shadow-lg transform group-hover:scale-110 transition-transform duration-500"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    />
+                                </div>
                             </Link>
 
                             <div className="p-8 flex flex-col flex-grow text-center">
-                                <span className="text-gray-400 text-xs uppercase tracking-widest font-bold mb-2">{product.type}</span>
+                                <span className="text-gray-400 text-xs uppercase tracking-widest font-bold mb-2">{product.type || 'Vino'}</span>
                                 <Link href={`/tienda/${product.id}`}>
                                     <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4 group-hover:text-brand-red transition-colors">
                                         {product.name}
@@ -72,21 +73,10 @@ export default function Tienda() {
                                 </Link>
                                 <div className="mt-auto pt-4 border-t border-gray-100 w-full flex flex-col gap-4">
                                     <span className="text-2xl font-bold text-brand-dark">
-                                        ${product.price.toLocaleString('es-CL')}
+                                        ${product.price ? product.price.toLocaleString('es-CL') : '0'}
                                     </span>
 
-                                    {!product.soldOut ? (
-                                        <Button
-                                            className="w-full bg-brand-dark text-white hover:bg-brand-gold hover:text-brand-dark transition-all duration-300"
-                                            onClick={() => addToCart(product)}
-                                        >
-                                            Añadir al Carrito
-                                        </Button>
-                                    ) : (
-                                        <Button disabled className="w-full bg-gray-300 text-gray-500 cursor-not-allowed">
-                                            Sin Stock
-                                        </Button>
-                                    )}
+                                    <AddToCartButton product={product} />
                                 </div>
                             </div>
                         </div>

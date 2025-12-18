@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react'
 import { Product } from '@/data/products'
 
 interface CartItem extends Product {
@@ -46,7 +46,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
     }, [items, isLoaded])
 
-    const addToCart = (product: Product) => {
+    const addToCart = useCallback((product: Product) => {
         setItems(prev => {
             const existing = prev.find(item => item.id === product.id)
             if (existing) {
@@ -59,25 +59,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
             return [...prev, { ...product, quantity: 1 }]
         })
         setIsOpen(true)
-    }
+    }, [])
 
-    const removeFromCart = (productId: number) => {
+    const removeFromCart = useCallback((productId: number) => {
         setItems(prev => prev.filter(item => item.id !== productId))
-    }
+    }, [])
 
-    const updateQuantity = (productId: number, quantity: number) => {
-        if (quantity < 1) {
-            removeFromCart(productId)
-            return
-        }
-        setItems(prev => prev.map(item =>
-            item.id === productId ? { ...item, quantity } : item
-        ))
-    }
+    const updateQuantity = useCallback((productId: number, quantity: number) => {
+        setItems(prev => {
+            if (quantity < 1) {
+                return prev.filter(item => item.id !== productId)
+            }
+            return prev.map(item =>
+                item.id === productId ? { ...item, quantity } : item
+            )
+        })
+    }, [])
 
-    const toggleCart = () => setIsOpen(prev => !prev)
+    const toggleCart = useCallback(() => setIsOpen(prev => !prev), [])
 
-    const clearCart = () => setItems([])
+    const clearCart = useCallback(() => setItems([]), [])
 
     const cartTotal = items.reduce((total, item) => total + (item.price * item.quantity), 0)
     const cartCount = items.reduce((count, item) => count + item.quantity, 0)

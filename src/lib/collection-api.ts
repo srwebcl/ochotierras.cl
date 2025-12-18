@@ -1,25 +1,29 @@
-export async function getCollectionWines() {
+export interface Wine {
+    id: number;
+    name: string;
+    subtitle?: string;
+    type?: string;
+    price: number;
+    image?: string;
+    bgGradient?: string;
+    accentColor?: string;
+    accentColorHex?: string;
+    description?: string;
+    stock?: number;
+}
+
+export async function getCollectionWines(): Promise<Wine[]> {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/collection-wines`, {
-            next: { revalidate: 60 },
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/collection-wines`, {
+            next: { revalidate: 60 } // Revalidate every minute
         });
 
         if (!res.ok) {
-            console.error('Collection API returned error status:', res.status);
             return [];
         }
 
-        const text = await res.text();
-        if (!text) return [];
-
-        try {
-            const data = JSON.parse(text);
-            return Array.isArray(data) ? data : [];
-        } catch (e) {
-            console.error('Failed to parse Collection API JSON:', e);
-            return [];
-        }
-
+        const data = await res.json();
+        return data as Wine[];
     } catch (error) {
         console.error('Failed to fetch collection wines:', error);
         return [];

@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "placehold.co",
       },
+      // Verified correct config
       {
         protocol: "http",
         hostname: "localhost",
