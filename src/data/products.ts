@@ -8,6 +8,7 @@ export interface Product {
     type: string;
     tag?: string;
     soldOut?: boolean;
+    stock?: number;
     description: string;
     tastingNotes?: {
         nose?: string;
