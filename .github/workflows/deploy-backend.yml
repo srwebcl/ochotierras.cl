@@ -27,20 +27,24 @@ jobs:
           composer install --no-dev --optimize-autoloader --prefer-dist
 
       - name: Sync files to cPanel
-        uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rlgoDzvc -i --delete"
-          SOURCE: "backend/"
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USERNAME }}
-          TARGET: "/home/${{ secrets.SSH_USERNAME }}/public_html/api" # Adjust path as needed
-          EXCLUDE: "/storage/, .env, /vendor/" 
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USERNAME }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
+          
+          rsync -avz --delete --exclude='.env' --exclude='/storage/' --exclude='/vendor/' -e "ssh -p $SSH_PORT" backend/ $SSH_USER@$SSH_HOST:/home/$SSH_USER/public_html/api 
 
       - name: Run Artisan Commands on Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT || '22' }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
