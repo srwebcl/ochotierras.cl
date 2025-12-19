@@ -332,30 +332,31 @@ export function Hero({ data }: HeroProps) {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-                            className="flex flex-col sm:flex-row gap-6 pt-8 w-full justify-center px-4"
+                            className="flex flex-col sm:flex-row gap-6 pt-10 w-full justify-center px-4"
                         >
+                            {/* Primary: Liquid Gold */}
                             <MagneticButton variant="primary" asChild>
                                 <Button
                                     size="lg"
-                                    className="relative min-w-[240px] h-16 text-xs md:text-sm font-bold tracking-[0.2em] uppercase bg-brand-gold text-brand-dark border border-brand-gold shadow-[0_0_40px_-10px_rgba(212,175,55,0.6)] hover:bg-white hover:text-brand-dark hover:border-white hover:shadow-[0_0_60px_-15px_rgba(255,255,255,0.8)] transition-all duration-500 overflow-hidden group"
+                                    className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-black tracking-[0.25em] uppercase text-black bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] bg-[length:200%_auto] animate-shimmer hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.8)] border border-transparent hover:scale-[1.02] transition-all duration-300 rounded-sm"
                                     asChild
                                 >
                                     <Link href={currentData.button_primary_url || "/nosotros"}>
-                                        <span className="relative z-10">{currentData.button_primary_text || "Nuestra Viña"}</span>
-                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
+                                        {currentData.button_primary_text || "Nuestra Viña"}
                                     </Link>
                                 </Button>
                             </MagneticButton>
 
+                            {/* Secondary: Minimalist Sharp */}
                             <MagneticButton variant="outline" asChild>
                                 <Button
                                     size="lg"
                                     variant="outline"
-                                    className="relative min-w-[240px] h-16 text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-white bg-white/5 border border-white/50 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.5)] transition-all duration-500 group"
+                                    className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-bold tracking-[0.25em] uppercase text-white bg-transparent border border-white/60 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] backdrop-blur-[2px] hover:scale-[1.02] transition-all duration-300 rounded-sm"
                                     asChild
                                 >
                                     <Link href={currentData.button_secondary_url || "/tienda"}>
-                                        <span className="relative z-10">{currentData.button_secondary_text || "Tienda Online"}</span>
+                                        {currentData.button_secondary_text || "Tienda Online"}
                                     </Link>
                                 </Button>
                             </MagneticButton>
