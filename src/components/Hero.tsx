@@ -237,7 +237,7 @@ export function Hero({ data }: HeroProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 2, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
+                className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
             >
                 <span className="text-[10px] text-white/50 uppercase tracking-widest">Descubre</span>
                 <div className="w-[1px] h-20 bg-gradient-to-b from-transparent via-brand-gold to-transparent relative overflow-hidden">
