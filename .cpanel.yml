@@ -1,0 +1,11 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ochotierras/public_html/api/
+    - /bin/rsync -av --delete --exclude='.env' --exclude='.git' --exclude='storage' backend/ $DEPLOYPATH
+    - cd $DEPLOYPATH
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader
+    - /usr/local/bin/php artisan migrate --force
+    - /usr/local/bin/php artisan config:cache
+    - /usr/local/bin/php artisan route:cache
+    - /usr/local/bin/php artisan view:cache
