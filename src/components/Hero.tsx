@@ -50,14 +50,14 @@ const defaultSlides: HeroData[] = [
 
 export function Hero({ data }: HeroProps) {
     // If `data` prop is provided, use it as initial state, otherwise null
-    // This assumes `data` prop is for the slider, not the single hero section from API
     // We update to receive an ARRAY of HeroSection from API
     const [apiData, setApiData] = useState<HeroSection[] | null>(null);
-    const [isLoading, setIsLoading] = useState(true); // Start loading if we need to fetch
+    const [isLoading, setIsLoading] = useState(!data || data.length === 0);
 
     useEffect(() => {
+        if (data && data.length > 0) return; // Don't fetch if data provided via props
+
         const apiUrl = `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/hero-section`;
-        console.log("Fetching Hero from:", apiUrl);
 
         // Fetch fresh data on client side to bypass connection issues
         fetch(apiUrl)
@@ -66,7 +66,6 @@ export function Hero({ data }: HeroProps) {
                 return res.json();
             })
             .then(fetchedData => {
-                console.log("Hero API Response:", fetchedData);
                 if (fetchedData && Array.isArray(fetchedData)) {
                     setApiData(fetchedData);
                 } else if (fetchedData && !Array.isArray(fetchedData)) {
@@ -76,7 +75,7 @@ export function Hero({ data }: HeroProps) {
             })
             .catch(err => console.error("Client hero fetch failed:", err))
             .finally(() => setIsLoading(false));
-    }, []);
+    }, [data]);
 
     // Convert API data to HeroData slides
     const apiHeroSlides: HeroData[] = apiData ? apiData.map(hero => ({
@@ -129,6 +128,10 @@ export function Hero({ data }: HeroProps) {
     const titleParts = title.includes("OCHOTIERRAS") && title.includes("VIÑA")
         ? title.split("OCHOTIERRAS")
         : [title];
+
+    if (isLoading) {
+        return <section className="relative h-screen min-h-[600px] w-full bg-black overflow-hidden" />;
+    }
 
     return (
         <section className="relative h-screen min-h-[600px] w-full overflow-hidden group">
