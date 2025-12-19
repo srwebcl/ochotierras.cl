@@ -187,20 +187,7 @@ export function Hero({ data }: HeroProps) {
     const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
     const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
-    // Mouse Parallax Logic
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
 
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const { clientX, clientY } = e;
-        const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 : 0;
-        const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 : 0;
-        mouseX.set((clientX - centerX) * 0.05); // Move background 5% of mouse distance
-        mouseY.set((clientY - centerY) * 0.05);
-    };
-
-    const parallaxX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-    const parallaxY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
     // Render Helpers
     const currentData = slides[currentSlide];
@@ -229,7 +216,6 @@ export function Hero({ data }: HeroProps) {
     return (
         <section
             className="relative h-screen min-h-[600px] w-full overflow-hidden group bg-black"
-            onMouseMove={handleMouseMove}
         >
             <AnimatePresence mode="popLayout">
                 <motion.div
@@ -240,13 +226,17 @@ export function Hero({ data }: HeroProps) {
                     transition={{ duration: 1.5, ease: "easeOut" }}
                     className="absolute inset-0 z-0"
                 >
-                    {/* Parallax Container */}
+                    {/* Ken Burns Effect Container */}
                     <motion.div
-                        className="absolute inset-[-5%] w-[110%] h-[110%] bg-cover bg-center bg-no-repeat"
-                        style={{
-                            backgroundImage: `url('${bgImage}')`,
-                            x: parallaxX,
-                            y: parallaxY
+                        className="absolute inset-[-10%] w-[120%] h-[120%] bg-cover bg-center bg-no-repeat"
+                        style={{ backgroundImage: `url('${bgImage}')` }}
+                        initial={{ scale: 1 }}
+                        animate={{ scale: 1.1, x: ["0%", "-2%"], y: ["0%", "-2%"] }}
+                        transition={{
+                            duration: 25,
+                            ease: "linear",
+                            repeat: Infinity,
+                            repeatType: "reverse"
                         }}
                     />
 
