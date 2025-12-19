@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/ochotierras/public_html/api/
+    - export DEPLOYPATH=/home/ochotierras/api.ochotierras.cl/
     - /bin/rsync -av --delete --exclude='.env' --exclude='.git' --exclude='storage' backend/ $DEPLOYPATH
     - cd $DEPLOYPATH
     - /usr/local/bin/composer install --no-dev --optimize-autoloader
