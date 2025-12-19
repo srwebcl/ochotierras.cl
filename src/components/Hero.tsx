@@ -337,16 +337,16 @@ export function Hero({ data }: HeroProps) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.6 }}
-                            className="flex flex-col sm:flex-row gap-6"
+                            className="flex flex-col sm:flex-row gap-6 pt-4"
                         >
                             <MagneticButton variant="primary" asChild>
-                                <Button size="lg" className="min-w-[200px] h-14 text-sm font-bold tracking-widest uppercase" asChild>
+                                <Button size="lg" className="min-w-[220px] h-16 text-sm font-bold tracking-widest uppercase border border-brand-gold shadow-[0_0_20px_rgba(212,175,55,0.3)] bg-brand-gold text-brand-dark hover:bg-white hover:text-brand-dark hover:border-white transition-all duration-500" asChild>
                                     <Link href={currentData.button_primary_url || "/nosotros"}>{currentData.button_primary_text || "Nuestra Viña"}</Link>
                                 </Button>
                             </MagneticButton>
 
                             <MagneticButton variant="outline" asChild>
-                                <Button size="lg" variant="outline" className="min-w-[200px] h-14 text-sm font-bold tracking-widest uppercase border-white/40" asChild>
+                                <Button size="lg" variant="outline" className="min-w-[220px] h-16 text-sm font-bold tracking-widest uppercase border-2 border-white/80 text-white bg-black/20 backdrop-blur-sm hover:bg-white hover:text-brand-dark hover:border-white transition-all duration-500 shadow-[0_4px_30px_rgba(0,0,0,0.1)]" asChild>
                                     <Link href={currentData.button_secondary_url || "/tienda"}>{currentData.button_secondary_text || "Tienda Online"}</Link>
                                 </Button>
                             </MagneticButton>
