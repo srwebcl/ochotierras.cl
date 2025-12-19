@@ -5,21 +5,32 @@ use Illuminate\Support\Facades\Route;
 use App\Models\HeroSection;
 
 Route::get('/hero-section', function () {
-    $hero = HeroSection::where('is_active', true)->latest()->first();
-    if (!$hero)
-        return null;
+    $heroes = HeroSection::where('is_active', true)->latest()->get();
 
-    $images = $hero->images ?? [];
-    $imageUrls = array_map(fn($img) => \Illuminate\Support\Facades\Storage::url($img), $images);
+    if ($heroes->isEmpty()) {
+        return null; // Handle empty state in frontend if needed
+        // Or return empty array? Frontend expects null or array of HeroData.
+        // If we return [], frontend logic needs to handle it.
+        // Let's stick to null if no heroes, or empty array.
+        // Original logic returned null if first() failed.
+        // Let's return empty array if empty, compatible with map.
+        // Actually, frontend expects `HeroSection | null` currently. We are changing it to `HeroSection[]`.
+        // So returning [] is safer.
+    }
 
-    return [
-        'title' => $hero->title,
-        'subtitle' => $hero->subtitle,
-        'description' => $hero->description,
-        'buttonText' => $hero->button_primary_text, // Fixed to use correct column name
-        'image' => $imageUrls[0] ?? null,
-        'images' => $imageUrls,
-    ];
+    return $heroes->map(function ($hero) {
+        $images = $hero->images ?? [];
+        $imageUrls = array_map(fn($img) => \Illuminate\Support\Facades\Storage::url($img), $images);
+
+        return [
+            'title' => $hero->title,
+            'subtitle' => $hero->subtitle,
+            'description' => $hero->description,
+            'buttonText' => $hero->button_primary_text,
+            'image' => $imageUrls[0] ?? null,
+            'images' => $imageUrls,
+        ];
+    });
 });
 
 Route::get('/collection-wines', function () {
