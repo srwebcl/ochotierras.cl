@@ -109,6 +109,7 @@ export function Hero({ data }: HeroProps) {
     const getImageUrl = (img?: string) => {
         if (!img) return "";
         if (img.startsWith("/")) return img; // Local static image
+        if (img.startsWith("http")) return img; // Absolute URL (API)
         return `${process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000/storage'}/${img}`;
     };
 
