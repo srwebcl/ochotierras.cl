@@ -4,8 +4,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\HeroSection;
 
-Route::get('/hero', function () {
-    return HeroSection::where('is_active', true)->latest()->get();
+Route::get('/hero-section', function () {
+    $hero = HeroSection::where('is_active', true)->latest()->first();
+    if (!$hero)
+        return null;
+
+    return [
+        'title' => $hero->title,
+        'subtitle' => $hero->subtitle,
+        'description' => $hero->description,
+        'buttonText' => $hero->button_text,
+        'image' => $hero->image ? \Illuminate\Support\Facades\Storage::url($hero->image) : null,
+    ];
 });
 
 Route::get('/collection-wines', function () {
