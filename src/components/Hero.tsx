@@ -51,42 +51,49 @@ const defaultSlides: HeroData[] = [
 export function Hero({ data }: HeroProps) {
     // If `data` prop is provided, use it as initial state, otherwise null
     // This assumes `data` prop is for the slider, not the single hero section from API
-    const [apiData, setApiData] = useState<HeroSection | null>(null);
+    // We update to receive an ARRAY of HeroSection from API
+    const [apiData, setApiData] = useState<HeroSection[] | null>(null);
     const [isLoading, setIsLoading] = useState(true); // Start loading if we need to fetch
 
     useEffect(() => {
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/hero-section`;
+        console.log("Fetching Hero from:", apiUrl);
+
         // Fetch fresh data on client side to bypass connection issues
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/hero-section`)
-            .then(res => res.json())
+        fetch(apiUrl)
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                return res.json();
+            })
             .then(fetchedData => {
-                if (fetchedData) {
+                console.log("Hero API Response:", fetchedData);
+                if (fetchedData && Array.isArray(fetchedData)) {
                     setApiData(fetchedData);
+                } else if (fetchedData && !Array.isArray(fetchedData)) {
+                    // Handle case where API might still return single object if not deployed yet
+                    setApiData([fetchedData]);
                 }
             })
             .catch(err => console.error("Client hero fetch failed:", err))
             .finally(() => setIsLoading(false));
     }, []);
 
-    // Use API data or fallback to defaults (merged)
-    // This `content` object seems to be for a single hero section, not the slider.
-    // The existing component is built for a slider (`slides` array).
-    // For now, I will integrate the `apiData` into the first slide if available,
-    // or create a single slide from it if no `data` prop is given.
-    const apiHeroSlide: HeroData | null = apiData ? {
-        title: apiData.title || "Ochotierras",
-        subtitle: apiData.subtitle || "Valle del Limarí",
-        button_primary_text: apiData.buttonText || "Descubrir Colección",
+    // Convert API data to HeroData slides
+    const apiHeroSlides: HeroData[] = apiData ? apiData.map(hero => ({
+        title: hero.title || "Ochotierras",
+        subtitle: hero.subtitle || "Valle del Limarí",
+        button_primary_text: hero.buttonText || "Descubrir Colección",
         button_primary_url: "/tienda", // Default to store
-        images: apiData.image ? [apiData.image] : defaultImages,
-    } : null;
+        images: hero.image ? [hero.image] : defaultImages, // Use single image for now as bg
+    })) : [];
 
     // Determine the slides to use:
     // 1. If `data` prop is provided and not empty, use it.
-    // 2. If `apiHeroSlide` is available (from API fetch), use it as a single slide.
+    // 2. If `apiHeroSlides` has items (from API fetch), use them.
     // 3. Otherwise, fall back to `defaultSlides`.
     const slides = (data && data.length > 0)
         ? data
-        : (apiHeroSlide ? [apiHeroSlide] : defaultSlides);
+        : (apiHeroSlides.length > 0 ? apiHeroSlides : defaultSlides);
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
