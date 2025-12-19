@@ -26,6 +26,9 @@ interface HeroSection {
     subtitle?: string;
     description?: string;
     buttonText?: string;
+    buttonPrimaryUrl?: string;
+    buttonSecondaryText?: string;
+    buttonSecondaryUrl?: string;
     image?: string;
 }
 
@@ -145,7 +148,9 @@ export function Hero({ data }: HeroProps) {
         title: hero.title || "Ochotierras",
         subtitle: hero.subtitle || "Valle del Limarí",
         button_primary_text: hero.buttonText || "Descubrir Colección",
-        button_primary_url: "/tienda",
+        button_primary_url: hero.buttonPrimaryUrl || "/tienda",
+        button_secondary_text: hero.buttonSecondaryText || "Tienda Online",
+        button_secondary_url: hero.buttonSecondaryUrl || "/tienda",
         images: hero.image ? [hero.image] : defaultImages,
     })) : [];
 
