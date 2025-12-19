@@ -27,6 +27,9 @@ Route::get('/hero-section', function () {
             'subtitle' => $hero->subtitle,
             'description' => $hero->description,
             'buttonText' => $hero->button_primary_text,
+            'buttonPrimaryUrl' => $hero->button_primary_url,
+            'buttonSecondaryText' => $hero->button_secondary_text,
+            'buttonSecondaryUrl' => $hero->button_secondary_url,
             'image' => $imageUrls[0] ?? null,
             'images' => $imageUrls,
         ];
