@@ -1,17 +1,66 @@
-import { getCollectionWines } from "@/lib/collection-api"
+"use client"
+
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Check, Truck, ShieldCheck } from "lucide-react"
 import { AddToCartButton } from "@/components/AddToCartButton"
+import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
-// Fix Next.js 15 params awaiting
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params
-    const products = await getCollectionWines()
-    const product = products.find(p => p.id === Number(slug))
+interface Wine {
+    id: number;
+    name: string;
+    subtitle?: string;
+    type?: string;
+    price: number;
+    image?: string;
+    bgGradient?: string;
+    description?: string;
+    stock?: number;
+}
 
-    if (!product) {
+export default function ProductPage() {
+    const { slug } = useParams()
+    const [product, setProduct] = useState<Wine | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(false)
+
+    useEffect(() => {
+        if (!slug) return;
+
+        setIsLoading(true)
+        // Ideally we would fetch /api/products/${slug}, but for now we fetch all and find (matching the previous logic)
+        // or if the backend supports individual fetch, that's better. Assuming we stick to the working /api/collection-wines for consistency.
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/collection-wines`)
+            .then(res => {
+                if (!res.ok) throw new Error("Network response was not ok")
+                return res.json()
+            })
+            .then((products: Wine[]) => {
+                const found = products.find(p => p.id === Number(slug))
+                if (found) {
+                    setProduct(found)
+                } else {
+                    setError(true)
+                }
+            })
+            .catch(err => {
+                console.error("Failed to fetch product:", err)
+                setError(true)
+            })
+            .finally(() => setIsLoading(false))
+    }, [slug])
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center bg-gray-50 text-brand-dark">
+                <div className="animate-pulse text-2xl font-serif">Cargando...</div>
+            </div>
+        )
+    }
+
+    if (error || !product) {
         return (
             <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center bg-gray-50 text-brand-dark">
                 <h1 className="text-4xl font-serif font-bold mb-4">Producto no encontrado</h1>
