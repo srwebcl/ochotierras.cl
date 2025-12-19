@@ -15,17 +15,28 @@ export interface Wine {
 export async function getCollectionWines(): Promise<Wine[]> {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/collection-wines`, {
-            next: { revalidate: 60 } // Revalidate every minute
+            cache: 'no-store'
         });
 
         if (!res.ok) {
-            return [];
+            throw new Error(`Status: ${res.status}`);
         }
 
         const data = await res.json();
         return data as Wine[];
     } catch (error) {
         console.error('Failed to fetch collection wines:', error);
-        return [];
+        // Return a DEBUG wine so we can see the error on screen
+        return [{
+            id: 999,
+            name: "Error de Conexión",
+            subtitle: "Revisar API",
+            type: "Error",
+            price: 0,
+            image: "",
+            bgGradient: "radial-gradient(circle at center, #ff0000 0%, transparent 70%)",
+            accentColorHex: "#ff0000",
+            description: `No pudimos conectar con el servidor. Error: ${error}`
+        }];
     }
 }
