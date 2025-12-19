@@ -339,20 +339,34 @@ export function Hero({ data }: HeroProps) {
 
                         {/* Buttons */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.6 }}
-                            className="flex flex-col sm:flex-row gap-6 pt-4"
+                            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+                            className="flex flex-col sm:flex-row gap-6 pt-8 w-full justify-center px-4"
                         >
                             <MagneticButton variant="primary" asChild>
-                                <Button size="lg" className="min-w-[220px] h-16 text-sm font-bold tracking-widest uppercase border border-brand-gold shadow-[0_0_20px_rgba(212,175,55,0.3)] bg-brand-gold text-brand-dark hover:bg-white hover:text-brand-dark hover:border-white transition-all duration-500" asChild>
-                                    <Link href={currentData.button_primary_url || "/nosotros"}>{currentData.button_primary_text || "Nuestra Viña"}</Link>
+                                <Button
+                                    size="lg"
+                                    className="relative min-w-[240px] h-16 text-xs md:text-sm font-bold tracking-[0.2em] uppercase bg-brand-gold text-brand-dark border border-brand-gold shadow-[0_0_40px_-10px_rgba(212,175,55,0.6)] hover:bg-white hover:text-brand-dark hover:border-white hover:shadow-[0_0_60px_-15px_rgba(255,255,255,0.8)] transition-all duration-500 overflow-hidden group"
+                                    asChild
+                                >
+                                    <Link href={currentData.button_primary_url || "/nosotros"}>
+                                        <span className="relative z-10">{currentData.button_primary_text || "Nuestra Viña"}</span>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
+                                    </Link>
                                 </Button>
                             </MagneticButton>
 
                             <MagneticButton variant="outline" asChild>
-                                <Button size="lg" variant="outline" className="min-w-[220px] h-16 text-sm font-bold tracking-widest uppercase border-2 border-white/80 text-white bg-black/20 backdrop-blur-sm hover:bg-white hover:text-brand-dark hover:border-white transition-all duration-500 shadow-[0_4px_30px_rgba(0,0,0,0.1)]" asChild>
-                                    <Link href={currentData.button_secondary_url || "/tienda"}>{currentData.button_secondary_text || "Tienda Online"}</Link>
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    className="relative min-w-[240px] h-16 text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-white bg-white/5 border border-white/50 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.5)] transition-all duration-500 group"
+                                    asChild
+                                >
+                                    <Link href={currentData.button_secondary_url || "/tienda"}>
+                                        <span className="relative z-10">{currentData.button_secondary_text || "Tienda Online"}</span>
+                                    </Link>
                                 </Button>
                             </MagneticButton>
                         </motion.div>
