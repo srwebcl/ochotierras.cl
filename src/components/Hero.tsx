@@ -76,7 +76,7 @@ export function Hero({ data }: HeroProps) {
         title: apiData.title || "Ochotierras",
         subtitle: apiData.subtitle || "Valle del Limarí",
         button_primary_text: apiData.buttonText || "Descubrir Colección",
-        button_primary_url: "/coleccion", // Assuming a default URL for the API button
+        button_primary_url: "/tienda", // Default to store
         images: apiData.image ? [apiData.image] : defaultImages,
     } : null;
 
