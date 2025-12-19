@@ -6,12 +6,12 @@ import { getHeroSection } from "@/lib/hero-api";
 import { getCollectionWines } from "@/lib/collection-api";
 
 export default async function Home() {
-  const heroData = await getHeroSection();
+  // Client components now handle their own fetching for reliability
   const collectionWines = await getCollectionWines();
 
   return (
     <main className="flex flex-col min-h-screen">
-      <Hero data={heroData} />
+      <Hero />
       <WineCarousel wines={collectionWines} />
       <StoryScroll />
       <DiscoverySection />
