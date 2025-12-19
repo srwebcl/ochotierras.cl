@@ -20,7 +20,7 @@ Route::get('/collection-wines', function () {
                 'type' => $product->type,
                 'price' => (int) $product->price,
                 'stock' => (int) $product->stock,
-                'image' => $product->image ? 'http://127.0.0.1:8000/storage/' . $product->image : null,
+                'image' => $product->image ? \Illuminate\Support\Facades\Storage::url($product->image) : null,
                 'bgGradient' => $product->type === 'Tinto'
                     ? "radial-gradient(circle at center, #5e0916 0%, transparent 70%)"
                     : ($product->type === 'Blanco'
