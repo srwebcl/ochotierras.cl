@@ -9,12 +9,16 @@ Route::get('/hero-section', function () {
     if (!$hero)
         return null;
 
+    $images = $hero->images ?? [];
+    $imageUrls = array_map(fn($img) => \Illuminate\Support\Facades\Storage::url($img), $images);
+
     return [
         'title' => $hero->title,
         'subtitle' => $hero->subtitle,
         'description' => $hero->description,
-        'buttonText' => $hero->button_text,
-        'image' => $hero->image ? \Illuminate\Support\Facades\Storage::url($hero->image) : null,
+        'buttonText' => $hero->button_primary_text, // Fixed to use correct column name
+        'image' => $imageUrls[0] ?? null,
+        'images' => $imageUrls,
     ];
 });
 
