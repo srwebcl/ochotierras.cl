@@ -35,6 +35,7 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-brand-dark text-white`}
+        suppressHydrationWarning
       >
         <CartProvider>
           <Navbar />

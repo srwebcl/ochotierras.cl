@@ -8,10 +8,10 @@ export default function Bodega() {
         <div className="pt-20">
             {/* Hero - Full Screen Parallax */}
             <section className="relative h-screen flex items-center justify-center overflow-hidden bg-brand-dark">
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-0 opacity-40">
                     <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-brand-dark z-10" />
                     <Image
-                        src="/images/general/bodega.webp"
+                        src="/images/general/hero-bodega.jpeg"
                         alt="Bodega Ochotierras"
                         fill
                         className="object-cover scale-105"
@@ -72,7 +72,7 @@ export default function Bodega() {
                     </div>
                     <div className="relative h-[800px] w-full bg-gray-100 rounded-lg overflow-hidden shadow-2xl">
                         <Image
-                            src="/images/general/vineyard-hero.webp"
+                            src="/images/general/vineyard_hero_new.png"
                             alt="Viñedos Ochotierras"
                             fill
                             className="object-cover"
@@ -88,7 +88,7 @@ export default function Bodega() {
 
             {/* The Cellar - Dark Section */}
             <Section className="bg-brand-dark text-white py-32 overflow-hidden relative">
-                <div className="absolute right-0 top-0 w-1/2 h-full opacity-10 bg-[url('/images/general/bodega.webp')] bg-cover bg-left" />
+                <div className="absolute right-0 top-0 w-1/2 h-full opacity-10 bg-[url('/images/general/bodega_hero_new.png')] bg-cover bg-left" />
 
                 <div className="max-w-4xl mx-auto text-center relative z-10">
                     <h2 className="text-5xl md:text-6xl font-serif font-bold text-white mb-10">La Bodega</h2>

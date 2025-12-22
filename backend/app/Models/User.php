@@ -52,4 +52,8 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
         ];
     }
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }

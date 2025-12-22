@@ -10,6 +10,7 @@ export interface Wine {
     accentColorHex?: string;
     description?: string;
     stock?: number;
+    slug?: string;
 }
 
 export async function getCollectionWines(): Promise<Wine[]> {
@@ -36,7 +37,8 @@ export async function getCollectionWines(): Promise<Wine[]> {
             image: "",
             bgGradient: "radial-gradient(circle at center, #ff0000 0%, transparent 70%)",
             accentColorHex: "#ff0000",
-            description: `No pudimos conectar con el servidor. Error: ${error}`
+            description: `No pudimos conectar con el servidor. Error: ${error}`,
+            slug: "error"
         }];
     }
 }

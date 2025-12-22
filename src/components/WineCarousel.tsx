@@ -3,9 +3,11 @@
 import * as React from "react"
 import { useState } from "react"
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion"
-import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight, ShoppingBag, Eye } from "lucide-react"
+import { Button, buttonVariants } from "@/components/ui/button"
 import Image from "next/image"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface Wine {
     id: number;
@@ -19,6 +21,7 @@ interface Wine {
     accentColorHex?: string;
     description?: string;
     stock?: number;
+    slug?: string;
 }
 
 const DEFAULT_WINES: Wine[] = [
@@ -31,7 +34,8 @@ const DEFAULT_WINES: Wine[] = [
         image: "/images/bottles/chardonnay-reserva.webp",
         bgGradient: "radial-gradient(circle at center, #ffd700 0%, transparent 70%)",
         accentColorHex: "#D4AF37",
-        description: "Fresco, mineral y elegante. La expresión pura del Limarí."
+        description: "Fresco, mineral y elegante. La expresión pura del Limarí.",
+        slug: "chardonnay-reserva"
     },
     {
         id: 2,
@@ -42,7 +46,8 @@ const DEFAULT_WINES: Wine[] = [
         image: "/images/bottles/reserva-privada-syrah.webp",
         bgGradient: "radial-gradient(circle at center, #5e0916 0%, transparent 70%)",
         accentColorHex: "#b91c1c",
-        description: "Elegancia estructural. Un tinto con carácter y profundidad inigualable."
+        description: "Elegancia estructural. Un tinto con carácter y profundidad inigualable.",
+        slug: "reserva-privada-carmenere-syrah"
     },
     {
         id: 3,
@@ -53,7 +58,8 @@ const DEFAULT_WINES: Wine[] = [
         image: "/images/bottles/vino-gran-reserva-24-barricas.webp",
         bgGradient: "radial-gradient(circle at center, #2a2a2a 0%, transparent 70%)",
         accentColorHex: "#1a1a1a",
-        description: "24 meses en barrica. Nuestra obra maestra de ensamblaje."
+        description: "24 meses en barrica. Nuestra obra maestra de ensamblaje.",
+        slug: "gran-reserva"
     }
 ]
 
@@ -245,12 +251,14 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                     />
                                     {activeWine.image && (
                                         <Image
-                                            src={activeWine.image}
+                                            src={activeWine.image.startsWith('/storage')
+                                                ? `${(process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage').replace(/\/storage$/, '')}${activeWine.image}`
+                                                : activeWine.image}
                                             alt={activeWine.name}
                                             fill
                                             className="object-contain drop-shadow-2xl z-10"
                                             priority
-                                            sizes="(max-width: 768px) 180px, (max-width: 1200px) 400px, 400px"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             unoptimized
                                         />
                                     )}
@@ -258,16 +266,32 @@ export function WineCarousel({ wines }: WineCarouselProps) {
 
                                 {/* Info Card (Floating) */}
                                 <div className="flex-1 text-center md:text-left pt-2 md:pt-0 max-w-lg w-full z-20">
-                                    <motion.span
+                                    <motion.div
                                         custom={0}
                                         variants={textStaggerVariants}
-                                        style={{ color: activeWine.accentColorHex }}
-                                        className={`text-[10px] items-center justify-center md:justify-start flex gap-2 font-bold tracking-[0.2em] uppercase mb-2`}
+                                        className="flex items-center justify-center md:justify-start mb-4"
                                     >
-                                        <span className="w-8 h-[1px] bg-current opacity-50 block md:hidden" /> {/* Decorative line mobile */}
-                                        {activeWine.subtitle}
-                                        <span className="w-8 h-[1px] bg-current opacity-50 block md:hidden" />
-                                    </motion.span>
+                                        <div
+                                            style={{
+                                                backgroundColor: activeWine.accentColorHex ? `${activeWine.accentColorHex}15` : '#f3f4f6', // 10-15% opacity
+                                                borderColor: activeWine.accentColorHex ? `${activeWine.accentColorHex}30` : 'transparent'
+                                            }}
+                                            className="px-4 py-1.5 rounded-full border backdrop-blur-sm flex items-center gap-2"
+                                        >
+                                            {/* Color Dot */}
+                                            {activeWine.accentColorHex && (
+                                                <span
+                                                    className="w-2 h-2 rounded-full shadow-sm"
+                                                    style={{ backgroundColor: activeWine.accentColorHex }}
+                                                />
+                                            )}
+
+                                            {/* Text - Always Dark for Readability */}
+                                            <span className="text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase text-brand-dark">
+                                                {activeWine.subtitle}
+                                            </span>
+                                        </div>
+                                    </motion.div>
 
                                     <motion.h2
                                         custom={1}
@@ -297,7 +321,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                         <motion.div
                                             custom={4}
                                             variants={textStaggerVariants}
-                                            className="w-full md:w-auto"
+                                            className="w-full md:w-auto flex flex-col md:flex-row gap-4"
                                         >
                                             <Button
                                                 disabled={activeWine.stock === 0}
@@ -309,6 +333,20 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                                 <ShoppingBag className="w-4 h-4 mr-2" />
                                                 {activeWine.stock === 0 ? 'Agotado' : 'Comprar'}
                                             </Button>
+
+                                            {/* Conocer el Vino Button */}
+                                            {activeWine.slug && (
+                                                <Link
+                                                    href={`/tienda/${activeWine.slug}`}
+                                                    className={cn(
+                                                        buttonVariants({ variant: "outline" }),
+                                                        "w-full md:w-auto h-12 md:h-14 px-8 rounded-full uppercase tracking-widest text-xs md:text-sm font-bold border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white transition-all duration-300"
+                                                    )}
+                                                >
+                                                    <Eye className="w-4 h-4 mr-2" />
+                                                    Conocer
+                                                </Link>
+                                            )}
 
                                             {/* Stock Status Badge */}
                                             {activeWine.stock !== undefined && activeWine.stock > 0 && activeWine.stock <= 5 && (

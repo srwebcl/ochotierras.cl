@@ -17,7 +17,11 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Pedidos';
+    protected static ?string $modelLabel = 'Pedido';
+    protected static ?string $pluralModelLabel = 'Pedidos';
+    protected static ?string $navigationGroup = 'Tienda';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -31,12 +35,14 @@ class OrderResource extends Resource
                                     ->label('Nombre Cliente')
                                     ->required(),
                                 Forms\Components\TextInput::make('customer_email')
+                                    ->label('Email')
                                     ->email()
                                     ->required(),
                                 Forms\Components\TextInput::make('customer_phone')
+                                    ->label('Teléfono')
                                     ->tel()
                                     ->required(),
-                                Forms\Components\Textarea::make('address_shipping')
+                                Forms\Components\Textarea::make('shipping_address')
                                     ->label('Dirección de Envío')
                                     ->required()
                                     ->columnSpanFull(),
@@ -45,22 +51,34 @@ class OrderResource extends Resource
                         Forms\Components\Section::make('Detalle de Productos')
                             ->schema([
                                 Forms\Components\Repeater::make('items')
+                                    ->label('Items del Pedido')
                                     ->relationship()
                                     ->schema([
-                                        Forms\Components\TextInput::make('product_name')
+                                        Forms\Components\Select::make('product_id')
                                             ->label('Producto')
-                                            ->disabled(),
+                                            ->relationship('product', 'name')
+                                            ->required()
+                                            ->reactive()
+                                            ->afterStateUpdated(fn($state, $set) => $set('unit_price', \App\Models\Product::find($state)?->price ?? 0)),
                                         Forms\Components\TextInput::make('quantity')
                                             ->label('Cantidad')
-                                            ->disabled(),
-                                        Forms\Components\TextInput::make('price')
+                                            ->numeric()
+                                            ->default(1)
+                                            ->required()
+                                            ->reactive()
+                                            ->afterStateUpdated(fn($state, $get, $set) => $set('total', $state * $get('unit_price'))),
+                                        Forms\Components\TextInput::make('unit_price')
                                             ->label('Precio Unitario')
+                                            ->numeric()
                                             ->prefix('$')
-                                            ->disabled(),
+                                            ->required(),
+                                        Forms\Components\TextInput::make('total')
+                                            ->label('Subtotal')
+                                            ->numeric()
+                                            ->prefix('$')
+                                            ->required(),
                                     ])
-                                    ->columns(3)
-                                    ->addable(false)
-                                    ->deletable(false)
+                                    ->columns(4)
                             ])
                     ])->columnSpan(2),
 
@@ -69,29 +87,26 @@ class OrderResource extends Resource
                         Forms\Components\Section::make('Estado del Pedido')
                             ->schema([
                                 Forms\Components\Select::make('status')
+                                    ->label('Estado')
                                     ->options([
-                                        'PENDING' => 'Pendiente',
-                                        'PAID' => 'Pagado',
-                                        'SHIPPED' => 'Enviado',
-                                        'DELIVERED' => 'Entregado',
-                                        'FAILED' => 'Fallido',
-                                        'CANCELLED' => 'Cancelado',
+                                        'pending' => 'Pendiente',
+                                        'paid' => 'Pagado',
+                                        'preparing' => 'En Preparación',
+                                        'shipped' => 'Enviado',
+                                        'delivered' => 'Entregado',
+                                        'cancelled' => 'Cancelado',
+                                        'failed' => 'Fallido',
                                     ])
                                     ->required(),
-                                Forms\Components\TextInput::make('total')
+                                Forms\Components\TextInput::make('total_amount')
+                                    ->label('Monto Total')
                                     ->prefix('$')
                                     ->numeric()
-                                    ->disabled() // Total should be calculated
                                     ->required(),
-                                Forms\Components\TextInput::make('site_transaction_id')
-                                    ->label('ID Transacción Sitio')
-                                    ->disabled(),
-                                Forms\Components\TextInput::make('payment_id')
-                                    ->label('ID Pasarela (Getnet)')
-                                    ->disabled(),
-                                Forms\Components\Toggle::make('marketing_opt_in')
-                                    ->label('Acepta Marketing')
-                                    ->disabled(),
+                                Forms\Components\TextInput::make('courier_name')
+                                    ->label('Courier / Transporte'),
+                                Forms\Components\TextInput::make('tracking_number')
+                                    ->label('N° Seguimiento'),
                             ])
                     ])->columnSpan(1),
             ])->columns(3);
@@ -102,23 +117,37 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
+                    ->label('N° Pedido')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('customer_name')
                     ->label('Cliente')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Estado')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'PENDING' => 'gray',
-                        'PAID' => 'success',
-                        'SHIPPED' => 'info',
-                        'DELIVERED' => 'success',
-                        'FAILED' => 'danger',
-                        'CANCELLED' => 'danger',
+                        'pending' => 'gray',
+                        'paid' => 'success',
+                        'preparing' => 'warning',
+                        'shipped' => 'info',
+                        'delivered' => 'success',
+                        'failed' => 'danger',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'pending' => 'Pendiente',
+                        'paid' => 'Pagado',
+                        'preparing' => 'En Preparación',
+                        'shipped' => 'Enviado',
+                        'delivered' => 'Entregado',
+                        'failed' => 'Fallido',
+                        'cancelled' => 'Cancelado',
+                        default => $state,
                     })
                     ->searchable(),
-                Tables\Columns\TextColumn::make('total')
+                Tables\Columns\TextColumn::make('total_amount')
+                    ->label('Total')
                     ->money('CLP')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -131,6 +160,45 @@ class OrderResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('print')
+                    ->label('Imprimir')
+                    ->icon('heroicon-o-printer')
+                    ->action(function (Order $record) {
+                        return response()->streamDownload(function () use ($record) {
+                            echo '<html><head><title>Pedido #' . $record->id . '</title></head><body style="font-family: sans-serif; padding: 20px;">';
+                            echo '<div style="text-align: center; margin-bottom: 20px;">';
+                            echo '<h1>Comprobante de Pedido #' . $record->id . '</h1>';
+                            echo '<p>OCHOTIERRAS</p>';
+                            echo '</div>';
+
+                            echo '<p><strong>Cliente:</strong> ' . $record->customer_name . '</p>';
+                            echo '<p><strong>Email:</strong> ' . $record->customer_email . '</p>';
+                            echo '<p><strong>Fecha:</strong> ' . $record->created_at->format('d/m/Y H:i') . '</p>';
+                            echo '<p><strong>Estado:</strong> ' . ucfirst($record->status) . '</p>';
+
+                            echo '<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">';
+                            echo '<tr style="background: #eee;">';
+                            echo '<th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Producto</th>';
+                            echo '<th style="padding: 10px; text-align: right; border: 1px solid #ddd;">Cant.</th>';
+                            echo '<th style="padding: 10px; text-align: right; border: 1px solid #ddd;">Precio</th>';
+                            echo '<th style="padding: 10px; text-align: right; border: 1px solid #ddd;">Total</th>';
+                            echo '</tr>';
+
+                            foreach ($record->items as $item) {
+                                echo '<tr>';
+                                echo '<td style="padding: 10px; border: 1px solid #ddd;">' . $item->product->name . '</td>';
+                                echo '<td style="padding: 10px; text-align: right; border: 1px solid #ddd;">' . $item->quantity . '</td>';
+                                echo '<td style="padding: 10px; text-align: right; border: 1px solid #ddd;">$' . number_format($item->unit_price, 0, ',', '.') . '</td>';
+                                echo '<td style="padding: 10px; text-align: right; border: 1px solid #ddd;">$' . number_format($item->total, 0, ',', '.') . '</td>';
+                                echo '</tr>';
+                            }
+
+                            echo '</table>';
+                            echo '<h3 style="text-align: right; margin-top: 20px;">Total: $' . number_format($record->total_amount, 0, ',', '.') . '</h3>';
+                            echo '<script>window.print();</script>';
+                            echo '</body></html>';
+                        }, 'pedido-' . $record->id . '.html');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

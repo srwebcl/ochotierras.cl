@@ -31,7 +31,7 @@ export function ProductCard({ product }: ProductCardProps) {
             {/* Info */}
             <div className="p-5">
                 <div className="text-xs text-brand-gold mb-2 uppercase tracking-wide">{product.category}</div>
-                <Link href={`/store/${product.slug}`}>
+                <Link href={`/tienda/${product.slug}`}>
                     <h3 className="text-lg font-serif font-bold text-white mb-2 leading-tight hover:text-brand-gold transition-colors">
                         {product.name}
                     </h3>

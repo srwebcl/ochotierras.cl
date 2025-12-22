@@ -1,179 +1,184 @@
 "use client"
 
-import { Section } from "@/components/ui/Section"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import Link from "next/link"
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { ArrowRight, Download } from 'lucide-react'
 
-export default function NuestrosVinos() {
+interface Wine {
+    id: number
+    name: string
+    subtitle: string
+    slug: string
+    image: string | null
+    price: number
+    stock: number
+    bgGradient: string
+    accentColorHex: string
+}
+
+interface Category {
+    id: number
+    name: string
+    slug: string
+    wines: Wine[]
+}
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: { staggerChildren: 0.1 }
+    }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as any } }
+}
+
+export default function NuestrosVinosPage() {
+    const [categories, setCategories] = useState<Category[]>([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        setIsLoading(true)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/categories-wines`)
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setCategories(data)
+                }
+            })
+            .catch(err => console.error("Failed to fetch categories:", err))
+            .finally(() => setIsLoading(false))
+    }, [])
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen pt-32 flex justify-center items-center bg-[#F9F9F9]">
+                <div className="animate-pulse text-xl font-serif text-brand-dark">Cargando nuestra colección...</div>
+            </div>
+        )
+    }
+
     return (
-        <div className="pt-20">
-            {/* Hero */}
-            <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-brand-dark">
-                <div className="absolute inset-0 bg-[url('/images/general/vineyard-hero.webp')] bg-cover bg-center opacity-30 fixed-parallax" />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-black/40" />
-
-                <div className="container relative z-10 px-4 text-center">
-                    <span className="block text-brand-gold uppercase tracking-[0.3em] text-sm md:text-base mb-6 font-bold animate-fade-in-up">
+        <main className="min-h-screen bg-[#F9F9F9] pt-32 pb-20">
+            {/* Header */}
+            <div className="container mx-auto px-6 mb-16 text-center">
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <span className="text-brand-gold font-sans uppercase tracking-[0.2em] text-xs font-bold block mb-4">
                         Nuestra Colección
                     </span>
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-8 tracking-tight animate-fade-in-up delay-100">
-                        Vinos de <span className="italic text-brand-red">Carácter</span>
+                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-gray-900 leading-tight mb-6">
+                        Nuestros <span className="italic font-light text-gray-400">Vinos</span>
                     </h1>
-                    <p className="max-w-2xl mx-auto text-xl text-gray-300 font-light leading-relaxed animate-fade-in-up delay-200">
-                        La expresión pura del Valle del Limarí en cada botella.
+                    <p className="max-w-2xl mx-auto text-gray-600 font-sans font-light text-lg">
+                        Descubre la expresión única del Valle del Limarí en cada una de nuestras líneas.
                     </p>
-                </div>
-            </section>
+                </motion.div>
+            </div>
 
-            {/* Intro */}
-            <Section className="bg-white text-brand-dark text-center">
-                <div className="max-w-4xl mx-auto">
-                    <p className="text-2xl font-serif text-brand-dark mb-8 leading-relaxed">
-                        &quot;La cosecha y selección de las uvas se realiza manualmente, asegurando que solo lo mejor de nuestro viñedo llegue a su copa.&quot;
-                    </p>
-                    <div className="w-24 h-[1px] bg-brand-gold mx-auto" />
-                </div>
-            </Section>
-
-            {/* Chardonnay Showcase */}
-            <section className="py-24 bg-gray-50 overflow-hidden">
-                <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <div className="relative h-[600px] flex items-center justify-center group">
-                            <div className="absolute inset-0 bg-brand-gold/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                            <Image
-                                src="/images/bottles/chardonnay-reserva.webp"
-                                alt="Chardonnay Reserva"
-                                width={250}
-                                height={800}
-                                className="drop-shadow-2xl transform group-hover:-translate-y-4 transition-transform duration-500 relative z-10"
-                            />
-                        </div>
-                        <div>
-                            <span className="text-brand-gold font-bold uppercase tracking-widest text-sm mb-2 block">Blancos</span>
-                            <h2 className="text-5xl font-serif font-bold text-brand-dark mb-6">Chardonnay Reserva</h2>
-                            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                                Un vino que refleja la frescura del Limarí. De suave color dorado, sus aromas recuerdan a frutas tropicales maduras como piña y mango, integrados con sutiles notas minerales y un toque de vainilla francesa.
-                            </p>
-                            <ul className="space-y-4 mb-10">
-                                <li className="flex items-center gap-3 text-gray-700">
-                                    <span className="w-2 h-2 bg-brand-gold rounded-full" />
-                                    <span>100% Chardonnay</span>
-                                </li>
-                                <li className="flex items-center gap-3 text-gray-700">
-                                    <span className="w-2 h-2 bg-brand-gold rounded-full" />
-                                    <span>Crianza en barricas francesas</span>
-                                </li>
-                                <li className="flex items-center gap-3 text-gray-700">
-                                    <span className="w-2 h-2 bg-brand-gold rounded-full" />
-                                    <span>Ideal para mariscos y pescados grasos</span>
-                                </li>
-                            </ul>
-                            <Button className="bg-brand-dark text-white hover:bg-brand-red px-8 py-6 uppercase tracking-widest text-xs font-bold transition-colors">
-                                <Link href="/tienda">Comprar Ahora</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Reserva Especial */}
-            <section className="py-24 bg-brand-dark text-white overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-red/5 skew-x-12 transform origin-top-right" />
-
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <div className="order-2 lg:order-1">
-                            <span className="text-brand-red font-bold uppercase tracking-widest text-sm mb-2 block">Tintos</span>
-                            <h2 className="text-5xl font-serif font-bold text-white mb-6">Reserva Especial</h2>
-                            <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-                                Nuestra línea única que representa la esencia del Valle del Limarí. Vinos con cuerpo, estructura y una elegancia que perdura.
-                            </p>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-                                <div className="p-4 border border-white/10 bg-white/5 text-center rounded hover:bg-white/10 transition-colors cursor-default">
-                                    <h3 className="font-serif font-bold text-xl mb-1 text-white">Cabernet</h3>
-                                    <span className="text-xs uppercase text-brand-gold">Sauvignon</span>
-                                </div>
-                                <div className="p-4 border border-white/10 bg-white/5 text-center rounded hover:bg-white/10 transition-colors cursor-default">
-                                    <h3 className="font-serif font-bold text-xl mb-1 text-white">Syrah</h3>
-                                    <span className="text-xs uppercase text-brand-gold">Limarí</span>
-                                </div>
-                                <div className="p-4 border border-white/10 bg-white/5 text-center rounded hover:bg-white/10 transition-colors cursor-default">
-                                    <h3 className="font-serif font-bold text-xl mb-1 text-white">Blend</h3>
-                                    <span className="text-xs uppercase text-brand-gold">Ensamblaje</span>
-                                </div>
+            {/* Categories List */}
+            <div className="container mx-auto px-6 space-y-24">
+                {categories.map((category) => (
+                    category.wines.length > 0 && (
+                        <section key={category.id} className="relative">
+                            {/* Category Title */}
+                            <div className="flex items-center gap-4 mb-12">
+                                <div className="h-px bg-gray-300 flex-1" />
+                                <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 text-center uppercase tracking-widest">
+                                    {category.name}
+                                </h2>
+                                <div className="h-px bg-gray-300 flex-1" />
                             </div>
 
-                            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-brand-dark px-8 py-6 uppercase tracking-widest text-xs font-bold transition-colors">
-                                <Link href="/tienda">Ver Colección</Link>
-                            </Button>
-                        </div>
+                            {/* Wines Grid */}
+                            <motion.div
+                                variants={containerVariants}
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, margin: "-100px" }}
+                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+                            >
+                                {category.wines.map((wine) => (
+                                    <motion.div
+                                        key={wine.id}
+                                        variants={itemVariants}
+                                        className="group relative bg-white rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col"
+                                    >
+                                        <Link href={`/tienda/${wine.slug}`} className="block relative h-[400px] w-full overflow-hidden bg-gray-50">
+                                            {/* Dynamic Background Gradient based on Wine Type */}
+                                            <div
+                                                className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
+                                                style={{ background: wine.bgGradient }}
+                                            />
 
-                        <div className="order-1 lg:order-2 relative h-[600px] flex items-center justify-center group">
-                            <div className="relative w-[300px] h-[600px]">
-                                <div className="absolute inset-0 bg-brand-red/20 blur-3xl rounded-full" />
-                                <Image
-                                    src="https://placehold.co/300x900/500000/FFFFFF.png?text=Vinos+Tintos"
-                                    alt="Vinos Tintos"
-                                    fill
-                                    className="object-contain drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-500"
-                                />
-                            </div>
-                        </div>
+                                            <div className="absolute inset-0 flex items-center justify-center p-8">
+                                                <Image
+                                                    src={wine.image || '/images/bottles/placeholder.webp'}
+                                                    alt={wine.name}
+                                                    width={300}
+                                                    height={400}
+                                                    priority={true}
+                                                    unoptimized
+                                                    className="object-contain h-full w-auto drop-shadow-xl group-hover:scale-105 transition-transform duration-700"
+                                                />
+                                            </div>
+
+                                            {/* Quick Add Overlay (Optional, simple link for now) */}
+                                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-[2px]">
+                                                <div className="bg-white/90 backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg">
+                                                    <span className="text-brand-dark font-bold text-sm uppercase tracking-wider">Ver Detalle</span>
+                                                    <ArrowRight size={16} className="text-brand-gold" />
+                                                </div>
+                                            </div>
+                                        </Link>
+
+                                        <div className="p-8 flex flex-col flex-grow">
+                                            <div className="mb-4">
+                                                <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-2 block">
+                                                    {category.name}
+                                                </span>
+                                                <Link href={`/tienda/${wine.slug}`}>
+                                                    <h3 className="text-2xl font-serif font-bold text-gray-900 group-hover:text-brand-gold transition-colors duration-300">
+                                                        {wine.name}
+                                                    </h3>
+                                                </Link>
+                                                {wine.subtitle && (
+                                                    <p className="text-gray-500 text-sm mt-1 font-light italic">{wine.subtitle}</p>
+                                                )}
+                                            </div>
+
+                                            <div className="mt-auto flex items-end justify-between border-t border-gray-50 pt-4">
+                                                <div className="flex flex-col">
+                                                    <span className="text-xs text-gray-400 uppercase">Precio</span>
+                                                    <span className="text-xl font-bold text-gray-900">${wine.price.toLocaleString('es-CL')}</span>
+                                                </div>
+                                                <Link href={`/tienda/${wine.slug}`} className="text-brand-dark hover:text-brand-gold transition-colors font-medium text-sm flex items-center gap-1 group/link">
+                                                    Comprar
+                                                    <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        </section>
+                    )
+                ))}
+
+                {categories.length === 0 && (
+                    <div className="text-center py-20">
+                        <p className="text-gray-500 text-lg">No hay vinos disponibles en este momento.</p>
                     </div>
-                </div>
-            </section>
-
-            {/* High End Lines */}
-            <Section className="bg-white text-brand-dark">
-                <div className="text-center mb-20">
-                    <span className="text-brand-gold font-bold uppercase tracking-widest text-sm mb-4 block">Alta Gama</span>
-                    <h2 className="text-5xl font-serif font-bold text-brand-dark mb-6">Iconos de la Bodega</h2>
-                    <p className="max-w-2xl mx-auto text-gray-600">Producciones limitadas, numeradas y creadas con la paciencia que requiere la excelencia.</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {/* Reserva Privada Card */}
-                    <div className="group relative overflow-hidden rounded-lg bg-gray-50 border border-gray-100 p-8 md:p-12 hover:shadow-2xl transition-all duration-300">
-                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <Image src="/images/logos/logo-gold.png" alt="Logo" width={100} height={100} />
-                        </div>
-
-                        <h3 className="text-4xl font-serif font-bold text-brand-dark mb-4">Reserva Privada</h3>
-                        <div className="w-12 h-1 bg-brand-dark mb-6 group-hover:w-24 transition-all duration-500" />
-                        <p className="text-gray-600 mb-6 leading-relaxed">
-                            Variedades Carmenere y Syrah con una crianza de 10 a 12 meses en barricas de roble francés. Un equilibrio perfecto entre fruta y madera.
-                        </p>
-                        <ul className="text-sm text-gray-500 space-y-2 mb-8 uppercase tracking-wider font-bold">
-                            <li>• Syrah</li>
-                            <li>• Carmenere</li>
-                        </ul>
-                        <Button variant="link" className="text-brand-red p-0 hover:text-brand-dark font-bold uppercase tracking-widest" asChild>
-                            <Link href="/tienda">Comprar Reserva Privada →</Link>
-                        </Button>
-                    </div>
-
-                    {/* Gran Reserva Card */}
-                    <div className="group relative overflow-hidden rounded-lg bg-brand-dark text-white p-8 md:p-12 hover:shadow-2xl transition-all duration-300 ring-1 ring-white/10">
-                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-gold to-brand-red" />
-
-                        <h3 className="text-4xl font-serif font-bold text-brand-gold mb-4">Gran Reserva</h3>
-                        <div className="w-12 h-1 bg-white mb-6 group-hover:w-24 transition-all duration-500" />
-                        <p className="text-gray-300 mb-6 leading-relaxed">
-                            Nuestros mejores vinos. Producción anual de solo 17.000 botellas. Guarda de 14 a 18 meses. Etiquetado y lacrado a mano. Una obra de arte en cada botella.
-                        </p>
-                        <ul className="text-sm text-gray-400 space-y-2 mb-8 uppercase tracking-wider font-bold">
-                            <li>• Ensamblaje 24 Barricas</li>
-                            <li>• Syrah 10 Barricas</li>
-                        </ul>
-                        <Button variant="link" className="text-brand-gold p-0 hover:text-white font-bold uppercase tracking-widest" asChild>
-                            <Link href="/tienda">Comprar Gran Reserva →</Link>
-                        </Button>
-                    </div>
-                </div>
-            </Section>
-        </div>
+                )}
+            </div>
+        </main>
     )
 }

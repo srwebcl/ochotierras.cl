@@ -97,18 +97,7 @@ const MagneticButton = ({ children, className, variant = "primary", ...props }: 
             style={{ x, y }}
             className="inline-block"
         >
-            <Button
-                className={cn(
-                    "relative overflow-hidden transition-all duration-300",
-                    variant === "primary"
-                        ? "bg-brand-gold text-brand-dark hover:bg-[#D4AF37] hover:brightness-110"
-                        : "border-white/30 text-white hover:bg-white/10 backdrop-blur-sm",
-                    className
-                )}
-                {...props}
-            >
-                {children}
-            </Button>
+            {children}
         </motion.div>
     );
 };
@@ -194,9 +183,18 @@ export function Hero({ data }: HeroProps) {
 
     const getImageUrl = (img?: string) => {
         if (!img) return "";
-        if (img.startsWith("/")) return img;
+        // If it starts with /storage, it's a backend image that needs the domain prepended
+        if (img.startsWith("/storage")) {
+            const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
+            // Remove /storage prefix if the env var already includes it to avoid double /storage/storage
+            // Check if env var ends with /storage
+            const cleanStorageUrl = storageUrl.endsWith('/storage') ? storageUrl : `${storageUrl}/storage`;
+            const cleanPath = img.replace(/^\/storage/, '');
+            return `${cleanStorageUrl}${cleanPath}`;
+        }
+        if (img.startsWith("/") && !img.startsWith("/storage")) return img; // Local frontend assets
         if (img.startsWith("http")) return img;
-        return `${process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000/storage'}/${img}`;
+        return `${process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage'}/${img}`;
     };
 
     const bgImage = currentData.images && currentData.images.length > 0
@@ -335,31 +333,27 @@ export function Hero({ data }: HeroProps) {
                             className="flex flex-col sm:flex-row gap-6 pt-10 w-full justify-center px-4"
                         >
                             {/* Primary: Liquid Gold */}
-                            <MagneticButton variant="primary" asChild>
-                                <Button
-                                    size="lg"
-                                    className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-black tracking-[0.25em] uppercase text-black bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] bg-[length:200%_auto] animate-shimmer hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.8)] border border-transparent hover:scale-[1.02] transition-all duration-300 rounded-sm"
-                                    asChild
-                                >
-                                    <Link href={currentData.button_primary_url || "/nosotros"}>
-                                        {currentData.button_primary_text || "Nuestra Viña"}
-                                    </Link>
-                                </Button>
-                            </MagneticButton>
+                            <Button
+                                size="lg"
+                                className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-black tracking-[0.25em] uppercase text-black bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] bg-[length:200%_auto] animate-shimmer hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.8)] border border-transparent hover:scale-[1.02] transition-all duration-300 rounded-sm"
+                                asChild
+                            >
+                                <Link href={currentData.button_primary_url || "/nosotros"}>
+                                    {currentData.button_primary_text || "Nuestra Viña"}
+                                </Link>
+                            </Button>
 
                             {/* Secondary: Minimalist Sharp */}
-                            <MagneticButton variant="outline" asChild>
-                                <Button
-                                    size="lg"
-                                    variant="outline"
-                                    className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-bold tracking-[0.25em] uppercase text-white bg-transparent border border-white/60 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] backdrop-blur-[2px] hover:scale-[1.02] transition-all duration-300 rounded-sm"
-                                    asChild
-                                >
-                                    <Link href={currentData.button_secondary_url || "/tienda"}>
-                                        {currentData.button_secondary_text || "Tienda Online"}
-                                    </Link>
-                                </Button>
-                            </MagneticButton>
+                            <Button
+                                size="lg"
+                                variant="outline"
+                                className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-bold tracking-[0.25em] uppercase text-white bg-transparent border border-white/60 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] backdrop-blur-[2px] hover:scale-[1.02] transition-all duration-300 rounded-sm"
+                                asChild
+                            >
+                                <Link href={currentData.button_secondary_url || "/tienda"}>
+                                    {currentData.button_secondary_text || "Tienda Online"}
+                                </Link>
+                            </Button>
                         </motion.div>
                     </motion.div>
                 </AnimatePresence>

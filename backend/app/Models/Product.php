@@ -14,15 +14,59 @@ class Product extends Model
         'description',
         'featured_description',
         'price',
-        'image',
         'stock',
+        'sku',
+        'image',
         'accent_color',
+        'meta_title',
+        'meta_description',
         'is_active',
         'is_featured',
+        'category_id',
+        'technical_sheet',
+        'harvest_year',
+        'harvest_type',
+        'origin',
+        'vineyard_location',
+        'presentation',
+        'closure_type',
+        'varietal_composition',
+        'aging_potential',
+        'wood_type',
+        'alcohol',
+        'residual_sugar',
+        'total_ph',
+        'volatile_acidity',
+        'total_acidity',
+        'tasting_notes',
+        'awards',
+        'vintage_year',
+        'strain',
+        'units_per_box',
+        'is_pack',
+        'technical_details',
+        'gallery',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function bundleItems()
+    {
+        return $this->belongsToMany(Product::class, 'product_bundles', 'bundle_id', 'product_id')
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_pack' => 'boolean',
         'price' => 'decimal:2',
+        'awards' => 'array',
+        'technical_details' => 'array',
+        'units_per_box' => 'integer',
+        'gallery' => 'array',
     ];
 }

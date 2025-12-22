@@ -18,6 +18,7 @@ class HeroSection extends Model
         'button_secondary_url',
         'images',
         'is_active',
+        'sort_order',
     ];
 
     protected $casts = [

@@ -16,6 +16,7 @@ interface Wine {
     bgGradient?: string;
     description?: string;
     stock?: number;
+    slug?: string;
 }
 
 export function StoreProductGrid() {
@@ -25,7 +26,7 @@ export function StoreProductGrid() {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/collection-wines`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/products`)
             .then(res => {
                 if (!res.ok) throw new Error("Error al cargar vinos")
                 return res.json()
@@ -72,7 +73,7 @@ export function StoreProductGrid() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {products.map((product) => (
                 <div key={product.id} className="group bg-white rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col">
-                    <Link href={`/tienda/${product.id}`} className="relative h-[400px] w-full bg-gray-50 flex items-center justify-center p-8 overflow-hidden cursor-pointer">
+                    <Link href={`/tienda/${product.slug}`} className="relative h-[400px] w-full bg-gray-50 flex items-center justify-center p-8 overflow-hidden cursor-pointer">
                         {product.stock !== undefined && product.stock <= 5 && product.stock > 0 && (
                             <span className="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 uppercase tracking-widest z-10">
                                 ¡Quedan pocos!
@@ -99,7 +100,7 @@ export function StoreProductGrid() {
 
                     <div className="p-8 flex flex-col flex-grow text-center">
                         <span className="text-gray-400 text-xs uppercase tracking-widest font-bold mb-2">{product.type || 'Vino'}</span>
-                        <Link href={`/tienda/${product.id}`}>
+                        <Link href={`/tienda/${product.slug}`}>
                             <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4 group-hover:text-brand-red transition-colors">
                                 {product.name}
                             </h3>

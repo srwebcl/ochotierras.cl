@@ -28,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('Ochotierras')
+            ->brandLogo(asset('images/logo.webp'))
             ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => '#cfb53b', // Gold-ish color for Ochotierras

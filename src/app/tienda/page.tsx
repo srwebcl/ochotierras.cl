@@ -8,7 +8,7 @@ export default function Tienda() {
             {/* Hero */}
             <section className="relative h-[50vh] flex items-center justify-center overflow-hidden bg-brand-dark">
                 <div className="absolute inset-0 z-0 opacity-40">
-                    <Image src="/images/general/vineyard-hero.webp" alt="Tienda Background" fill className="object-cover" />
+                    <Image src="/images/general/tienda_hero_new.png" alt="Tienda Background" fill className="object-cover" />
                 </div>
                 <div className="absolute inset-0 bg-brand-dark/60 z-10" />
 

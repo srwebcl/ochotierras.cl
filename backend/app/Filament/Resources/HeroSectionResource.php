@@ -17,7 +17,9 @@ class HeroSectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
     protected static ?string $navigationGroup = 'Sitio Web';
-    protected static ?string $navigationLabel = 'Hero Section';
+    protected static ?string $navigationLabel = 'Banner Principal';
+    protected static ?string $modelLabel = 'Portada';
+    protected static ?string $pluralModelLabel = 'Portadas';
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -76,6 +78,8 @@ class HeroSectionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderable('sort_order')
+            ->defaultSort('sort_order')
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')

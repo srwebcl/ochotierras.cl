@@ -8,7 +8,7 @@ export default function Nosotros() {
             <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-brand-dark fixed-parallax">
                     {/* Use vineyard hero as background */}
-                    <div className="absolute inset-0 bg-[url('/images/general/vineyard-hero.webp')] bg-cover bg-center opacity-40" />
+                    <div className="absolute inset-0 bg-[url('/images/general/hero-nosotros.jpeg')] bg-cover bg-center opacity-40" />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/50 to-transparent" />
                 </div>
 
@@ -52,7 +52,7 @@ export default function Nosotros() {
                     <div className="relative h-[600px] w-full shadow-2xl overflow-hidden rounded-sm group">
                         {/* Placeholder for now - replace with historical photo if available */}
                         <Image
-                            src="/images/general/bodega.webp"
+                            src="/images/general/vinedos-nosotros.jpeg"
                             alt="Historia de Viña Ochotierras"
                             fill
                             className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
@@ -70,7 +70,7 @@ export default function Nosotros() {
                         <div className="absolute inset-0 border border-white/20 translate-x-4 translate-y-4" />
                         <div className="absolute inset-0 bg-gray-800 overflow-hidden">
                             <Image
-                                src="/images/general/vineyard-hero.webp"
+                                src="/images/general/valle-limari.jpg"
                                 alt="Valle del Limarí"
                                 fill
                                 className="object-cover"

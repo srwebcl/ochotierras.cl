@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 
+import { motion } from "framer-motion"
+
 export default function Turismo() {
     return (
         <div className="pt-20">
@@ -12,7 +14,7 @@ export default function Turismo() {
             <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-brand-dark">
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/images/general/bodega.webp"
+                        src="/images/general/hero-turismo.jpeg"
                         alt="Turismo Ochotierras"
                         fill
                         className="object-cover opacity-60"
@@ -27,8 +29,8 @@ export default function Turismo() {
                             Experiencias
                         </span>
                         <h1 className="text-6xl md:text-8xl font-serif font-bold text-white mb-6 tracking-tight leading-none animate-fade-in-up delay-100">
-                            Visita Nuestra <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white">Bodega</span>
+                            Visita Viña <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white">Ochotierras</span>
                         </h1>
                         <p className="text-xl text-gray-200 font-light mb-10 leading-relaxed max-w-lg animate-fade-in-up delay-200">
                             Sumérgete en el Valle del Limarí. Recorre nuestros viñedos, conoce nuestro proceso gravitacional y degusta vinos inolvidables.
@@ -41,16 +43,56 @@ export default function Turismo() {
             </section>
 
             {/* Tour Detail */}
-            <Section className="bg-white text-brand-dark">
-                <div className="flex flex-col lg:flex-row gap-20 items-stretch">
-                    {/* Left - Image Grid */}
-                    <div className="lg:w-1/2 grid grid-cols-2 gap-4">
-                        <div className="relative h-[300px] lg:h-full rounded-2xl overflow-hidden transform translate-y-8 shadow-2xl">
-                            <Image src="/images/general/vineyard-hero.webp" alt="Viñedos" fill className="object-cover" />
-                        </div>
-                        <div className="relative h-[300px] lg:h-full rounded-2xl overflow-hidden shadow-2xl">
-                            <Image src="/images/bottles/chardonnay-reserva.webp" alt="Cata" fill className="object-contain bg-gray-50" />
-                        </div>
+            <Section className="bg-white text-brand-dark overflow-hidden">
+                <div className="flex flex-col lg:flex-row gap-20 items-center">
+                    {/* Left - Image Grid (Redesigned) */}
+                    <div className="lg:w-1/2 relative h-[600px] w-full flex items-center justify-center">
+
+                        {/* 1. Main Base Image (Viñedos) - Large and rotated slightly */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0, rotate: -2 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="absolute left-0 top-0 w-3/4 h-[85%] z-10"
+                        >
+                            <div className="relative w-full h-full rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-2xl border-4 border-white">
+                                <Image
+                                    src="/images/general/turismo-1.jpeg"
+                                    alt="Viñedos del Limarí"
+                                    fill
+                                    className="object-cover hover:scale-105 transition-transform duration-700"
+                                />
+                                {/* Overlay gradient */}
+                                <div className="absolute inset-0 bg-black/10 mix-blend-multiply" />
+                            </div>
+                        </motion.div>
+
+                        {/* 2. Secondary Overlapping Image (Cata) - Overlaid on bottom right */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                            whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 3 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
+                            className="absolute right-4 bottom-8 w-3/5 h-[60%] z-20"
+                        >
+                            <div className="relative w-full h-full rounded-tl-[3rem] rounded-br-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-white">
+                                <Image
+                                    src="/images/general/turismo.jpeg"
+                                    alt="Cata de Vinos"
+                                    fill
+                                    className="object-cover hover:scale-105 transition-transform duration-700"
+                                />
+                            </div>
+                            {/* Decorative Badge */}
+                            <div className="absolute -top-6 -right-6 bg-brand-gold text-white font-serif w-24 h-24 rounded-full flex items-center justify-center text-center p-2 shadow-lg animate-spin-slow">
+                                <span className="text-xs font-bold uppercase tracking-widest leading-none">Premium<br />Tasting</span>
+                            </div>
+                        </motion.div>
+
+                        {/* Decorative Background Elements */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-brand-gold/5 blur-[100px] z-0 pointer-events-none" />
+
                     </div>
 
                     {/* Right - Info */}

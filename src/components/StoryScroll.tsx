@@ -27,7 +27,7 @@ export function StoryScroll() {
             <div className="absolute inset-0 z-0">
                 <motion.div style={{ y: bgY }} className="relative w-full h-[120%] -top-[10%]">
                     <Image
-                        src="/images/general/bodega.webp"
+                        src="/images/general/back-story-scroll.jpeg"
                         alt="Bodega OchoTierras"
                         fill
                         className="object-cover opacity-60 md:opacity-100" // Lower opacity on mobile for readability
@@ -84,23 +84,11 @@ export function StoryScroll() {
                         {/* Glass Shine Effect */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                        <h3 className="text-3xl font-serif font-bold mb-4 text-white">Diseño por Gravedad</h3>
+                        <h3 className="text-3xl font-serif font-bold mb-4 text-white text-left">Diseño por Gravedad</h3>
 
-                        <p className="text-gray-400 font-light text-base leading-relaxed mb-8">
+                        <p className="text-gray-400 font-light text-base leading-relaxed mb-8 text-left">
                             La bodega fue construida bajo el nivel del suelo, permitiendo usar la gravedad para mover el vino suavemente. Sin bombas. Preservando la condición excepcional de cada gota.
                         </p>
-
-                        <div className="flex items-center gap-8 mb-8">
-                            <div>
-                                <span className="block text-4xl font-bold text-white">-5°C</span>
-                                <span className="text-[10px] uppercase tracking-widest text-gray-500">Temperatura</span>
-                            </div>
-                            <div className="w-[1px] h-10 bg-white/20" />
-                            <div>
-                                <span className="block text-4xl font-bold text-white">5</span>
-                                <span className="text-[10px] uppercase tracking-widest text-gray-500">Niveles Subt.</span>
-                            </div>
-                        </div>
 
                         <Button asChild className="w-full h-12 bg-white text-black hover:bg-brand-gold hover:text-white transition-colors duration-300 uppercase tracking-widest text-xs font-bold">
                             <Link href="/bodega-y-vinedos">Explorar Bodega</Link>

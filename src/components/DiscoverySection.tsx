@@ -20,21 +20,21 @@ const DISCOVERY_ITEMS = [
         id: 1,
         title: "Turismo",
         subtitle: "Experiencias Únicas",
-        image: "/images/general/vina-ochotierras-2.webp",
+        image: "/images/general/turismo-ochotierras.jpeg",
         link: "/turismo",
     },
     {
         id: 2,
         title: "Vinos",
         subtitle: "Nuestra Colección",
-        image: "/images/general/nuestra-vina-ochotierras.webp",
+        image: "/images/general/nuestros-vinos.jpeg",
         link: "/nuestros-vinos",
     },
     {
         id: 3,
         title: "Tienda",
         subtitle: "Compra Online",
-        image: "/images/general/vina-ochotierras-82.webp",
+        image: "/images/general/tienda-ochotierras.jpeg",
         link: "/tienda",
     },
     {
@@ -48,7 +48,7 @@ const DISCOVERY_ITEMS = [
         id: 5,
         title: "Bodega",
         subtitle: "Arquitectura & Gravedad",
-        image: "/images/general/vina-ochotierras-53.webp",
+        image: "/images/general/bodega-ochotierras.jpeg",
         link: "/bodega-y-vinedos",
     },
 ]
@@ -66,9 +66,9 @@ export function DiscoverySection() {
         damping: 20
     })
 
-    // Wrap logic: -20 to -45 to ensure smooth looping of the 5 base items repeated
-    // We will render items multiple times to cover screen
-    const x = useTransform(smoothBaseX, (v) => `${wrap(-20, -45, v)}%`)
+    // Wrap logic: Loop seamlessly every 33.33% (1/3 of total width since we have 3 sets of items)
+    // Range is -33.333% back to 0%. When we scroll past 1/3, we snap back to start (0) which looks identical.
+    const x = useTransform(smoothBaseX, (v) => `${wrap(-33.3333, 0, v)}%`)
 
     const [isDragging, setIsDragging] = useState(false)
 
@@ -77,7 +77,7 @@ export function DiscoverySection() {
     const handleManualNav = (direction: 'left' | 'right') => {
         // Approximate width of one item + gap in percentage relative to total track
         // Tuning this to feel like "one by one"
-        const step = 15
+        const step = 5
 
         if (direction === 'left') {
             baseX.set(baseX.get() + step)
@@ -143,8 +143,8 @@ export function DiscoverySection() {
                             // Use a sensitivity factor. Px to % depends on viewport.
                             // Assuming 100vw approx.
                             const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1000
-                            const sensitivity = 0.1 // Adjust feel
-                            const deltaPercent = (info.delta.x / windowWidth) * 100 * -1
+                            const sensitivity = 0.05 // Adjust feel
+                            const deltaPercent = (info.delta.x / windowWidth) * 100 * -1 * 1.5 // Multiplier to make drag feel responsive but controlled
                             baseX.set(baseX.get() - deltaPercent)
                         }}
                         onDragEnd={() => {
