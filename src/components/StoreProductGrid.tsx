@@ -11,6 +11,8 @@ interface Wine {
     name: string;
     subtitle?: string;
     type?: string;
+    category_name?: string;
+    category_slug?: string;
     price: number;
     image?: string;
     bgGradient?: string;
@@ -19,7 +21,11 @@ interface Wine {
     slug?: string;
 }
 
-export function StoreProductGrid() {
+interface StoreProductGridProps {
+    filterCategory?: string | null;
+}
+
+export function StoreProductGrid({ filterCategory }: StoreProductGridProps) {
     const [products, setProducts] = useState<Wine[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -43,6 +49,14 @@ export function StoreProductGrid() {
             .finally(() => setIsLoading(false))
     }, [])
 
+    const filteredProducts = filterCategory && filterCategory !== 'todos'
+        ? products.filter(product => {
+            // Filter by category slug if available, or type for backward compatibility
+            return product.category_slug === filterCategory ||
+                product.type?.toLowerCase() === filterCategory.toLowerCase();
+        })
+        : products;
+
     if (isLoading) {
         return (
             <div className="flex justify-center items-center min-h-[400px]">
@@ -61,17 +75,19 @@ export function StoreProductGrid() {
         )
     }
 
-    if (products.length === 0) {
+    if (filteredProducts.length === 0) {
         return (
             <div className="flex justify-center items-center min-h-[400px]">
-                <div className="text-gray-500 font-serif text-xl">No hay productos disponibles por el momento.</div>
+                <div className="text-gray-500 font-serif text-xl">
+                    {products.length === 0 ? "No hay productos disponibles por el momento." : "No hay productos en esta categoría."}
+                </div>
             </div>
         )
     }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
                 <div key={product.id} className="group bg-white rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col">
                     <Link href={`/tienda/${product.slug}`} className="relative h-[400px] w-full bg-gray-50 flex items-center justify-center p-8 overflow-hidden cursor-pointer">
                         {product.stock !== undefined && product.stock <= 5 && product.stock > 0 && (

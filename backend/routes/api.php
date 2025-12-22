@@ -118,6 +118,7 @@ Route::get('/collection-wines', function () {
 
 Route::get('/products', function () {
     return \App\Models\Product::where('is_active', true)
+        ->with('category')
         ->get()
         ->map(function ($product) {
             return [
@@ -125,6 +126,8 @@ Route::get('/products', function () {
                 'name' => $product->name,
                 'subtitle' => $product->subtitle,
                 'type' => $product->type,
+                'category_name' => $product->category ? $product->category->name : null,
+                'category_slug' => $product->category ? $product->category->slug : null,
                 'price' => (int) $product->price,
                 'stock' => (int) $product->stock,
                 'image' => $product->image ? \Illuminate\Support\Facades\Storage::url($product->image) : null,
@@ -143,6 +146,19 @@ Route::get('/products', function () {
                 'vintage_year' => $product->vintage_year,
                 'strain' => $product->strain,
                 'origin' => $product->origin,
+            ];
+        });
+});
+
+Route::get('/categories', function () {
+    return Category::where('is_active', true)
+        ->orderBy('sort_order', 'asc')
+        ->get()
+        ->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'name' => $category->name,
+                'slug' => $category->slug,
             ];
         });
 });
