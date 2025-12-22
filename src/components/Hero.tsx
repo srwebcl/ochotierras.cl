@@ -33,7 +33,7 @@ interface HeroSection {
 }
 
 const defaultImages = [
-    "/images/general/vineyard-hero.webp",
+    "/images/general/hero-nosotros.jpeg",
     "/images/general/bodega.webp",
     "/images/general/vina-ochotierras-1.webp"
 ]
@@ -46,7 +46,7 @@ const defaultSlides: HeroData[] = [
         button_primary_url: "/nosotros",
         button_secondary_text: "Tienda Online",
         button_secondary_url: "/tienda",
-        images: ["/images/general/vineyard-hero.webp"]
+        images: ["/images/general/hero-nosotros.jpeg"]
     }
 ];
 

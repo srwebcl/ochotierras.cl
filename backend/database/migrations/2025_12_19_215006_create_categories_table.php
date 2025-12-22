@@ -10,14 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->integer('sort_order')->default(0);
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
-        });
+        // NO-OP: This file exists to overwrite a duplicate migration file on the server.
+        // The actual table creation is handled by 2025_12_19_214000_create_categories_table.php
+        // which runs before this timestamp.
     }
 
     /**
@@ -25,6 +20,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        //
     }
 };

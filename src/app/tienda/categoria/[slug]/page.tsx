@@ -83,7 +83,7 @@ export default function CategoryPage() {
             {/* Hero for Category */}
             <section className="relative h-[40vh] flex items-center justify-center overflow-hidden bg-brand-dark">
                 <div className="absolute inset-0 z-0 opacity-40">
-                    <Image src="/images/general/vineyard-hero.webp" alt="Background" fill className="object-cover" />
+                    <Image src="/images/general/hero-nosotros.jpeg" alt="Background" fill className="object-cover" />
                 </div>
                 <div className="absolute inset-0 bg-brand-dark/70 z-10" />
 

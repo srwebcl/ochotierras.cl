@@ -11,7 +11,7 @@ export default function Contacto() {
             {/* Hero */}
             <section className="relative h-[50vh] flex items-center justify-center overflow-hidden bg-brand-dark">
                 <div className="absolute inset-0 z-0">
-                    <Image src="/images/general/vineyard-hero.webp" alt="Contacto" fill className="object-cover opacity-40" />
+                    <Image src="/images/general/hero-nosotros.jpeg" alt="Contacto" fill className="object-cover opacity-40" />
                     <div className="absolute inset-0 bg-brand-dark/50" />
                 </div>
                 <div className="container relative z-10 px-4 text-center">

@@ -45,7 +45,7 @@ export function AgeVerification() {
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md"
                 >
                     {/* Background Texture/Image (Optional) */}
-                    <div className="absolute inset-0 bg-[url('/images/general/vineyard-hero.webp')] bg-cover bg-center opacity-20 pointer-events-none" />
+                    <div className="absolute inset-0 bg-[url('/images/general/hero-nosotros.jpeg')] bg-cover bg-center opacity-20 pointer-events-none" />
 
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}

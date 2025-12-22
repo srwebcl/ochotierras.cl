@@ -63,7 +63,7 @@ export default function Nosotros() {
 
             {/* The Valley - Dark Mode */}
             <Section className="bg-brand-dark text-white py-32 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/images/general/vineyard-hero.webp')] bg-cover bg-center opacity-10 blur-sm" />
+                <div className="absolute inset-0 bg-[url('/images/general/hero-nosotros.jpeg')] bg-cover bg-center opacity-10 blur-sm" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
                     <div className="order-2 md:order-1 relative h-[500px] w-full">

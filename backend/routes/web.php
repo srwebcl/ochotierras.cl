@@ -22,7 +22,15 @@ Route::get('/deploy-setup', function () {
         $storageOutput = "Storage link failed (might already exist or permission denied): " . $e->getMessage();
     }
 
-    // 3. Clear Caches
+    // 3. Run Seeds (Automated Product Loading)
+    try {
+        \Illuminate\Support\Facades\Artisan::call('db:seed --force');
+        $seedOutput = \Illuminate\Support\Facades\Artisan::output();
+    } catch (\Exception $e) {
+        $seedOutput = "Seeding failed: " . $e->getMessage();
+    }
+
+    // 4. Clear Caches
     \Illuminate\Support\Facades\Artisan::call('config:clear');
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
     \Illuminate\Support\Facades\Artisan::call('route:clear');
@@ -34,6 +42,8 @@ Route::get('/deploy-setup', function () {
             <strong>Migration Output:</strong><br>$migrationOutput
             <br>
             <strong>Storage Link Output:</strong><br>$storageOutput
+            <br>
+            <strong>Seeding Output:</strong><br>$seedOutput
             <br>
             <strong>Cache Output:</strong><br>$cacheOutput
             </pre>";
