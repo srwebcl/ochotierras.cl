@@ -216,12 +216,12 @@ export function WineCarousel({ wines }: WineCarouselProps) {
 
                 <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center h-auto md:h-[700px] mt-12 md:mt-0">
 
-                    {/* Previous Button (Desktop) */}
+                    {/* Previous Button (Universal) */}
                     <button
                         onClick={() => paginate(-1)}
-                        className="absolute left-4 md:left-12 z-30 p-4 rounded-full border border-transparent hover:bg-white hover:shadow-xl transition-all duration-300 group hidden md:block"
+                        className="absolute left-0 md:left-12 top-1/2 -translate-y-1/2 z-30 p-2 md:p-4 rounded-full border border-transparent hover:bg-white hover:shadow-xl transition-all duration-300 group"
                     >
-                        <ChevronLeft className="w-8 h-8 text-gray-300 group-hover:text-brand-dark transition-colors" />
+                        <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 text-gray-400 md:text-gray-300 group-hover:text-brand-dark transition-colors" />
                     </button>
 
                     {/* Carousel Content */}
@@ -367,19 +367,13 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                         </AnimatePresence>
                     </div>
 
-                    {/* Next Button (Desktop) */}
+                    {/* Next Button (Universal) */}
                     <button
                         onClick={() => paginate(1)}
-                        className="absolute right-4 md:right-12 z-30 p-4 rounded-full border border-transparent hover:bg-white hover:shadow-xl transition-all duration-300 group hidden md:block"
+                        className="absolute right-0 md:right-12 z-30 p-2 md:p-4 rounded-full border border-transparent hover:bg-white hover:shadow-xl transition-all duration-300 group"
                     >
-                        <ChevronRight className="w-8 h-8 text-gray-300 group-hover:text-brand-dark transition-colors" />
+                        <ChevronRight className="w-6 h-6 md:w-8 md:h-8 text-gray-400 md:text-gray-300 group-hover:text-brand-dark transition-colors" />
                     </button>
-
-                    {/* Mobile Controls */}
-                    <div className="flex gap-12 md:hidden mt-4 z-30 pb-4">
-                        <button onClick={() => paginate(-1)} className="p-3 bg-white border border-gray-100 rounded-full shadow-md active:scale-95 transition-transform"><ChevronLeft className="w-5 h-5 text-brand-dark" /></button>
-                        <button onClick={() => paginate(1)} className="p-3 bg-white border border-gray-100 rounded-full shadow-md active:scale-95 transition-transform"><ChevronRight className="w-5 h-5 text-brand-dark" /></button>
-                    </div>
 
                 </div>
             </div>

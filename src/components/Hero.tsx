@@ -212,8 +212,19 @@ export function Hero({ data }: HeroProps) {
     }
 
     return (
-        <section
+        <motion.section
             className="relative h-screen min-h-[600px] w-full overflow-hidden group bg-black"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+            onDragEnd={(e, { offset, velocity }) => {
+                const swipe = offset.x; // + is right (prev), - is left (next)
+                if (swipe < -50) {
+                    nextSlide();
+                } else if (swipe > 50) {
+                    prevSlide();
+                }
+            }}
         >
             <AnimatePresence mode="popLayout">
                 <motion.div
@@ -250,14 +261,14 @@ export function Hero({ data }: HeroProps) {
             <FilmGrain />
 
             {/* Content */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 max-w-7xl mx-auto">
+            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 max-w-7xl mx-auto pointer-events-none">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={`content-${currentSlide}`}
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="flex flex-col items-center"
+                        className="flex flex-col items-center pointer-events-auto"
                     >
                         {/* Subtitle with Growing Lines */}
                         <div className="flex items-center gap-4 mb-6 overflow-hidden">
@@ -284,7 +295,7 @@ export function Hero({ data }: HeroProps) {
                         </div>
 
                         {/* Staggered Title Animation */}
-                        <h1 className="font-serif text-5xl md:text-8xl lg:text-9xl font-bold text-white mb-10 tracking-tighter leading-[0.9] overflow-hidden">
+                        <h1 className="font-serif text-4xl md:text-8xl lg:text-9xl font-bold text-white mb-10 tracking-tighter leading-[0.9] overflow-hidden">
                             {titleParts.length > 1 ? (
                                 <div className="flex flex-col items-center">
                                     <motion.span
@@ -362,18 +373,18 @@ export function Hero({ data }: HeroProps) {
             {/* Navigation & Progress */}
             {slides.length > 1 && (
                 <>
-                    {/* Left Arrow */}
+                    {/* Left Arrow - Hidden on Mobile */}
                     <button
                         onClick={prevSlide}
-                        className="absolute left-8 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white transition-all p-4 rounded-full border border-white/0 hover:border-white/20 hover:bg-white/10 backdrop-blur-sm group"
+                        className="absolute left-8 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white transition-all p-4 rounded-full border border-white/0 hover:border-white/20 hover:bg-white/10 backdrop-blur-sm group hidden md:block"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-10 h-10 transition-transform group-hover:-translate-x-1">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                         </svg>
                     </button>
 
-                    {/* Right Arrow with Progress Ring (Optional approach) or separate */}
-                    <div className="absolute right-8 top-1/2 -translate-y-1/2 z-20">
+                    {/* Right Arrow - Hidden on Mobile */}
+                    <div className="absolute right-8 top-1/2 -translate-y-1/2 z-20 hidden md:block">
                         {/* Circle Progress Indicator Wrapper */}
                         <div className="relative flex items-center justify-center">
                             {/* SVG Progress Ring */}
@@ -425,6 +436,6 @@ export function Hero({ data }: HeroProps) {
                     />
                 </div>
             </motion.div>
-        </section>
+        </motion.section>
     )
 }
