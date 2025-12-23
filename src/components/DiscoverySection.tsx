@@ -41,7 +41,7 @@ const DISCOVERY_ITEMS = [
         id: 4,
         title: "Contacto",
         subtitle: "Hablemos de Negocios",
-        image: "/images/general/ochotierras-lizana de tamaño grande.jpeg",
+        image: "/images/general/ochotierras-lizana.jpg",
         link: "/contacto",
     },
     {

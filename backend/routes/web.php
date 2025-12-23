@@ -22,12 +22,17 @@ Route::get('/deploy-setup', function () {
         $storageOutput = "Storage link failed (might already exist or permission denied): " . $e->getMessage();
     }
 
-    // 3. Run Seeds (Automated Product Loading)
+    // 3. Run Seeds & Ensure Admin User
     try {
         \Illuminate\Support\Facades\Artisan::call('db:seed --force');
-        $seedOutput = \Illuminate\Support\Facades\Artisan::output();
+        // Force reset admin user
+        $user = \App\Models\User::updateOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Admin User', 'password' => \Illuminate\Support\Facades\Hash::make('password')]
+        );
+        $seedOutput = \Illuminate\Support\Facades\Artisan::output() . "\nAdmin user 'test@example.com' password reset to 'password'.";
     } catch (\Exception $e) {
-        $seedOutput = "Seeding failed: " . $e->getMessage();
+        $seedOutput = "Seeding/User Reset failed: " . $e->getMessage();
     }
 
     // 4. Clear Caches
@@ -37,11 +42,19 @@ Route::get('/deploy-setup', function () {
     \Illuminate\Support\Facades\Artisan::call('view:clear');
     $cacheOutput = "Caches cleared.";
 
+    // DEBUG: Show resolved URLs
+    $debugAppUrl = config('app.url');
+    $debugStorageUrl = config('filesystems.disks.public.url');
+    $debugRoot = \Illuminate\Support\Facades\URL::to('/');
+
     return "<h1>Deployment Setup Completed</h1>
             <pre>
-            <strong>Migration Output:</strong><br>$migrationOutput
+            <strong>Debug Environment:</strong>
+            APP_URL (Config): $debugAppUrl
+            Storage URL: $debugStorageUrl
+            Actual Root URL: $debugRoot
             <br>
-            <strong>Storage Link Output:</strong><br>$storageOutput
+            <strong>Migration Output:</strong><br>$migrationOutput
             <br>
             <strong>Seeding Output:</strong><br>$seedOutput
             <br>
