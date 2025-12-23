@@ -199,10 +199,10 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                 </AnimatePresence>
             </div>
 
-            <div className="container mx-auto px-4 relative z-10 h-full flex flex-col items-center justify-center">
+            <div className="container mx-auto px-4 relative z-10 h-full flex flex-col items-center justify-center py-4 md:py-0">
 
-                {/* Navigation & Status */}
-                <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-6 md:px-12 py-8 z-20">
+                {/* Navigation & Status - Relative on Mobile for stacking, Absolute on Desktop */}
+                <div className="relative md:absolute top-0 left-0 right-0 flex justify-between items-center px-2 md:px-12 py-4 md:py-8 z-20 w-full mb-4 md:mb-0">
                     <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-gray-400">Colección Exclusiva</span>
                     <div className="flex gap-2">
                         {data.map((_, idx) => (
@@ -214,7 +214,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                     </div>
                 </div>
 
-                <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center h-auto md:h-[700px] mt-12 md:mt-0">
+                <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center h-auto md:h-[700px] mt-0 md:mt-0">
 
                     {/* Previous Button (Universal) */}
                     <button
@@ -225,7 +225,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                     </button>
 
                     {/* Carousel Content */}
-                    <div className="flex items-center justify-center w-full h-full relative perspective-1000 min-h-[500px] md:min-h-full">
+                    <div className="flex items-center justify-center w-full h-full relative perspective-1000 min-h-[550px] md:min-h-full">
                         <AnimatePresence initial={false} custom={direction} mode="popLayout">
                             <motion.div
                                 key={activeIndex}
@@ -234,7 +234,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                 initial="enter"
                                 animate="center"
                                 exit="exit"
-                                className="absolute flex flex-col md:flex-row items-center gap-6 md:gap-20 w-full max-w-5xl px-4"
+                                className="absolute flex flex-col md:flex-row items-center gap-4 md:gap-20 w-full max-w-5xl px-0 md:px-4"
                             >
 
                                 {/* The Bottle (Hero) */}

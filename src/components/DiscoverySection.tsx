@@ -104,8 +104,8 @@ export function DiscoverySection() {
                     </h2>
                 </div>
 
-                {/* Manual Navigation Controls */}
-                <div className="flex items-center gap-4">
+                {/* Manual Navigation Controls (Desktop Only) */}
+                <div className="hidden md:flex items-center gap-4">
                     <button
                         onClick={() => handleManualNav('left')}
                         className="w-12 h-12 rounded-full border border-gray-300 text-brand-dark flex items-center justify-center hover:bg-brand-dark hover:text-white hover:border-brand-dark transition-all duration-300 active:scale-95"
@@ -123,8 +123,47 @@ export function DiscoverySection() {
                 </div>
             </div>
 
-            {/* Infinite Marquee Container */}
-            <div className="relative w-full overflow-hidden group cursor-grab active:cursor-grabbing">
+            {/* Mobile Snap Carousel */}
+            <div className="md:hidden w-full overflow-x-auto snap-x snap-mandatory flex gap-4 px-6 pb-12 scrollbar-hide">
+                {DISCOVERY_ITEMS.map((item) => (
+                    <Link
+                        key={item.id}
+                        href={item.link}
+                        className="relative flex-shrink-0 w-[85vw] aspect-[3/4] snap-center overflow-hidden rounded-sm group"
+                    >
+                        {/* Image */}
+                        <div className="absolute inset-0 bg-gray-200">
+                            <Image
+                                src={item.image}
+                                alt={item.title}
+                                fill
+                                className="object-cover"
+                                sizes="85vw"
+                            />
+                            {/* Gradients */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
+                        </div>
+
+                        {/* Content */}
+                        <div className="absolute bottom-0 left-0 w-full p-6 flex flex-col justify-end h-full">
+                            <span className="text-brand-gold text-xs font-sans uppercase tracking-[0.2em] mb-2">
+                                {item.subtitle}
+                            </span>
+                            <div className="flex items-center justify-between w-full">
+                                <h3 className="text-3xl font-serif font-bold text-white leading-none">
+                                    {item.title}
+                                </h3>
+                                <div className="w-10 h-10 rounded-full bg-white text-brand-dark flex items-center justify-center shadow-lg">
+                                    <ArrowUpRight size={20} />
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+
+            {/* Desktop Infinite Marquee Container */}
+            <div className="hidden md:block relative w-full overflow-hidden group cursor-grab active:cursor-grabbing">
                 {/* Gradient Masks */}
                 <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-[#F9F9F9] to-transparent z-20 pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-[#F9F9F9] to-transparent z-20 pointer-events-none" />

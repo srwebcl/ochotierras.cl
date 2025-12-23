@@ -271,33 +271,33 @@ export function Hero({ data }: HeroProps) {
                         className="flex flex-col items-center pointer-events-auto"
                     >
                         {/* Subtitle with Growing Lines */}
-                        <div className="flex items-center gap-4 mb-6 overflow-hidden">
+                        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6 overflow-hidden">
                             <motion.div
                                 initial={{ width: 0, opacity: 0 }}
-                                animate={{ width: 48, opacity: 1 }}
+                                animate={{ width: 32, opacity: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
-                                className="h-[1px] bg-brand-gold/80"
+                                className="h-[1px] bg-brand-gold/60 md:w-12"
                             />
                             <motion.h2
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.3 }}
-                                className="text-brand-gold font-sans uppercase tracking-[0.3em] text-[10px] md:text-sm font-medium whitespace-nowrap"
+                                className="text-brand-gold font-sans uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-sm font-medium whitespace-nowrap"
                             >
                                 {currentData.subtitle}
                             </motion.h2>
                             <motion.div
                                 initial={{ width: 0, opacity: 0 }}
-                                animate={{ width: 48, opacity: 1 }}
+                                animate={{ width: 32, opacity: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
-                                className="h-[1px] bg-brand-gold/80"
+                                className="h-[1px] bg-brand-gold/60 md:w-12"
                             />
                         </div>
 
                         {/* Staggered Title Animation */}
-                        <h1 className="font-serif text-4xl md:text-8xl lg:text-9xl font-bold text-white mb-10 tracking-tighter leading-[0.9] overflow-hidden">
+                        <h1 className="font-serif text-4xl md:text-8xl lg:text-9xl font-bold text-white mb-8 md:mb-10 tracking-tight leading-none overflow-hidden drop-shadow-2xl">
                             {titleParts.length > 1 ? (
-                                <div className="flex flex-col items-center">
+                                <div className="flex flex-col items-center gap-2 md:gap-0">
                                     <motion.span
                                         initial={{ y: "100%" }}
                                         animate={{ y: 0 }}
@@ -310,7 +310,7 @@ export function Hero({ data }: HeroProps) {
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ duration: 1, delay: 0.4 }}
-                                        className="text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#b38728] bg-200% animate-shine"
+                                        className="text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#b38728] bg-200% animate-shine pb-2"
                                         style={{ textShadow: "0 4px 30px rgba(212, 175, 55, 0.3)" }}
                                     >
                                         OCHOTIERRAS
@@ -341,12 +341,12 @@ export function Hero({ data }: HeroProps) {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-                            className="flex flex-col sm:flex-row gap-6 pt-10 w-full justify-center px-4"
+                            className="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-6 md:pt-10 w-full items-center justify-center px-6"
                         >
                             {/* Primary: Liquid Gold */}
                             <Button
                                 size="lg"
-                                className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-black tracking-[0.25em] uppercase text-black bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] bg-[length:200%_auto] animate-shimmer hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.8)] border border-transparent hover:scale-[1.02] transition-all duration-300 rounded-sm"
+                                className="relative w-full sm:w-auto min-w-[200px] md:min-w-[240px] h-12 md:h-16 text-xs md:text-sm font-black tracking-[0.2em] uppercase text-black bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] bg-[length:200%_auto] animate-shimmer hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.8)] border border-transparent hover:scale-[1.02] transition-all duration-300 rounded-sm"
                                 asChild
                             >
                                 <Link href={currentData.button_primary_url || "/nosotros"}>
