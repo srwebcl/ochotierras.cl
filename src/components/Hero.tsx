@@ -295,6 +295,8 @@ export function Hero({ data }: HeroProps) {
                         </div>
 
                         {/* Staggered Title Animation */}
+                        {/* Staggered Title Animation */}
+                        {/* Staggered Title Animation */}
                         <h1 className="font-serif text-4xl md:text-8xl lg:text-9xl font-bold text-white mb-8 md:mb-10 tracking-tight leading-none overflow-hidden drop-shadow-2xl">
                             {titleParts.length > 1 ? (
                                 <div className="flex flex-col items-center gap-2 md:gap-0">

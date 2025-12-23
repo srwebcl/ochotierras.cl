@@ -313,11 +313,13 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                         <motion.div
                                             custom={3}
                                             variants={textStaggerVariants}
-                                            className="text-2xl md:text-3xl font-bold text-brand-dark"
+                                            className="flex flex-col items-center md:items-start"
                                         >
-                                            ${activeWine.price.toLocaleString("es-CL")}
-                                            <span className="text-sm md:text-base font-medium text-gray-400 ml-2">
-                                                (Caja 6 Bot.)
+                                            <span className="text-3xl md:text-4xl font-bold text-brand-dark leading-none">
+                                                ${activeWine.price.toLocaleString("es-CL")}
+                                            </span>
+                                            <span className="text-xs text-gray-400 italic mt-1 font-serif">
+                                                caja de 6 botellas
                                             </span>
                                         </motion.div>
 
