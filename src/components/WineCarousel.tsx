@@ -199,12 +199,12 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                 </AnimatePresence>
             </div>
 
-            <div className="container mx-auto px-4 relative z-10 h-full flex flex-col items-center justify-center py-4 md:py-0">
+            <div className="container mx-auto px-4 relative z-10 h-full flex flex-col items-center justify-center py-8 md:py-0">
 
                 {/* Navigation & Status - Relative on Mobile for stacking, Absolute on Desktop */}
-                <div className="relative md:absolute top-0 left-0 right-0 flex justify-between items-center px-2 md:px-12 py-4 md:py-8 z-20 w-full mb-4 md:mb-0">
-                    <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-gray-400">Colección Exclusiva</span>
-                    <div className="flex gap-2">
+                <div className="relative md:absolute top-0 left-0 right-0 flex justify-center md:justify-between items-center px-2 md:px-12 py-4 md:py-8 z-20 w-full mb-6 md:mb-0">
+                    <span className="text-sm md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-gray-400 text-center">Colección Exclusiva</span>
+                    <div className="hidden md:flex gap-2">
                         {data.map((_, idx) => (
                             <div
                                 key={idx}
@@ -214,7 +214,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                     </div>
                 </div>
 
-                <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center h-auto md:h-[700px] mt-0 md:mt-0">
+                <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center h-auto md:h-[700px] mt-0 md:mt-0 pb-12 md:pb-0">
 
                     {/* Previous Button (Universal) */}
                     <button
