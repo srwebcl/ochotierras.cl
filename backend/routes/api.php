@@ -66,14 +66,7 @@ Route::get('/hero-section', function () {
     $heroes = HeroSection::where('is_active', true)->orderBy('sort_order', 'asc')->get();
 
     if ($heroes->isEmpty()) {
-        return null; // Handle empty state in frontend if needed
-        // Or return empty array? Frontend expects null or array of HeroData.
-        // If we return [], frontend logic needs to handle it.
-        // Let's stick to null if no heroes, or empty array.
-        // Original logic returned null if first() failed.
-        // Let's return empty array if empty, compatible with map.
-        // Actually, frontend expects `HeroSection | null` currently. We are changing it to `HeroSection[]`.
-        // So returning [] is safer.
+        return null;
     }
 
     return $heroes->map(function ($hero) {
@@ -106,7 +99,9 @@ Route::get('/collection-wines', function () {
             return [
                 'id' => $product->id,
                 'name' => $product->name,
+                'nameEn' => $product->name_en,
                 'subtitle' => $product->subtitle,
+                'subtitleEn' => $product->subtitle_en,
                 'type' => $product->type,
                 'price' => (int) $product->price,
                 'stock' => (int) $product->stock,
@@ -116,10 +111,10 @@ Route::get('/collection-wines', function () {
                     : ($product->type === 'Blanco'
                         ? "radial-gradient(circle at center, #ffd700 0%, transparent 70%)"
                         : "radial-gradient(circle at center, #2a2a2a 0%, transparent 70%)"),
-                'accentColor' => 'text-brand-gold', // Using class for now or could send color hex to be used in inline style
+                'accentColor' => 'text-brand-gold',
                 'accentColorHex' => $product->accent_color ?? '#D4AF37',
                 'description' => $product->featured_description ?? strip_tags($product->description),
-                'descriptionEn' => $product->short_description_en ?? $product->description_en, // Fallback logic
+                'descriptionEn' => $product->short_description_en ?? $product->description_en,
                 'slug' => $product->slug,
             ];
         });
@@ -133,7 +128,9 @@ Route::get('/products', function () {
             return [
                 'id' => $product->id,
                 'name' => $product->name,
+                'nameEn' => $product->name_en,
                 'subtitle' => $product->subtitle,
+                'subtitleEn' => $product->subtitle_en,
                 'type' => $product->type,
                 'category_name' => $product->category ? $product->category->name : null,
                 'category_slug' => $product->category ? $product->category->slug : null,
@@ -186,12 +183,6 @@ Route::post('/shipping/calculate', function (Request $request) {
     ]);
 
     $region = $request->input('region');
-
-    // Find a zone that includes this region
-    // Since we store regions as a JSON array, we can filter manually or use whereJsonContains if database supports it.
-    // SQLite/MySQL support whereJsonContains, but sometimes it's tricky with simple arrays.
-    // Let's grab all active zones and filter in PHP for reliability with the flexible JSON structure.
-
     $zones = \App\Models\ShippingZone::where('is_active', true)->get();
 
     $matchedZone = $zones->first(function ($zone) use ($region) {

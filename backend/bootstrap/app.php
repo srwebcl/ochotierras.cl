@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Handle CORS manually or via config/cors.php if preferred, 
         // but often in API-first setup we might need to be expansive:
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
