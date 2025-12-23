@@ -180,7 +180,7 @@ export default function ProductPage() {
 
                         <div className="flex flex-col md:flex-row gap-8 items-start md:items-center border-t border-white/10 pt-8 mb-8">
                             <div>
-                                <span className="block text-xs uppercase text-gray-400 mb-1">Precio Botella</span>
+                                <span className="block text-xs uppercase text-gray-400 mb-1">Precio Caja (6 Bot.)</span>
                                 <span className="text-4xl font-bold text-white">${product.price.toLocaleString('es-CL')}</span>
                             </div>
 

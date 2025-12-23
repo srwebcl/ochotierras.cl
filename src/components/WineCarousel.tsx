@@ -214,7 +214,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                     </div>
                 </div>
 
-                <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center h-auto md:h-[700px] mt-0 md:mt-0 pb-12 md:pb-0">
+                <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center h-auto md:h-[700px] mt-12 md:mt-0 pb-12 md:pb-0">
 
                     {/* Previous Button (Universal) */}
                     <button
@@ -316,6 +316,9 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                             className="text-2xl md:text-3xl font-bold text-brand-dark"
                                         >
                                             ${activeWine.price.toLocaleString("es-CL")}
+                                            <span className="text-sm md:text-base font-medium text-gray-400 ml-2">
+                                                (Caja 6 Bot.)
+                                            </span>
                                         </motion.div>
 
                                         <motion.div

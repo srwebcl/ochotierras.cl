@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { motion, useScroll, useMotionValueEvent } from "framer-motion"
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion"
 import { Menu, ShoppingBag, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -119,36 +119,79 @@ export function Navbar() {
             </div>
 
             {/* Mobile Menu Overlay */}
-            {isMobileMenuOpen && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="md:hidden bg-brand-dark border-t border-white/10"
-                >
-                    <nav className="container mx-auto px-4 py-8 flex flex-col gap-6">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className="text-lg font-serif text-white hover:text-brand-gold transition-colors"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                {item.name}
-                            </Link>
-                        ))}
-                        <Button
-                            className="w-full mt-4 bg-brand-gold text-brand-dark hover:bg-white"
-                            onClick={() => {
-                                setIsMobileMenuOpen(false)
-                                toggleCart()
-                            }}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: "-100%" }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: "-100%" }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                        className="fixed inset-0 z-[100] bg-brand-dark/98 backdrop-blur-xl flex flex-col justify-center items-center h-[100dvh]"
+                    >
+                        {/* Decorative Background */}
+                        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+                            <Image
+                                src="/images/logos/logo-white.webp"
+                                alt="Background"
+                                fill
+                                className="object-contain scale-150 rotate-12 blur-sm opacity-10"
+                            />
+                        </div>
+
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="absolute top-6 right-6 p-2 text-white/50 hover:text-brand-gold transition-colors z-50"
                         >
-                            Ver Carrito ({cartCount})
-                        </Button>
-                    </nav>
-                </motion.div>
-            )}
+                            <X className="w-10 h-10" />
+                        </button>
+
+                        <nav className="relative z-10 flex flex-col items-center gap-8 md:gap-6 w-full px-6">
+                            {navItems.map((item, i) => (
+                                <motion.div
+                                    key={item.href}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
+                                >
+                                    <Link
+                                        href={item.href}
+                                        className={cn(
+                                            "text-3xl font-serif font-bold text-white hover:text-brand-gold transition-all duration-300 relative group",
+                                            pathname === item.href && "text-brand-gold"
+                                        )}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        {item.name}
+                                        <span className={cn(
+                                            "absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-brand-gold transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100",
+                                            pathname === item.href && "w-full opacity-100"
+                                        )} />
+                                    </Link>
+                                </motion.div>
+                            ))}
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.8, duration: 0.5 }}
+                                className="mt-8"
+                            >
+                                <Button
+                                    className="bg-brand-gold text-brand-dark hover:bg-white px-8 py-6 text-lg rounded-full shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)]"
+                                    onClick={() => {
+                                        setIsMobileMenuOpen(false)
+                                        toggleCart()
+                                    }}
+                                >
+                                    <ShoppingBag className="mr-3 h-5 w-5" />
+                                    Ver Carrito ({cartCount})
+                                </Button>
+                            </motion.div>
+                        </nav>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.header>
     )
 }

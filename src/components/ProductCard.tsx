@@ -37,8 +37,9 @@ export function ProductCard({ product }: ProductCardProps) {
                     </h3>
                 </Link>
                 <div className="flex items-center justify-between mt-4">
-                    <span className="text-xl font-bold text-white">
+                    <span className="text-xl font-bold text-white flex flex-col">
                         ${product.price.toLocaleString("es-CL")}
+                        <span className="text-[10px] font-normal text-gray-400">Caja 6 Bot.</span>
                     </span>
                 </div>
             </div>

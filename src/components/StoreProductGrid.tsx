@@ -124,6 +124,7 @@ export function StoreProductGrid({ filterCategory }: StoreProductGridProps) {
                         <div className="mt-auto pt-4 border-t border-gray-100 w-full flex flex-col gap-4">
                             <span className="text-2xl font-bold text-brand-dark">
                                 ${product.price ? product.price.toLocaleString('es-CL') : '0'}
+                                <span className="block text-xs font-normal text-gray-400 mt-0.5">Caja 6 Botellas</span>
                             </span>
 
                             <AddToCartButton product={product} />
