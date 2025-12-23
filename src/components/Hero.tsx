@@ -213,7 +213,7 @@ export function Hero({ data }: HeroProps) {
 
     return (
         <motion.section
-            className="relative h-screen min-h-[600px] w-full overflow-hidden group bg-black"
+            className="relative h-screen min-h-[100dvh] w-full overflow-hidden group bg-black"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={1}
@@ -271,18 +271,18 @@ export function Hero({ data }: HeroProps) {
                         className="flex flex-col items-center pointer-events-auto"
                     >
                         {/* Subtitle with Growing Lines */}
-                        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6 overflow-hidden">
+                        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6 max-w-[90vw]">
                             <motion.div
                                 initial={{ width: 0, opacity: 0 }}
                                 animate={{ width: 32, opacity: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
-                                className="h-[1px] bg-brand-gold/60 md:w-12"
+                                className="h-[1px] bg-brand-gold/60 w-8 md:w-12 flex-shrink-0"
                             />
                             <motion.h2
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.3 }}
-                                className="text-brand-gold font-sans uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-sm font-medium whitespace-nowrap"
+                                className="text-brand-gold font-sans uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-sm font-medium text-center whitespace-normal mx-2 break-words"
                             >
                                 {currentData.subtitle}
                             </motion.h2>
@@ -290,7 +290,7 @@ export function Hero({ data }: HeroProps) {
                                 initial={{ width: 0, opacity: 0 }}
                                 animate={{ width: 32, opacity: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
-                                className="h-[1px] bg-brand-gold/60 md:w-12"
+                                className="h-[1px] bg-brand-gold/60 w-8 md:w-12 flex-shrink-0"
                             />
                         </div>
 
@@ -358,7 +358,7 @@ export function Hero({ data }: HeroProps) {
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="relative min-w-[200px] md:min-w-[240px] h-14 md:h-16 text-xs md:text-sm font-bold tracking-[0.25em] uppercase text-white bg-transparent border border-white/60 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] backdrop-blur-[2px] hover:scale-[1.02] transition-all duration-300 rounded-sm"
+                                className="relative w-full sm:w-auto min-w-[200px] md:min-w-[240px] h-12 md:h-16 text-xs md:text-sm font-bold tracking-[0.25em] uppercase text-white bg-transparent border border-white/60 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] backdrop-blur-[2px] hover:scale-[1.02] transition-all duration-300 rounded-sm"
                                 asChild
                             >
                                 <Link href={currentData.button_secondary_url || "/tienda"}>
@@ -373,22 +373,22 @@ export function Hero({ data }: HeroProps) {
             {/* Navigation & Progress */}
             {slides.length > 1 && (
                 <>
-                    {/* Left Arrow - Hidden on Mobile */}
+                    {/* Left Arrow - Responsive */}
                     <button
                         onClick={prevSlide}
-                        className="absolute left-8 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white transition-all p-4 rounded-full border border-white/0 hover:border-white/20 hover:bg-white/10 backdrop-blur-sm group hidden md:block"
+                        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white transition-all p-2 md:p-4 rounded-full border border-white/0 hover:border-white/20 hover:bg-white/10 backdrop-blur-sm group"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-10 h-10 transition-transform group-hover:-translate-x-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10 transition-transform group-hover:-translate-x-1">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                         </svg>
                     </button>
 
-                    {/* Right Arrow - Hidden on Mobile */}
-                    <div className="absolute right-8 top-1/2 -translate-y-1/2 z-20 hidden md:block">
+                    {/* Right Arrow - Responsive */}
+                    <div className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-20">
                         {/* Circle Progress Indicator Wrapper */}
                         <div className="relative flex items-center justify-center">
-                            {/* SVG Progress Ring */}
-                            <svg className="absolute w-20 h-20 -rotate-90 pointer-events-none">
+                            {/* SVG Progress Ring (Desktop only for cleaner mobile) */}
+                            <svg className="absolute w-20 h-20 -rotate-90 pointer-events-none hidden md:block">
                                 <circle
                                     cx="40" cy="40" r="38"
                                     fill="none"
@@ -409,9 +409,9 @@ export function Hero({ data }: HeroProps) {
 
                             <button
                                 onClick={nextSlide}
-                                className="text-white/40 hover:text-white transition-all p-4 rounded-full hover:bg-white/10 backdrop-blur-sm group"
+                                className="text-white/40 hover:text-white transition-all p-2 md:p-4 rounded-full hover:bg-white/10 backdrop-blur-sm group"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-10 h-10 transition-transform group-hover:translate-x-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10 transition-transform group-hover:translate-x-1">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                 </svg>
                             </button>
