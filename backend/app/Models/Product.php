@@ -44,6 +44,12 @@ class Product extends Model
         'strain',
         'units_per_box',
         'is_pack',
+        'name_en',
+        'description_en',
+        'short_description_en',
+        'tasting_notes_en',
+        'pairing_en',
+        'service_temp_en',
         'technical_details',
         'gallery',
     ];

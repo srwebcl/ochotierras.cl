@@ -7,7 +7,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect } from "react"
 
+import { useTranslations } from "next-intl"
+
 export function CartSidebar() {
+    const t = useTranslations('Cart');
     const { items, isOpen, toggleCart, removeFromCart, updateQuantity, cartTotal } = useCart()
 
     // Prevent body scroll when cart is open
@@ -47,7 +50,7 @@ export function CartSidebar() {
                         <div className="p-6 border-b border-white/10 flex items-center justify-between bg-[#0A0A0A]">
                             <h2 className="text-xl font-serif font-bold text-white flex items-center gap-2">
                                 <ShoppingBag className="text-brand-gold" size={24} />
-                                Tu Compra
+                                {t('title')}
                             </h2>
                             <button
                                 onClick={toggleCart}
@@ -64,12 +67,12 @@ export function CartSidebar() {
                                     <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-gray-600">
                                         <ShoppingBag size={32} />
                                     </div>
-                                    <p className="text-gray-400">Tu carrito está vacío.</p>
+                                    <p className="text-gray-400">{t('empty')}</p>
                                     <button
                                         onClick={toggleCart}
                                         className="text-brand-gold hover:text-white transition-colors text-sm font-bold uppercase tracking-widest border-b border-brand-gold/20 hover:border-brand-gold pb-1"
                                     >
-                                        Seguir Explorando
+                                        {t('continue_shopping')}
                                     </button>
                                 </div>
                             ) : (
@@ -124,11 +127,11 @@ export function CartSidebar() {
                         {items.length > 0 && (
                             <div className="p-6 bg-[#0A0A0A] border-t border-white/10 space-y-4">
                                 <div className="flex items-center justify-between text-gray-400 text-sm">
-                                    <span>Subtotal</span>
+                                    <span>{t('subtotal')}</span>
                                     <span>${cartTotal.toLocaleString('es-CL')}</span>
                                 </div>
                                 <div className="flex items-center justify-between text-white text-xl font-bold font-serif">
-                                    <span>Total</span>
+                                    <span>{t('total')}</span>
                                     <span>${cartTotal.toLocaleString('es-CL')}</span>
                                 </div>
 
@@ -137,10 +140,10 @@ export function CartSidebar() {
                                     onClick={toggleCart}
                                     className="block w-full bg-brand-gold text-brand-dark py-4 text-center font-bold uppercase tracking-widest hover:bg-white transition-all duration-300 rounded-sm flex items-center justify-center gap-2 group"
                                 >
-                                    Ir a Pagar <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
+                                    {t('checkout')} <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
                                 </Link>
                                 <p className="text-center text-xs text-gray-600">
-                                    Envíos calculados en el siguiente paso.
+                                    {t('shipping_note')}
                                 </p>
                             </div>
                         )}

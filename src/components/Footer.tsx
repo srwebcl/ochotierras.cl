@@ -3,8 +3,13 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { Link as IntlLink } from "@/i18n/routing"
 
 export function Footer() {
+    const t = useTranslations('Footer')
+    const navT = useTranslations('Navbar') // Reuse navbar keys for links if needed or generic
+
     return (
         <footer className="bg-[#050505] text-white pt-20 pb-10 border-t border-white/10">
             <div className="container mx-auto px-6">
@@ -14,7 +19,7 @@ export function Footer() {
 
                     {/* Branding Section (Moved from top) */}
                     <div>
-                        <Link href="/" className="block mb-6 relative w-32 h-12">
+                        <IntlLink href="/" className="block mb-6 relative w-32 h-12">
                             <Image
                                 src="/images/logos/logo-white.webp"
                                 alt="OchoTierras Logo"
@@ -22,9 +27,9 @@ export function Footer() {
                                 className="object-contain object-left"
                                 sizes="200px"
                             />
-                        </Link>
+                        </IntlLink>
                         <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                            Vinos nacidos de la gravedad y el silencio del Valle del Limarí. Una expresión pura de nuestra tierra.
+                            {t('quote')}
                         </p>
                         <div className="flex gap-4">
                             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-gold hover:text-black transition-all duration-300">
@@ -38,7 +43,7 @@ export function Footer() {
 
                     {/* Contacto */}
                     <div>
-                        <h4 className="text-brand-gold uppercase tracking-widest text-xs font-bold mb-8">Contacto</h4>
+                        <h4 className="text-brand-gold uppercase tracking-widest text-xs font-bold mb-8">{t('contact')}</h4>
                         <ul className="space-y-6 text-gray-300 font-light">
                             <li className="flex items-start gap-4">
                                 <MapPin className="w-5 h-5 text-gray-500 mt-1" />
@@ -64,29 +69,29 @@ export function Footer() {
 
                     {/* Navegación */}
                     <div>
-                        <h4 className="text-brand-gold uppercase tracking-widest text-xs font-bold mb-8">Explorar</h4>
+                        <h4 className="text-brand-gold uppercase tracking-widest text-xs font-bold mb-8">{t('explore')}</h4>
                         <ul className="space-y-4 text-gray-400">
-                            <li><Link href="/nosotros" className="hover:text-white transition-colors flex items-center gap-2 group">Nosotros <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>
-                            <li><Link href="/nuestros-vinos" className="hover:text-white transition-colors flex items-center gap-2 group">Vinos <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>
-                            <li><Link href="/bodega-y-vinedos" className="hover:text-white transition-colors flex items-center gap-2 group">Bodega <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>
-                            <li><Link href="/turismo" className="hover:text-white transition-colors flex items-center gap-2 group">Turismo <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>
-                            <li><Link href="/tienda" className="hover:text-white transition-colors flex items-center gap-2 group">Tienda <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>
+                            <li><IntlLink href="/nosotros" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('about')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
+                            <li><IntlLink href="/nuestros-vinos" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('wines')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
+                            <li><IntlLink href="/bodega-y-vinedos" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('winery')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
+                            <li><IntlLink href="/turismo" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('tourism')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
+                            <li><IntlLink href="/tienda" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('shop')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
                         </ul>
                     </div>
 
                     {/* Ventas */}
                     <div>
-                        <h4 className="text-brand-gold uppercase tracking-widest text-xs font-bold mb-8">Ventas y Exportación</h4>
+                        <h4 className="text-brand-gold uppercase tracking-widest text-xs font-bold mb-8">{t('sales')}</h4>
                         <ul className="space-y-4 text-gray-400">
                             <li className="border-b border-white/5 pb-4 mb-4">
-                                <span className="block text-white text-sm mb-1 font-bold">Ventas Nacionales / Tourism</span>
+                                <span className="block text-white text-sm mb-1 font-bold">{t('national_sales')}</span>
                                 <a href="https://wa.me/56995422781" className="block hover:text-brand-gold transition-colors text-sm mb-1 flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full bg-green-500" /> +56 9 9542 2781
                                 </a>
                                 <a href="mailto:contacto@ochotierras.cl" className="hover:text-brand-gold transition-colors text-sm">contacto@ochotierras.cl</a>
                             </li>
                             <li>
-                                <span className="block text-white text-sm mb-1 font-bold">China Sales / Colonia China</span>
+                                <span className="block text-white text-sm mb-1 font-bold">{t('china_sales')}</span>
                                 <a href="tel:+56966552222" className="block hover:text-brand-gold transition-colors text-sm mb-1">
                                     +56 9 6655 2222
                                 </a>
@@ -98,15 +103,15 @@ export function Footer() {
 
                 {/* Bottom Bar: Copyright & Credits */}
                 <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 font-medium">
-                    <p>© {new Date().getFullYear()} Viña OchoTierras. Todos los derechos reservados.</p>
+                    <p>© {new Date().getFullYear()} Viña OchoTierras. {t('rights_reserved')}</p>
 
                     <div className="flex items-center gap-6">
-                        <Link href="/privacidad" className="hover:text-gray-400">Privacidad</Link>
-                        <Link href="/terminos" className="hover:text-gray-400">Términos</Link>
+                        <IntlLink href="/privacidad" className="hover:text-gray-400">{t('privacy')}</IntlLink>
+                        <IntlLink href="/terminos" className="hover:text-gray-400">{t('terms')}</IntlLink>
 
                         {/* Developer Credit */}
                         <a href="https://srweb.cl" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-brand-gold transition-colors ml-4 pl-4 border-l border-gray-800">
-                            <span>Desarrollado por</span>
+                            <span>{t('developed_by')}</span>
                             <span className="font-bold text-gray-300">SRweb</span>
                         </a>
                     </div>

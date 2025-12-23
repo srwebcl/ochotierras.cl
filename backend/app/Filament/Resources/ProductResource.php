@@ -213,6 +213,37 @@ class ProductResource extends Resource
                                         Forms\Components\TextInput::make('slug')->required(),
                                     ]),
                             ]),
+                        Forms\Components\Tabs\Tab::make('Traducción (Inglés)')
+                            ->icon('heroicon-m-language')
+                            ->schema([
+                                Forms\Components\TextInput::make('name_en')
+                                    ->label('Nombre del Producto (EN)')
+                                    ->required(false),
+
+                                Forms\Components\Textarea::make('description_en')
+                                    ->label('Descripción Comercial (EN)')
+                                    ->rows(3)
+                                    ->columnSpanFull(),
+
+                                Forms\Components\Textarea::make('short_description_en')
+                                    ->label('Descripción Corta / Colección (EN)')
+                                    ->columnSpanFull(),
+
+                                Forms\Components\Section::make('Ficha Técnica (EN)')
+                                    ->schema([
+                                        Forms\Components\RichEditor::make('tasting_notes_en')
+                                            ->label('Notas de Cata (EN)')
+                                            ->columnSpanFull(),
+
+                                        Forms\Components\Textarea::make('pairing_en')
+                                            ->label('Maridaje (EN)')
+                                            ->rows(2),
+
+                                        Forms\Components\TextInput::make('service_temp_en')
+                                            ->label('Temperatura de Servicio (EN)'),
+                                    ])->columns(2),
+                            ]),
+
                         Forms\Components\Tabs\Tab::make('SEO Google')
                             ->schema([
                                 Forms\Components\TextInput::make('meta_title')

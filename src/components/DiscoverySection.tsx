@@ -14,46 +14,50 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowUpRight, ArrowLeft, ArrowRight } from "lucide-react"
-
-const DISCOVERY_ITEMS = [
-    {
-        id: 1,
-        title: "Turismo",
-        subtitle: "Experiencias Únicas",
-        image: "/images/general/turismo-ochotierras.jpeg",
-        link: "/turismo",
-    },
-    {
-        id: 2,
-        title: "Vinos",
-        subtitle: "Nuestra Colección",
-        image: "/images/general/nuestros-vinos.jpeg",
-        link: "/nuestros-vinos",
-    },
-    {
-        id: 3,
-        title: "Tienda",
-        subtitle: "Compra Online",
-        image: "/images/general/tienda-ochotierras.jpeg",
-        link: "/tienda",
-    },
-    {
-        id: 4,
-        title: "Contacto",
-        subtitle: "Hablemos de Negocios",
-        image: "/images/general/ochotierras-lizana.jpg",
-        link: "/contacto",
-    },
-    {
-        id: 5,
-        title: "Bodega",
-        subtitle: "Arquitectura & Gravedad",
-        image: "/images/general/bodega-ochotierras.jpeg",
-        link: "/bodega-y-vinedos",
-    },
-]
+import { useTranslations } from "next-intl"
 
 export function DiscoverySection() {
+    const t = useTranslations('DiscoverySection');
+
+    // Moved inside to use translations
+    const DISCOVERY_ITEMS = [
+        {
+            id: 1,
+            title: t('items.tourism'),
+            subtitle: t('items.tourism_subtitle'),
+            image: "/images/general/turismo-ochotierras.jpeg",
+            link: "/turismo",
+        },
+        {
+            id: 2,
+            title: t('items.wines'),
+            subtitle: t('items.wines_subtitle'),
+            image: "/images/general/nuestros-vinos.jpeg",
+            link: "/nuestros-vinos",
+        },
+        {
+            id: 3,
+            title: t('items.shop'),
+            subtitle: t('items.shop_subtitle'),
+            image: "/images/general/tienda-ochotierras.jpeg",
+            link: "/tienda",
+        },
+        {
+            id: 4,
+            title: t('items.contact'),
+            subtitle: t('items.contact_subtitle'),
+            image: "/images/general/ochotierras-lizana.jpg",
+            link: "/contacto",
+        },
+        {
+            id: 5,
+            title: t('items.winery'),
+            subtitle: t('items.winery_subtitle'),
+            image: "/images/general/bodega-ochotierras.jpeg",
+            link: "/bodega-y-vinedos",
+        },
+    ]
+
     const baseX = useMotionValue(0)
     const { scrollY } = useScroll()
     const scrollVelocity = useVelocity(scrollY)
@@ -97,10 +101,10 @@ export function DiscoverySection() {
             <div className="container mx-auto px-6 mb-16 flex flex-col md:flex-row items-end justify-between gap-8">
                 <div>
                     <span className="text-brand-gold font-sans uppercase tracking-[0.2em] text-xs font-bold block mb-4">
-                        Explora El Universo OchoTierras
+                        {t('explore_universe')}
                     </span>
                     <h2 className="text-5xl md:text-6xl font-serif font-bold text-gray-900 leading-tight">
-                        Descubre <span className="italic font-light text-gray-400">Más</span>
+                        {t('discover_more')} <span className="italic font-light text-gray-400">{t('more')}</span>
                     </h2>
                 </div>
 

@@ -1,7 +1,12 @@
+"use client"
+
 import { Section } from "@/components/ui/Section"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 export default function Nosotros() {
+    const t = useTranslations('Nosotros');
+
     return (
         <div className="pt-20">
             {/* Hero / Header - Parallax Style */}
@@ -14,11 +19,11 @@ export default function Nosotros() {
 
                 <div className="container relative z-10 px-4 text-center">
                     <div className="inline-block border text-brand-gold border-brand-gold px-4 py-1 mb-6 text-sm uppercase tracking-widest font-bold">
-                        Desde 1993
+                        {t('badge')}
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 tracking-tight">Nuestra Historia</h1>
+                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 tracking-tight">{t('title')}</h1>
                     <p className="max-w-3xl mx-auto text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
-                        Una bodega de producción limitada en el corazón del Valle del Limarí.
+                        {t('subtitle')}
                     </p>
                 </div>
             </section>
@@ -29,7 +34,7 @@ export default function Nosotros() {
                     <div className="relative">
                         <div className="absolute -top-10 -left-10 w-40 h-40 border-l-4 border-t-4 border-brand-gold/30" />
                         <h2 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-8 leading-none">
-                            Raíces <br /> <span className="text-brand-red italic">Profundas</span>
+                            {t('timeline.title_roots')} <br /> <span className="text-brand-red italic">{t('timeline.title_deep')}</span>
                         </h2>
 
                         <div className="border-l border-brand-dark/20 pl-8 ml-2 space-y-12">
@@ -37,14 +42,14 @@ export default function Nosotros() {
                                 <span className="absolute -left-[41px] top-0 w-5 h-5 bg-brand-gold rounded-full border-4 border-white" />
                                 <span className="text-brand-gold font-bold text-xl block mb-2">1993</span>
                                 <p className="text-lg leading-relaxed text-gray-600">
-                                    La historia comienza cuando se plantaron las primeras parras en nuestras tierras, buscando el terroir perfecto.
+                                    {t('timeline.year_1993')}
                                 </p>
                             </div>
                             <div className="relative">
                                 <span className="absolute -left-[41px] top-0 w-5 h-5 bg-brand-red rounded-full border-4 border-white" />
                                 <span className="text-brand-red font-bold text-xl block mb-2">2005</span>
                                 <p className="text-lg leading-relaxed text-gray-600">
-                                    Nace Viña Ochotierras como tal. Comenzamos a hacer nuestros propios y únicos vinos prácticamente a mano, cuidando cada detalle para lograr la máxima expresión de nuestro Valle.
+                                    {t('timeline.year_2005')}
                                 </p>
                             </div>
                         </div>
@@ -78,22 +83,22 @@ export default function Nosotros() {
                         </div>
                     </div>
                     <div className="order-1 md:order-2">
-                        <h2 className="text-4xl lg:text-5xl font-serif font-bold text-white mb-8">Valle del Limarí</h2>
+                        <h2 className="text-4xl lg:text-5xl font-serif font-bold text-white mb-8">{t('valley.title')}</h2>
                         <p className="text-xl leading-relaxed text-gray-300 mb-6 font-light">
-                            Tierra de contrastes. Suelos minerales y sol del norte, acariciados por la "Camanchaca".
+                            {t('valley.description_1')}
                         </p>
                         <p className="text-lg leading-relaxed text-gray-400">
-                            Nuestras viñas crecen en un entorno semi-désertico. La niebla fría proveniente del Pacífico modera las temperaturas, permitiendo una maduración lenta que otorga acidez vibrante, frescura y una marcada mineralidad a nuestros vinos.
+                            {t('valley.description_2')}
                         </p>
 
                         <div className="mt-10 grid grid-cols-2 gap-4">
                             <div className="p-4 bg-white/5 border border-white/10">
                                 <span className="block text-brand-gold text-2xl mb-1">🌤</span>
-                                <span className="text-sm font-bold uppercase tracking-widest">Alta Luminosidad</span>
+                                <span className="text-sm font-bold uppercase tracking-widest">{t('valley.luminosity')}</span>
                             </div>
                             <div className="p-4 bg-white/5 border border-white/10">
                                 <span className="block text-brand-gold text-2xl mb-1">🌫</span>
-                                <span className="text-sm font-bold uppercase tracking-widest">Camanchaca</span>
+                                <span className="text-sm font-bold uppercase tracking-widest">{t('valley.camanchaca')}</span>
                             </div>
                         </div>
                     </div>
@@ -103,25 +108,25 @@ export default function Nosotros() {
             {/* Philosophy */}
             <Section className="bg-white text-brand-dark py-32">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-6">Nuestra Filosofía</h2>
+                    <h2 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-6">{t('philosophy.title')}</h2>
                     <div className="w-24 h-1 bg-brand-gold mx-auto mb-10" />
                     <p className="text-2xl leading-relaxed text-gray-600 mb-16 italic font-serif">
-                        &quot;Creemos en la mínima intervención como camino a la excelencia.&quot;
+                        {t('philosophy.quote')}
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
                         <div className="p-10 border border-gray-200 bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 group">
                             <span className="text-4xl mb-6 block text-gray-300 group-hover:text-brand-red transition-colors">01.</span>
-                            <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4 group-hover:text-brand-red transition-colors">Vendimia Manual</h3>
+                            <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4 group-hover:text-brand-red transition-colors">{t('philosophy.harvest_title')}</h3>
                             <p className="text-gray-600 leading-relaxed">
-                                Cada racimo es seleccionado y cosechado a mano para asegurar que solo la mejor fruta llegue a la bodega. No utilizamos maquinaria que pueda dañar las uvas.
+                                {t('philosophy.harvest_desc')}
                             </p>
                         </div>
                         <div className="p-10 border border-gray-200 bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 group">
                             <span className="text-4xl mb-6 block text-gray-300 group-hover:text-brand-red transition-colors">02.</span>
-                            <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4 group-hover:text-brand-red transition-colors">Movimiento por Gravedad</h3>
+                            <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4 group-hover:text-brand-red transition-colors">{t('philosophy.gravity_title')}</h3>
                             <p className="text-gray-600 leading-relaxed">
-                                Minimizamos el uso de bombas, moviendo el vino suavemente por gravedad. Esto preserva los aromas naturales y la estructura tánica, entregando vinos redondos y elegantes.
+                                {t('philosophy.gravity_desc')}
                             </p>
                         </div>
                     </div>

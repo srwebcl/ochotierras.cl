@@ -6,13 +6,20 @@ import { StoreProductGrid } from "@/components/StoreProductGrid"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
+import { useTranslations, useLocale } from "next-intl"
+
 interface Category {
     id: number;
     name: string;
+    nameEn?: string;
     slug: string;
 }
 
 export default function Tienda() {
+    const t = useTranslations('Tienda');
+    const locale = useLocale();
+    const isEnglish = locale === 'en';
+
     const [selectedCategory, setSelectedCategory] = useState<string>('todos')
     const [categories, setCategories] = useState<Category[]>([])
 
@@ -56,14 +63,15 @@ export default function Tienda() {
 
                 <div className="container relative z-20 text-center px-4 max-w-5xl">
                     <span className="inline-block py-1 px-3 border border-brand-gold/50 rounded-full text-brand-gold text-sm tracking-[0.2em] uppercase mb-6 animate-fade-in backdrop-blur-sm">
-                        Catálogo Oficial
+                        {t('catalog_tag')}
                     </span>
                     <h1 className="text-6xl md:text-8xl font-serif font-bold text-white mb-8 tracking-tight drop-shadow-2xl animate-fade-in-up">
-                        Nuestros Vinos
+                        {t('title')}
                     </h1>
                     <p className="text-xl md:text-2xl text-gray-200 font-light max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
-                        Descubre la expresión única del <span className="text-brand-gold font-serif italic">Valle del Limarí</span>.
-                        Vinos con carácter, creados con pasión.
+                        {t.rich('subtitle', {
+                            italic: (chunks) => <span className="text-brand-gold font-serif italic">{chunks}</span>
+                        })}
                     </p>
                 </div>
             </section>
@@ -81,7 +89,7 @@ export default function Tienda() {
                                     : "bg-transparent text-gray-600 border-gray-200 hover:border-brand-dark/50 hover:text-brand-dark"
                             )}
                         >
-                            TODOS
+                            {t('filters.all')}
                         </button>
 
                         {categories.map((cat) => (
@@ -95,7 +103,7 @@ export default function Tienda() {
                                         : "bg-transparent text-gray-600 border-gray-200 hover:border-brand-dark/50 hover:text-brand-dark"
                                 )}
                             >
-                                {cat.name}
+                                {isEnglish && cat.nameEn ? cat.nameEn : cat.name}
                             </button>
                         ))}
                     </div>

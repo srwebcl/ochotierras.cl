@@ -3,28 +3,33 @@
 import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+// import { usePathname } from "next/navigation" 
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion"
-import { Menu, ShoppingBag, X } from "lucide-react"
+import { Menu, ShoppingBag, X, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/CartContext"
+import { useTranslations, useLocale } from "next-intl"
+import { Link as IntlLink, usePathname, useRouter } from "@/i18n/routing"
 
 const navItems = [
-    { name: "Inicio", href: "/" },
-    { name: "Nosotros", href: "/nosotros" },
-    { name: "Nuestros Vinos", href: "/nuestros-vinos" },
-    { name: "Bodega y Viñedos", href: "/bodega-y-vinedos" },
-    { name: "Turismo", href: "/turismo" },
-    { name: "Tienda", href: "/tienda" },
-    { name: "Contacto", href: "/contacto" },
+    { key: "home", href: "/" },
+    { key: "about", href: "/nosotros" },
+    { key: "wines", href: "/nuestros-vinos" },
+    { key: "winery", href: "/bodega-y-vinedos" },
+    { key: "tourism", href: "/turismo" },
+    { key: "shop", href: "/tienda" },
+    { key: "contact", href: "/contacto" },
 ]
 
 export function Navbar() {
+    const t = useTranslations('Navbar')
     const [isScrolled, setIsScrolled] = React.useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const { scrollY } = useScroll()
     const pathname = usePathname()
+    const router = useRouter()
+    const locale = useLocale()
     // Connect to Cart Context
     const { toggleCart, cartCount } = useCart()
 
@@ -37,7 +42,8 @@ export function Navbar() {
         }
     })
 
-    const isHome = pathname === "/"
+    // Check if Home (matches root or locale root)
+    const isHome = pathname === "/" || pathname === "/es" || pathname === "/en"
 
     return (
         <motion.header
@@ -52,7 +58,7 @@ export function Navbar() {
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex h-20 items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="relative h-12 w-48 hover:opacity-90 transition-opacity">
+                    <IntlLink href="/" className="relative h-12 w-48 hover:opacity-90 transition-opacity">
                         <Image
                             src="/images/logos/logo-white.webp"
                             alt="Ochotierras"
@@ -61,26 +67,49 @@ export function Navbar() {
                             priority
                             sizes="(max-width: 768px) 120px, 160px"
                         />
-                    </Link>
+                    </IntlLink>
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-8">
                         {navItems.map((item) => (
-                            <Link
-                                key={item.href}
+                            <IntlLink
+                                key={item.key}
                                 href={item.href}
                                 className={cn(
                                     "text-sm font-medium uppercase tracking-wider transition-colors hover:text-brand-gold",
                                     pathname === item.href ? "text-brand-gold" : "text-white/90"
                                 )}
                             >
-                                {item.name}
-                            </Link>
+                                {t(item.key)}
+                            </IntlLink>
                         ))}
                     </nav>
 
                     {/* Actions */}
                     <div className="hidden md:flex items-center gap-4">
+                        {/* Language Switcher */}
+                        <div className="flex items-center gap-2 mr-2 border-r border-white/20 pr-4">
+                            <button
+                                onClick={() => router.replace(pathname, { locale: 'es' })}
+                                className={cn(
+                                    "text-xs font-bold transition-colors hover:text-brand-gold",
+                                    locale === 'es' ? "text-brand-gold" : "text-white/60"
+                                )}
+                            >
+                                ES
+                            </button>
+                            <span className="text-white/30 text-xs">|</span>
+                            <button
+                                onClick={() => router.replace(pathname, { locale: 'en' })}
+                                className={cn(
+                                    "text-xs font-bold transition-colors hover:text-brand-gold",
+                                    locale === 'en' ? "text-brand-gold" : "text-white/60"
+                                )}
+                            >
+                                EN
+                            </button>
+                        </div>
+
                         <Button
                             variant="ghost"
                             size="icon"
@@ -149,12 +178,12 @@ export function Navbar() {
                         <nav className="relative z-10 flex flex-col items-center gap-8 md:gap-6 w-full px-6">
                             {navItems.map((item, i) => (
                                 <motion.div
-                                    key={item.href}
+                                    key={item.key}
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
                                 >
-                                    <Link
+                                    <IntlLink
                                         href={item.href}
                                         className={cn(
                                             "text-3xl font-serif font-bold text-white hover:text-brand-gold transition-all duration-300 relative group",
@@ -162,14 +191,47 @@ export function Navbar() {
                                         )}
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >
-                                        {item.name}
+                                        {t(item.key)}
                                         <span className={cn(
                                             "absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-brand-gold transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100",
                                             pathname === item.href && "w-full opacity-100"
                                         )} />
-                                    </Link>
+                                    </IntlLink>
                                 </motion.div>
                             ))}
+
+                            {/* Mobile Language Switcher */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.7, duration: 0.5 }}
+                                className="mt-4 flex items-center gap-6"
+                            >
+                                <button
+                                    onClick={() => {
+                                        router.replace(pathname, { locale: 'es' });
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                    className={cn(
+                                        "text-xl font-bold transition-colors uppercase tracking-widest",
+                                        locale === 'es' ? "text-brand-gold border-b-2 border-brand-gold" : "text-white/60"
+                                    )}
+                                >
+                                    Español
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        router.replace(pathname, { locale: 'en' });
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                    className={cn(
+                                        "text-xl font-bold transition-colors uppercase tracking-widest",
+                                        locale === 'en' ? "text-brand-gold border-b-2 border-brand-gold" : "text-white/60"
+                                    )}
+                                >
+                                    English
+                                </button>
+                            </motion.div>
 
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
@@ -185,7 +247,7 @@ export function Navbar() {
                                     }}
                                 >
                                     <ShoppingBag className="mr-3 h-5 w-5" />
-                                    Ver Carrito ({cartCount})
+                                    {t('cart')} ({cartCount})
                                 </Button>
                             </motion.div>
                         </nav>

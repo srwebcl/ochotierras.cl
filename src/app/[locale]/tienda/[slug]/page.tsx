@@ -8,22 +8,27 @@ import { AddToCartButton } from "@/components/AddToCartButton"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
+import { useTranslations, useLocale } from "next-intl"
 
 interface Wine {
     id: number;
     name: string;
+    nameEn?: string;
     subtitle?: string;
+    subtitleEn?: string; // Not in API yet, but good to have
     type?: string;
     price: number;
     image?: string;
     bgGradient?: string;
     description?: string;
+    descriptionEn?: string;
     stock?: number;
     slug?: string;
     technical_sheet?: string | null;
     vintage_year?: number;
     strain?: string;
     origin?: string;
+    tastingNotesEn?: string; // Added in API
     gallery?: string[];
     technical_details?: {
         harvest_type?: string;
@@ -40,6 +45,10 @@ interface Wine {
 }
 
 export default function ProductPage() {
+    const t = useTranslations('ProductDetail');
+    const locale = useLocale();
+    const isEnglish = locale === 'en';
+
     const { slug } = useParams()
     const [product, setProduct] = useState<Wine | null>(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -50,9 +59,6 @@ export default function ProductPage() {
         if (!slug) return;
 
         setIsLoading(true)
-        // Try finding in specific product API first (now that we have /api/products giving full list)
-        // But for efficiency on slug lookup without a specific slug endpoint, we fetch all. 
-        // Ideal: /api/products/{slug} but we stick to list filtering for now.
         fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/products`)
             .then(res => res.json())
             .then((products: any[]) => {
@@ -61,7 +67,7 @@ export default function ProductPage() {
                     setProduct(found)
                     setActiveImage(found.image)
                 } else {
-                    // Fallback to categories if needed (legacy check)
+                    // Fallback to categories (legacy)
                     return fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/categories-wines`)
                         .then(res => res.json())
                         .then((categories: any[]) => {
@@ -83,10 +89,17 @@ export default function ProductPage() {
             .finally(() => setIsLoading(false))
     }, [slug])
 
+    const localizedName = product ? (isEnglish && product.nameEn ? product.nameEn : product.name) : '';
+    const localizedDescription = product ? (isEnglish && product.descriptionEn ? product.descriptionEn : product.description) : '';
+    const localizedSubtitle = product ? (product.subtitle || product.type) : ''; // API doesn't fully support subtitleEn yet, fallback ok.
+
+    // Tasting Notes: check if tastingNotesEn exists (I added it to API).
+    const localizedTastingNotes = product?.tastingNotesEn && isEnglish ? product.tastingNotesEn : product?.technical_details?.tasting_notes;
+
     if (isLoading) {
         return (
             <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center bg-brand-dark text-white">
-                <div className="animate-pulse text-2xl font-serif">Cargando experiencia...</div>
+                <div className="animate-pulse text-2xl font-serif">{t('loading')}</div>
             </div>
         )
     }
@@ -94,9 +107,9 @@ export default function ProductPage() {
     if (error || !product) {
         return (
             <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center bg-gray-50 text-brand-dark">
-                <h1 className="text-4xl font-serif font-bold mb-4">Vino no encontrado</h1>
+                <h1 className="text-4xl font-serif font-bold mb-4">{t('not_found')}</h1>
                 <Link href="/tienda">
-                    <Button variant="outline">Volver a la Bodega</Button>
+                    <Button variant="outline">{t('back_shop')}</Button>
                 </Link>
             </div>
         )
@@ -124,7 +137,7 @@ export default function ProductPage() {
                         >
                             <Image
                                 src={activeImage || product.image || '/images/bottles/placeholder.webp'}
-                                alt={product.name}
+                                alt={localizedName}
                                 fill
                                 unoptimized
                                 className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
@@ -168,33 +181,33 @@ export default function ProductPage() {
                         className="text-white"
                     >
                         <Link href="/tienda" className="inline-flex items-center gap-2 text-brand-gold mb-6 hover:underline text-sm uppercase tracking-widest font-bold">
-                            <ArrowLeft size={16} /> Volver a la Tienda
+                            <ArrowLeft size={16} /> {t('back_shop')}
                         </Link>
 
-                        <span className="block text-brand-gold/80 text-lg font-serif italic mb-2">{product.subtitle || product.type}</span>
-                        <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight mb-6">{product.name}</h1>
+                        <span className="block text-brand-gold/80 text-lg font-serif italic mb-2">{localizedSubtitle}</span>
+                        <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight mb-6">{localizedName}</h1>
 
                         <div className="prose prose-lg prose-invert text-gray-300 mb-8 max-w-xl font-light">
-                            <p>{product.description}</p>
+                            <p>{localizedDescription}</p>
                         </div>
 
                         <div className="flex flex-col md:flex-row gap-8 items-start md:items-center border-t border-white/10 pt-8 mb-8">
                             <div>
-                                <span className="block text-xs uppercase text-gray-400 mb-1">Precio Caja (6 Bot.)</span>
+                                <span className="block text-xs uppercase text-gray-400 mb-1">{t('price_label')}</span>
                                 <span className="text-4xl font-bold text-white">${product.price.toLocaleString('es-CL')}</span>
                             </div>
 
                             <div className="flex-1 w-full md:w-auto">
                                 {product.stock === 0 ? (
                                     <div className="bg-white/10 backdrop-blur text-white px-6 py-4 text-center rounded-lg font-bold uppercase tracking-widest">
-                                        Agotado Temporalmente
+                                        {t('out_of_stock')}
                                     </div>
                                 ) : (
                                     <div className="bg-white text-brand-dark p-6 rounded-xl shadow-2xl max-w-md">
                                         <AddToCartButton product={product} />
                                         <div className="flex items-center gap-4 mt-4 text-xs text-gray-500 justify-center">
-                                            <span className="flex items-center gap-1"><Truck size={14} /> Envío a todo Chile</span>
-                                            <span className="flex items-center gap-1"><ShieldCheck size={14} /> Compra Segura</span>
+                                            <span className="flex items-center gap-1"><Truck size={14} /> {t('shipping_chile')}</span>
+                                            <span className="flex items-center gap-1"><ShieldCheck size={14} /> {t('secure_buy')}</span>
                                         </div>
                                     </div>
                                 )}
@@ -207,7 +220,7 @@ export default function ProductPage() {
                                 target="_blank"
                                 className="inline-flex items-center gap-2 text-white border border-white/30 px-6 py-3 rounded-full hover:bg-white hover:text-brand-dark transition-all text-sm uppercase tracking-wider font-bold"
                             >
-                                <Download size={18} /> Descargar Ficha Técnica
+                                <Download size={18} /> {t('download_tech_sheet')}
                             </a>
                         )}
                     </motion.div>
@@ -220,21 +233,21 @@ export default function ProductPage() {
 
                     {/* Left Column: Tasting Notes & Awards */}
                     <div className="md:col-span-7 space-y-16">
-                        {(product.technical_details?.tasting_notes) && (
+                        {localizedTastingNotes && (
                             <section className="animate-fade-in-up">
                                 <h3 className="text-3xl font-serif font-bold text-brand-dark mb-8 flex items-center gap-3">
-                                    <span className="w-12 h-[1px] bg-brand-gold"></span> Notas de Cata
+                                    <span className="w-12 h-[1px] bg-brand-gold"></span> {t('tasting_notes')}
                                 </h3>
                                 <div
                                     className="prose prose-lg text-gray-600 font-light border-l-4 border-brand-gold pl-6 py-2"
-                                    dangerouslySetInnerHTML={{ __html: product.technical_details.tasting_notes }}
+                                    dangerouslySetInnerHTML={{ __html: localizedTastingNotes }}
                                 />
                             </section>
                         )}
 
                         {product.technical_details?.awards && product.technical_details.awards.length > 0 && (
                             <section>
-                                <h3 className="text-2xl font-serif font-bold text-brand-dark mb-6">Premios & Reconocimientos</h3>
+                                <h3 className="text-2xl font-serif font-bold text-brand-dark mb-6">{t('awards')}</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {product.technical_details.awards.map((award, idx) => (
                                         <div key={idx} className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg border border-gray-100">
@@ -252,43 +265,48 @@ export default function ProductPage() {
                     <div className="md:col-span-4">
                         <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200 sticky top-28">
                             <h3 className="text-xl font-serif font-bold text-brand-dark mb-6 border-b border-gray-200 pb-4">
-                                Ficha Técnica
+                                {t('tech_sheet_title')}
                             </h3>
 
                             <dl className="space-y-4 text-sm">
                                 {product.vintage_year && (
                                     <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                                        <dt className="flex items-center gap-2 text-gray-500"> <Calendar size={16} /> Año</dt>
+                                        <dt className="flex items-center gap-2 text-gray-500"> <Calendar size={16} /> {t('year')}</dt>
                                         <dd className="font-bold text-brand-dark">{product.vintage_year}</dd>
                                     </div>
                                 )}
                                 {product.strain && (
                                     <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                                        <dt className="flex items-center gap-2 text-gray-500"> <Grape size={16} /> Variedad</dt>
+                                        <dt className="flex items-center gap-2 text-gray-500"> <Grape size={16} /> {t('variety')}</dt>
                                         <dd className="font-bold text-brand-dark text-right max-w-[50%]">{product.strain}</dd>
                                     </div>
                                 )}
                                 {product.origin && (
                                     <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                                        <dt className="flex items-center gap-2 text-gray-500"> <MapPin size={16} /> Origen</dt>
+                                        <dt className="flex items-center gap-2 text-gray-500"> <MapPin size={16} /> {t('origin')}</dt>
                                         <dd className="font-bold text-brand-dark">{product.origin}</dd>
                                     </div>
                                 )}
 
                                 {/* Analysis Fields from JSON */}
                                 {product.technical_details?.analysis && Object.entries(product.technical_details.analysis).map(([key, value]) => {
-                                    const labelMap: Record<string, any> = {
-                                        alcohol: { label: "Alcohol", icon: <Droplet size={16} /> },
-                                        residual_sugar: { label: "Azúcar R.", icon: <Grape size={16} /> },
-                                        total_ph: { label: "pH", icon: <Thermometer size={16} /> },
-                                        volatile_acidity: { label: "Acidez Volátil", icon: <Thermometer size={16} /> },
-                                        total_acidity: { label: "Acidez Total", icon: <Thermometer size={16} /> },
+                                    const metaMap: any = {
+                                        alcohol: { key: 'alcohol', icon: <Droplet size={16} /> },
+                                        residual_sugar: { key: 'residual_sugar', icon: <Grape size={16} /> },
+                                        total_ph: { key: 'total_ph', icon: <Thermometer size={16} /> },
+                                        volatile_acidity: { key: 'volatile_acidity', icon: <Thermometer size={16} /> },
+                                        total_acidity: { key: 'total_acidity', icon: <Thermometer size={16} /> },
                                     };
-                                    const meta = labelMap[key] || { label: key, icon: <Check size={16} /> };
+
+                                    const meta = metaMap[key] || { key: key, icon: <Check size={16} /> };
+                                    // Use explicit keys for type safety in t() if possible, or fallback to key if safe
+                                    // t('analysis.' + key) might work if configured, but better to be safe.
+                                    // I defined analysis keys in json: "analysis": { "alcohol": "..." }
+                                    // So t(`analysis.${key}`) is valid effectively.
 
                                     return (
                                         <div key={key} className="flex justify-between items-center py-2 border-b border-gray-100">
-                                            <dt className="flex items-center gap-2 text-gray-500"> {meta.icon} {meta.label}</dt>
+                                            <dt className="flex items-center gap-2 text-gray-500"> {meta.icon} {t(`analysis.${key}`)}</dt>
                                             <dd className="font-bold text-brand-dark">{value as string}</dd>
                                         </div>
                                     )
@@ -296,14 +314,14 @@ export default function ProductPage() {
 
                                 {product.technical_details?.aging_potential && (
                                     <div className="pt-4">
-                                        <dt className="text-xs uppercase text-gray-400 font-bold mb-1">Potencial de Guarda</dt>
+                                        <dt className="text-xs uppercase text-gray-400 font-bold mb-1">{t('aging_potential')}</dt>
                                         <dd className="text-gray-700">{product.technical_details.aging_potential}</dd>
                                     </div>
                                 )}
 
                                 {product.technical_details?.wood_type && (
                                     <div className="pt-2">
-                                        <dt className="text-xs uppercase text-gray-400 font-bold mb-1">Guarda en Barrica</dt>
+                                        <dt className="text-xs uppercase text-gray-400 font-bold mb-1">{t('barrel_aging')}</dt>
                                         <dd className="text-gray-700">{product.technical_details.wood_type}</dd>
                                     </div>
                                 )}

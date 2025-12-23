@@ -18,11 +18,13 @@ Route::get('/categories-wines', function () {
             return [
                 'id' => $category->id,
                 'name' => $category->name,
+                'nameEn' => $category->name_en,
                 'slug' => $category->slug,
                 'wines' => $category->products->map(function ($product) {
                     return [
                         'id' => $product->id,
                         'name' => $product->name,
+                        'nameEn' => $product->name_en,
                         'subtitle' => $product->subtitle,
                         'slug' => $product->slug,
                         'image' => $product->image ? \Illuminate\Support\Facades\Storage::url($product->image) : null,
@@ -44,8 +46,10 @@ Route::get('/categories-wines', function () {
                         'volatile_acidity' => $product->volatile_acidity,
                         'total_acidity' => $product->total_acidity,
                         'tasting_notes' => $product->tasting_notes,
+                        'tastingNotesEn' => $product->tasting_notes_en,
                         'awards' => $product->awards,
                         'description' => $product->description,
+                        'descriptionEn' => $product->description_en,
                         'bgGradient' => $product->type === 'Tinto'
                             ? "radial-gradient(circle at center, #5e0916 0%, transparent 70%)"
                             : ($product->type === 'Blanco'
@@ -78,11 +82,15 @@ Route::get('/hero-section', function () {
 
         return [
             'title' => $hero->title,
+            'titleEn' => $hero->title_en,
             'subtitle' => $hero->subtitle,
+            'subtitleEn' => $hero->subtitle_en,
             'description' => $hero->description,
             'buttonText' => $hero->button_primary_text,
+            'buttonTextEn' => $hero->button_primary_text_en,
             'buttonPrimaryUrl' => $hero->button_primary_url,
             'buttonSecondaryText' => $hero->button_secondary_text,
+            'buttonSecondaryTextEn' => $hero->button_secondary_text_en,
             'buttonSecondaryUrl' => $hero->button_secondary_url,
             'image' => $imageUrls[0] ?? null,
             'images' => $imageUrls,
@@ -111,6 +119,7 @@ Route::get('/collection-wines', function () {
                 'accentColor' => 'text-brand-gold', // Using class for now or could send color hex to be used in inline style
                 'accentColorHex' => $product->accent_color ?? '#D4AF37',
                 'description' => $product->featured_description ?? strip_tags($product->description),
+                'descriptionEn' => $product->short_description_en ?? $product->description_en, // Fallback logic
                 'slug' => $product->slug,
             ];
         });
@@ -139,6 +148,7 @@ Route::get('/products', function () {
                 'accentColor' => 'text-brand-gold',
                 'accentColorHex' => $product->accent_color ?? '#D4AF37',
                 'description' => $product->description,
+                'descriptionEn' => $product->description_en,
                 'slug' => $product->slug,
                 'gallery' => $product->gallery ? array_map(fn($img) => \Illuminate\Support\Facades\Storage::url($img), $product->gallery) : [],
                 'technical_details' => $product->technical_details,
@@ -146,6 +156,9 @@ Route::get('/products', function () {
                 'vintage_year' => $product->vintage_year,
                 'strain' => $product->strain,
                 'origin' => $product->origin,
+                'tastingNotesEn' => $product->tasting_notes_en,
+                'pairingEn' => $product->pairing_en,
+                'serviceTempEn' => $product->service_temp_en,
             ];
         });
 });
@@ -158,6 +171,7 @@ Route::get('/categories', function () {
             return [
                 'id' => $category->id,
                 'name' => $category->name,
+                'nameEn' => $category->name_en,
                 'slug' => $category->slug,
             ];
         });

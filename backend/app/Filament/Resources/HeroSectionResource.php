@@ -32,26 +32,42 @@ class HeroSectionResource extends Resource
                             ->label('Título Principal')
                             ->placeholder('VIÑA OCHOTIERRAS')
                             ->required(),
+                        Forms\Components\TextInput::make('title_en')
+                            ->label('Título Principal (Inglés)')
+                            ->placeholder('OCHOTIERRAS WINERY'),
+
                         Forms\Components\TextInput::make('subtitle')
                             ->label('Subtítulo')
                             ->placeholder('En el corazón del Valle del Limarí')
                             ->required(),
+                        Forms\Components\TextInput::make('subtitle_en')
+                            ->label('Subtítulo (Inglés)')
+                            ->placeholder('In the heart of Limari Valley'),
                     ]),
 
                 Forms\Components\Section::make('Botones')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('button_primary_text')
-                                    ->label('Texto Botón Primario')
-                                    ->default('Nuestra Viña'),
+                                Forms\Components\Group::make([
+                                    Forms\Components\TextInput::make('button_primary_text')
+                                        ->label('Texto Botón Primario')
+                                        ->default('Nuestra Viña'),
+                                    Forms\Components\TextInput::make('button_primary_text_en')
+                                        ->label('Texto Botón Primario (Inglés)'),
+                                ]),
                                 Forms\Components\TextInput::make('button_primary_url')
                                     ->label('URL Botón Primario')
                                     ->default('/nosotros'),
 
-                                Forms\Components\TextInput::make('button_secondary_text')
-                                    ->label('Texto Botón Secundario')
-                                    ->default('Tienda Online'),
+                                Forms\Components\Group::make([
+                                    Forms\Components\TextInput::make('button_secondary_text')
+                                        ->label('Texto Botón Secundario')
+                                        ->default('Tienda Online'),
+                                    Forms\Components\TextInput::make('button_secondary_text_en')
+                                        ->label('Texto Botón Secundario (Inglés)'),
+                                ]),
+
                                 Forms\Components\TextInput::make('button_secondary_url')
                                     ->label('URL Botón Secundario')
                                     ->default('/tienda'),

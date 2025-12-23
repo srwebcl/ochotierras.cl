@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { MessageCircle, X, ShoppingBag, MapPin, MessageSquare, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 export function SmartWhatsApp() {
+    const t = useTranslations('SmartWhatsApp');
     const pathname = usePathname()
     const [isOpen, setIsOpen] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false)
@@ -14,13 +16,14 @@ export function SmartWhatsApp() {
 
     // Context Logic for "General Help" fallback
     const getContextMessage = () => {
-        switch (pathname) {
-            case "/": return "Hola, estoy viendo la portada y necesito asesoría."
-            case "/tienda": return "Hola, tengo dudas sobre la tienda online."
-            case "/nuestros-vinos": return "Hola, quisiera cotizar vinos precios especiales."
-            case "/bodega-y-vinedos": return "Hola, quisiera saber más sobre la bodega."
-            default: return "Hola, tengo una consulta general."
-        }
+        // Strip locale prefix if present (e.g. /en/nosotros -> /nosotros for comparison, though pathname from next/navigation usually keeps structure)
+        // With next-intl middleware, exact matching might need adjustment if logic relies on raw paths.
+        // Simple heuristic: check string inclusion
+        if (pathname.includes('/tienda')) return t('context_msgs.shop')
+        if (pathname.includes('/nuestros-vinos')) return t('context_msgs.wines')
+        if (pathname.includes('/bodega-y-vinedos')) return t('context_msgs.winery')
+        if (pathname === '/' || pathname === '/en' || pathname === '/es') return t('context_msgs.home')
+        return t('context_msgs.default')
     }
 
     // Scroll Visibility
@@ -55,22 +58,22 @@ export function SmartWhatsApp() {
     const menuOptions = [
         {
             id: 'buy',
-            label: 'Comprar Vinos',
-            sub: 'Asesoría y ventas',
+            label: t('options.buy_label'),
+            sub: t('options.buy_sub'),
             icon: ShoppingBag,
-            message: "Hola, me interesa comprar vinos. ¿Me pueden asesorar?"
+            message: t('options.buy_msg')
         },
         {
             id: 'tour',
-            label: 'Visitar la Viña',
-            sub: 'Turismo y reservas',
+            label: t('options.tour_label'),
+            sub: t('options.tour_sub'),
             icon: MapPin,
-            message: "Hola, quisiera agendar una visita o tour en la viña."
+            message: t('options.tour_msg')
         },
         {
             id: 'help',
-            label: 'Ayuda General',
-            sub: 'Consultas varias',
+            label: t('options.help_label'),
+            sub: t('options.help_sub'),
             icon: MessageSquare,
             message: getContextMessage()
         }
@@ -81,7 +84,7 @@ export function SmartWhatsApp() {
             {isVisible && (
                 <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end gap-4 pointer-events-none font-sans">
 
-                    {/* Concierge Menu */}
+                    {/* Menu */}
                     <AnimatePresence>
                         {isOpen && (
                             <motion.div
@@ -94,8 +97,8 @@ export function SmartWhatsApp() {
                                 {/* Header */}
                                 <div className="bg-brand-dark p-4 border-b border-white/5 relative overflow-hidden">
                                     <div className="absolute top-0 right-0 w-20 h-20 bg-brand-gold/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2" />
-                                    <h3 className="text-white font-serif font-bold text-lg relative z-10">Concierge</h3>
-                                    <p className="text-white/60 text-xs relative z-10">¿En qué podemos ayudarte hoy?</p>
+                                    <h3 className="text-white font-serif font-bold text-lg relative z-10">{t('header_title')}</h3>
+                                    <p className="text-white/60 text-xs relative z-10">{t('header_subtitle')}</p>
                                 </div>
 
                                 {/* Options */}

@@ -31,6 +31,13 @@ class CategoryResource extends Resource
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn(string $operation, $state, $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
 
+                Forms\Components\TextInput::make('name_en')
+                    ->label('Nombre (Inglés)'),
+
+                Forms\Components\Textarea::make('description_en')
+                    ->label('Descripción (Inglés)')
+                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->unique(ignoreRecord: true),

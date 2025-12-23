@@ -6,8 +6,11 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 export default function Turismo() {
+    const t = useTranslations('Turismo');
+
     return (
         <div className="pt-20">
             {/* Hero */}
@@ -26,17 +29,17 @@ export default function Turismo() {
                 <div className="container relative z-10 px-4 flex justify-start">
                     <div className="max-w-2xl text-left">
                         <span className="block text-brand-gold uppercase tracking-[0.3em] text-sm font-bold mb-4 animate-fade-in-up">
-                            Experiencias
+                            {t('badge')}
                         </span>
                         <h1 className="text-6xl md:text-8xl font-serif font-bold text-white mb-6 tracking-tight leading-none animate-fade-in-up delay-100">
-                            Visita Viña <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white">Ochotierras</span>
+                            {t('title_1')} <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white">{t('title_2')}</span>
                         </h1>
                         <p className="text-xl text-gray-200 font-light mb-10 leading-relaxed max-w-lg animate-fade-in-up delay-200">
-                            Sumérgete en el Valle del Limarí. Recorre nuestros viñedos, conoce nuestro proceso gravitacional y degusta vinos inolvidables.
+                            {t('description')}
                         </p>
                         <Button className="bg-brand-red text-white hover:bg-white hover:text-brand-dark px-10 py-7 text-sm uppercase tracking-widest font-bold transition-all duration-300 transform hover:translate-x-2 animate-fade-in-up delay-300">
-                            <Link href="/contacto">Reservar Visita</Link>
+                            <Link href="/contacto">{t('pta_button')}</Link>
                         </Button>
                     </div>
                 </div>
@@ -97,27 +100,27 @@ export default function Turismo() {
 
                     {/* Right - Info */}
                     <div className="lg:w-1/2 flex flex-col justify-center">
-                        <h2 className="text-4xl font-serif font-bold text-brand-dark mb-6">Tour & Degustación</h2>
+                        <h2 className="text-4xl font-serif font-bold text-brand-dark mb-6">{t('tour.title')}</h2>
                         <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                            Una experiencia completa diseñada para los amantes del vino. Comenzamos con un paseo por nuestros viñedos para entender el terroir del Limarí, seguido de un recorrido por nuestra bodega gravitacional donde conocerás los secretos de nuestra elaboración. Finalizamos con una degustación guiada de nuestros vinos Icono.
+                            {t('tour.description')}
                         </p>
 
                         <div className="bg-gray-50 border border-gray-100 p-8 rounded-xl mb-10">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <div>
-                                    <h4 className="text-brand-gold uppercase tracking-wider text-xs font-bold mb-2">Valor por persona</h4>
+                                    <h4 className="text-brand-gold uppercase tracking-wider text-xs font-bold mb-2">{t('tour.price_label')}</h4>
                                     <p className="text-3xl font-serif font-bold text-brand-dark">$18.000</p>
                                 </div>
                                 <div>
-                                    <h4 className="text-brand-gold uppercase tracking-wider text-xs font-bold mb-2">Duración</h4>
-                                    <p className="text-xl font-serif font-bold text-brand-dark">1 hora 30 min</p>
+                                    <h4 className="text-brand-gold uppercase tracking-wider text-xs font-bold mb-2">{t('tour.duration_label')}</h4>
+                                    <p className="text-xl font-serif font-bold text-brand-dark">{t('tour.duration_val')}</p>
                                 </div>
                                 <div className="col-span-1 sm:col-span-2">
-                                    <h4 className="text-brand-gold uppercase tracking-wider text-xs font-bold mb-2">Incluye</h4>
+                                    <h4 className="text-brand-gold uppercase tracking-wider text-xs font-bold mb-2">{t('tour.includes_label')}</h4>
                                     <ul className="text-gray-600 space-y-1 text-sm">
-                                        <li className="flex items-center gap-2"><span className="text-brand-red">✓</span> Recorrido por viñedos y bodega</li>
-                                        <li className="flex items-center gap-2"><span className="text-brand-red">✓</span> Degustación de 3 vinos (Línea Reserva y Gran Reserva)</li>
-                                        <li className="flex items-center gap-2"><span className="text-brand-red">✓</span> Tabla de quesos y frutos secos</li>
+                                        <li className="flex items-center gap-2"><span className="text-brand-red">✓</span>{t('tour.include_1')}</li>
+                                        <li className="flex items-center gap-2"><span className="text-brand-red">✓</span>{t('tour.include_2')}</li>
+                                        <li className="flex items-center gap-2"><span className="text-brand-red">✓</span>{t('tour.include_3')}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -125,7 +128,7 @@ export default function Turismo() {
 
                         <div className="space-y-4">
                             <p className="text-sm text-gray-400 italic">
-                                * Mínimo 2 personas. Reservas con 24 horas de anticipación.
+                                {t('tour.note')}
                             </p>
                         </div>
                     </div>

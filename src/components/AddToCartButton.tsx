@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/CartContext"
 import { Wine } from "@/lib/collection-api"
 import { Product } from "@/data/products"
+import { useTranslations } from "next-intl"
 
 interface AddToCartButtonProps {
     product: Wine
 }
 
 export function AddToCartButton({ product }: AddToCartButtonProps) {
+    const t = useTranslations('Common');
     const { addToCart } = useCart()
 
     // Transform Wine to Product (if needed, or ensure interface compatibility)
@@ -31,7 +33,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
     if (!hasStock) {
         return (
             <Button disabled className="w-full bg-gray-300 text-gray-500 cursor-not-allowed">
-                Sin Stock
+                {t('out_of_stock')}
             </Button>
         )
     }
@@ -41,7 +43,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
             className="w-full bg-brand-dark text-white hover:bg-brand-gold hover:text-brand-dark transition-all duration-300"
             onClick={() => addToCart(cartProduct)}
         >
-            Añadir al Carrito
+            {t('add_to_cart')}
         </Button>
     )
 }

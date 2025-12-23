@@ -1,0 +1,274 @@
+{
+    "Navbar": {
+        "home": "Home",
+        "about": "About Us",
+        "wines": "Our Wines",
+        "winery": "Winery & Vineyards",
+        "tourism": "Tourism",
+        "shop": "Shop",
+        "contact": "Contact",
+        "cart": "View Cart"
+    },
+    "Common": {
+        "add_to_cart": "Add to Cart",
+        "out_of_stock": "Out of Stock",
+        "loading": "Loading..."
+    },
+    "AgeVerification": {
+        "welcome": "Welcome to",
+        "title": "VIÑA OCHOTIERRAS",
+        "description": "To enter this site you must be of legal drinking age in your country.",
+        "question": "Are you over 18?",
+        "yes_button": "Yes, Enter",
+        "no_button": "No, Exit",
+        "footer": "Drink responsibly. Sale prohibited to minors."
+    },
+    "SmartWhatsApp": {
+        "header_title": "Ochotierras",
+        "header_subtitle": "How can we help you today?",
+        "options": {
+            "buy_label": "Buy Wines",
+            "buy_sub": "Sales & Advice",
+            "buy_msg": "Hello, I am interested in buying wines. Can you advise me?",
+            "tour_label": "Visit Winery",
+            "tour_sub": "Tourism & Reservations",
+            "tour_msg": "Hello, I would like to book a visit or tour at the winery.",
+            "help_label": "General Help",
+            "help_sub": "General Inquiries"
+        },
+        "context_msgs": {
+            "home": "Hello, I am browsing the homepage and need advice.",
+            "shop": "Hello, I have questions about the online shop.",
+            "wines": "Hello, I would like to quote special wine prices.",
+            "winery": "Hello, I would like to know more about the winery.",
+            "default": "Hello, I have a general inquiry."
+        }
+    },
+    "Footer": {
+        "quote": "Wines born from gravity and the silence of the Limarí Valley. A pure expression of our land.",
+        "contact": "Contact",
+        "explore": "Explore",
+        "sales": "Sales & Export",
+        "national_sales": "National Sales / Tourism",
+        "china_sales": "China Sales",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "developed_by": "Developed by",
+        "rights_reserved": "All rights reserved."
+    },
+    "Metadata": {
+        "title": {
+            "default": "Viña Ochotierras - Limarí Valley",
+            "template": "%s | Viña Ochotierras"
+        },
+        "description": "Author wines from Limarí Valley. A pure expression of our land.",
+        "og": {
+            "title": "Viña Ochotierras",
+            "description": "Author wines from Limarí Valley."
+        }
+    },
+    "HomePage": {
+        "title": "Welcome to Ochotierras",
+        "about": "Go to About"
+    },
+    "Tienda": {
+        "catalog_tag": "Official Catalog",
+        "title": "Our Wines",
+        "subtitle": "Discover the unique expression of <italic>Limarí Valley</italic>. Wines with character, crafted with passion.",
+        "filters": {
+            "all": "ALL"
+        },
+        "status": {
+            "loading": "Loading winery...",
+            "error": "We could not load the products. Please check your connection.",
+            "empty_category": "No products in this category.",
+            "empty_all": "No products available at the moment.",
+            "few_left": "Few left!",
+            "out_of_stock": "Sold Out",
+            "box_of_6": "Box of 6 Bottles"
+        }
+    },
+    "Cart": {
+        "title": "Your Cart",
+        "empty": "Your cart is empty.",
+        "continue_shopping": "Continue Shopping",
+        "subtotal": "Subtotal",
+        "total": "Total",
+        "checkout": "Checkout",
+        "shipping_note": "Shipping calculated at next step."
+    },
+    "ProductDetail": {
+        "loading": "Loading experience...",
+        "not_found": "Wine not found",
+        "back_home": "Back to Winery",
+        "back_shop": "Back to Shop",
+        "price_label": "Price (Box of 6)",
+        "out_of_stock": "Temporarily Out of Stock",
+        "shipping_chile": "Shipping to all Chile",
+        "secure_buy": "Secure Purchase",
+        "download_tech_sheet": "Download Tech Sheet",
+        "tasting_notes": "Tasting Notes",
+        "awards": "Awards & Recognition",
+        "tech_sheet_title": "Technical Sheet",
+        "year": "Vintage",
+        "variety": "Variety",
+        "origin": "Origin",
+        "aging_potential": "Aging Potential",
+        "barrel_aging": "Barrel Aging",
+        "analysis": {
+            "alcohol": "Alcohol",
+            "residual_sugar": "Residual Sugar",
+            "total_ph": "pH",
+            "volatile_acidity": "Volatile Acidity",
+            "total_acidity": "Total Acidity"
+        }
+    },
+    "Home": {
+        "scroll_discover": "Discover"
+    },
+    "WineCarousel": {
+        "loading": "Loading wines...",
+        "collection_label": "Exclusive Collection",
+        "box_of_6": "Box of 6 Bottles",
+        "buy": "Add to Cart",
+        "sold_out": "Sold Out",
+        "view": "View Details",
+        "few_left": "Only {stock} units left!"
+    },
+    "StoryScroll": {
+        "philosophy": "Our Philosophy",
+        "earth": "Earth",
+        "gravity": "Gravity",
+        "description": "At Viña OchoTierras we work with the dedication of an artisan. People and their experiences play a central role in the creation of our wines.",
+        "gravity_design": "Gravity Design",
+        "winery_description": "The winery was built below ground level, allowing gravity to be used to move the wine gently. No pumps. Preserving the exceptional condition of every drop.",
+        "explore_winery": "Explore Winery",
+        "discover": "Discover"
+    },
+    "DiscoverySection": {
+        "explore_universe": "Explore The OchoTierras Universe",
+        "discover_more": "Discover",
+        "more": "More",
+        "items": {
+            "tourism": "Tourism",
+            "tourism_subtitle": "Unique Experiences",
+            "wines": "Wines",
+            "wines_subtitle": "Our Collection",
+            "shop": "Shop",
+            "shop_subtitle": "Shop Online",
+            "contact": "Contact",
+            "contact_subtitle": "Let's Talk Business",
+            "winery": "Winery",
+            "winery_subtitle": "Architecture & Gravity"
+        }
+    },
+    "Nosotros": {
+        "badge": "Since 1993",
+        "title": "Our History",
+        "subtitle": "A limited production winery in the heart of Limarí Valley.",
+        "timeline": {
+            "title_roots": "Deep",
+            "title_deep": "Roots",
+            "year_1993": "The story begins when the first vines were planted on our lands, searching for the perfect terroir.",
+            "year_2005": "Viña OchoTierras is born. We started making our own unique wines practically by hand, caring for every detail to achieve the maximum expression of our Valley."
+        },
+        "valley": {
+            "title": "Limarí Valley",
+            "description_1": "Land of contrasts. Mineral soils and northern sun, caressed by the \"Camanchaca\".",
+            "description_2": "Our vines grow in a semi-desert environment. The cold fog from the Pacific moderates temperatures, allowing slow ripening that grants vibrant acidity, freshness, and marked minerality to our wines.",
+            "luminosity": "High Luminosity",
+            "camanchaca": "Camanchaca"
+        },
+        "philosophy": {
+            "title": "Our Philosophy",
+            "quote": "\"We believe in minimal intervention as the path to excellence.\"",
+            "harvest_title": "Manual Harvest",
+            "harvest_desc": "Every bunch is selected and harvested by hand to ensure only the best fruit reaches the winery. We do not use machinery that could damage the grapes.",
+            "gravity_title": "Gravity Movement",
+            "gravity_desc": "We minimize the use of pumps, moving the wine gently by gravity. This preserves natural aromas and tannins structure, delivering round and elegant wines."
+        }
+    },
+    "Bodega": {
+        "badge": "Architecture & Nature",
+        "title": "Winery &",
+        "title_highlight": "Vineyards",
+        "subtitle": "Designed to respect the fruit and the environment.",
+        "terroir": {
+            "location_title": "Privileged Location",
+            "location_desc": "Our property is located 30 km from the coast. This proximity to the sea allows fresh Pacific breezes to regulate extreme valley temperatures, creating an ideal microclimate.",
+            "sea_dist_label": "Dist to Sea",
+            "surface_label": "Total Surface",
+            "soils_title": "Soils",
+            "soils_desc": "Sandy loam soils, with presence of gravel and calcium carbonate. This mineral composition provides unique structure, minerality, and elegance to our wines.",
+            "varieties_title": "Varieties",
+            "quote": "\"Wine quality is born in the vineyard.\""
+        },
+        "cellar": {
+            "title": "The Winery",
+            "description": "The winery stands out for its architectural design built below ground level. This decision is not aesthetic, it is functional and philosophical.",
+            "gravity_title": "Gravity",
+            "gravity_desc": "We use the force of gravity to move our wines, avoiding pumps that oxygenate or mistreat the wine.",
+            "temp_title": "Temperature",
+            "temp_desc": "Being underground, we maintain a stable and cool natural temperature, ideal for aging our wines.",
+            "efficiency_title": "Efficiency",
+            "efficiency_desc": "An efficient design that reduces energy consumption and minimizes our environmental impact."
+        }
+    },
+    "Turismo": {
+        "badge": "Experiences",
+        "title_1": "Visit Viña",
+        "title_2": "Ochotierras",
+        "description": "Immerse yourself in Limarí Valley. Tour our vineyards, learn about our gravitational process, and taste unforgettable wines.",
+        "pta_button": "Book Visit",
+        "tour": {
+            "title": "Tour & Tasting",
+            "description": "A complete experience designed for wine lovers. We start with a walk through our vineyards to understand the Limarí terroir, followed by a tour of our gravitational winery where you will learn the secrets of our production. We finish with a guided tasting of our Icon wines.",
+            "price_label": "Price per person",
+            "duration_label": "Duration",
+            "duration_val": "1 hour 30 min",
+            "includes_label": "Includes",
+            "include_1": "Vineyard and winery tour",
+            "include_2": "Tasting of 3 wines (Reserve and Grand Reserve Line)",
+            "include_3": "Cheese and nuts board",
+            "note": "* Minimum 2 people. Reservations 24 hours in advance."
+        }
+    },
+    "Contacto": {
+        "title": "Contact",
+        "subtitle": "We are here to answer your questions.",
+        "info": {
+            "title": "Information",
+            "location_title": "Location",
+            "location_val": "Route D 505, km 11 from Ovalle.\nLimarí Valley, Chile.",
+            "phone_title": "General Contact",
+            "phone_val_1": "+56 94453 8170 (WhatsApp)",
+            "phone_val_2": "+56 53 2 626211 (WhatsApp Only)",
+            "sales_title": "National Sales / Export",
+            "china_title": "China Sales",
+            "email_title": "General Email"
+        },
+        "form": {
+            "title": "Send us a message",
+            "name": "Name",
+            "phone": "Phone",
+            "email": "Email",
+            "message": "Message",
+            "submit": "Send Message",
+            "placeholder_name": "Your name",
+            "placeholder_phone": "+56 9...",
+            "placeholder_email": "you@email.com",
+            "placeholder_message": "How can we help you?"
+        }
+    },
+    "NuestrosVinos": {
+        "loading": "Loading our collection...",
+        "collection_subtitle": "Our Collection",
+        "title_main": "Our",
+        "title_highlight": "Wines",
+        "description": "Discover the unique expression of Limarí Valley in each of our lines.",
+        "view_detail": "View Details",
+        "price_label": "Price",
+        "buy_button": "Buy Now",
+        "empty_message": "No wines available at the moment."
+    }
+}

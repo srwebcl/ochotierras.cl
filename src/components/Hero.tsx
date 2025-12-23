@@ -4,15 +4,20 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 
 // --- TYPES ---
 interface HeroData {
     title?: string;
+    titleEn?: string;
     subtitle?: string;
+    subtitleEn?: string;
     button_primary_text?: string;
+    button_primary_text_en?: string;
     button_primary_url?: string;
     button_secondary_text?: string;
+    button_secondary_text_en?: string;
     button_secondary_url?: string;
     images?: string[];
 }
@@ -23,11 +28,15 @@ interface HeroProps {
 
 interface HeroSection {
     title?: string;
+    titleEn?: string;
     subtitle?: string;
+    subtitleEn?: string;
     description?: string;
     buttonText?: string;
+    buttonTextEn?: string;
     buttonPrimaryUrl?: string;
     buttonSecondaryText?: string;
+    buttonSecondaryTextEn?: string;
     buttonSecondaryUrl?: string;
     image?: string;
 }
@@ -106,6 +115,10 @@ const MagneticButton = ({ children, className, variant = "primary", ...props }: 
 // --- MAIN COMPONENT ---
 
 export function Hero({ data }: HeroProps) {
+    const locale = useLocale();
+    const t = useTranslations('Home');
+    const isEnglish = locale === 'en';
+
     // API State
     const [apiData, setApiData] = useState<HeroSection[] | null>(null);
     const [isLoading, setIsLoading] = useState(!data || data.length === 0);
@@ -134,11 +147,12 @@ export function Hero({ data }: HeroProps) {
 
     // Data Processing
     const apiHeroSlides: HeroData[] = apiData ? apiData.map(hero => ({
-        title: hero.title || "Ochotierras",
-        subtitle: hero.subtitle || "Valle del Limarí",
-        button_primary_text: hero.buttonText || "Descubrir Colección",
+        // Title Logic: EN -> titleEn (fallback to title), ES -> title
+        title: isEnglish ? (hero.titleEn || hero.title) : (hero.title || "Ochotierras"),
+        subtitle: isEnglish ? (hero.subtitleEn || hero.subtitle) : (hero.subtitle || "Valle del Limarí"),
+        button_primary_text: isEnglish ? (hero.buttonTextEn || hero.buttonText) : (hero.buttonText || "Descubrir Colección"),
         button_primary_url: hero.buttonPrimaryUrl || "/tienda",
-        button_secondary_text: hero.buttonSecondaryText || "Tienda Online",
+        button_secondary_text: isEnglish ? (hero.buttonSecondaryTextEn || hero.buttonSecondaryText) : (hero.buttonSecondaryText || "Tienda Online"),
         button_secondary_url: hero.buttonSecondaryUrl || "/tienda",
         images: hero.image ? [hero.image] : defaultImages,
     })) : [];
@@ -429,7 +443,7 @@ export function Hero({ data }: HeroProps) {
                 transition={{ delay: 2, duration: 1 }}
                 className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
             >
-                <span className="text-[9px] text-white/40 uppercase tracking-[0.3em] font-light">Descubre</span>
+                <span className="text-[9px] text-white/40 uppercase tracking-[0.3em] font-light">{t('scroll_discover')}</span>
                 <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-brand-gold/50 to-transparent relative overflow-hidden">
                     <motion.div
                         className="absolute top-0 left-0 w-full h-1/3 bg-brand-gold"

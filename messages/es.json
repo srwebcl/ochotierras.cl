@@ -1,0 +1,274 @@
+{
+    "Navbar": {
+        "home": "Inicio",
+        "about": "Nosotros",
+        "wines": "Nuestros Vinos",
+        "winery": "Bodega y Viñedos",
+        "tourism": "Turismo",
+        "shop": "Tienda",
+        "contact": "Contacto",
+        "cart": "Ver Carrito"
+    },
+    "Common": {
+        "add_to_cart": "Añadir al Carrito",
+        "out_of_stock": "Sin Stock",
+        "loading": "Cargando..."
+    },
+    "AgeVerification": {
+        "welcome": "Bienvenido a",
+        "title": "VIÑA OCHOTIERRAS",
+        "description": "Para ingresar a este sitio debes ser mayor de edad legal para beber alcohol en tu país.",
+        "question": "¿Eres mayor de 18 años?",
+        "yes_button": "Sí, Entrar",
+        "no_button": "No, Salir",
+        "footer": "Bebe con moderación. Prohibida su venta a menores de 18 años."
+    },
+    "SmartWhatsApp": {
+        "header_title": "Ochotierras",
+        "header_subtitle": "¿En qué podemos ayudarte hoy?",
+        "options": {
+            "buy_label": "Comprar Vinos",
+            "buy_sub": "Asesoría y ventas",
+            "buy_msg": "Hola, me interesa comprar vinos. ¿Me pueden asesorar?",
+            "tour_label": "Visitar la Viña",
+            "tour_sub": "Turismo y reservas",
+            "tour_msg": "Hola, quisiera agendar una visita o tour en la viña.",
+            "help_label": "Ayuda General",
+            "help_sub": "Consultas varias"
+        },
+        "context_msgs": {
+            "home": "Hola, estoy viendo la portada y necesito asesoría.",
+            "shop": "Hola, tengo dudas sobre la tienda online.",
+            "wines": "Hola, quisiera cotizar vinos precios especiales.",
+            "winery": "Hola, quisiera saber más sobre la bodega.",
+            "default": "Hola, tengo una consulta general."
+        }
+    },
+    "Footer": {
+        "quote": "Vinos nacidos de la gravedad y el silencio del Valle del Limarí. Una expresión pura de nuestra tierra.",
+        "contact": "Contacto",
+        "explore": "Explorar",
+        "sales": "Ventas y Exportación",
+        "national_sales": "Ventas Nacionales / Turismo",
+        "china_sales": "Ventas China / Colonia China",
+        "privacy": "Privacidad",
+        "terms": "Términos",
+        "developed_by": "Desarrollado por",
+        "rights_reserved": "Todos los derechos reservados."
+    },
+    "Metadata": {
+        "title": {
+            "default": "Viña Ochotierras - Valle del Limarí",
+            "template": "%s | Viña Ochotierras"
+        },
+        "description": "Vinos de autor del Valle del Limarí. Una expresión pura de nuestra tierra.",
+        "og": {
+            "title": "Viña Ochotierras",
+            "description": "Vinos de autor del Valle del Limarí."
+        }
+    },
+    "HomePage": {
+        "title": "Bienvenido a Ochotierras",
+        "about": "Ir a Nosotros"
+    },
+    "Tienda": {
+        "catalog_tag": "Catálogo Oficial",
+        "title": "Nuestros Vinos",
+        "subtitle": "Descubre la expresión única del <italic>Valle del Limarí</italic>. Vinos con carácter, creados con pasión.",
+        "filters": {
+            "all": "TODOS"
+        },
+        "status": {
+            "loading": "Cargando bodega...",
+            "error": "No pudimos cargar los productos. Por favor revisa tu conexión.",
+            "empty_category": "No hay productos en esta categoría.",
+            "empty_all": "No hay productos disponibles por el momento.",
+            "few_left": "¡Quedan pocos!",
+            "out_of_stock": "Agotado",
+            "box_of_6": "Caja 6 Botellas"
+        }
+    },
+    "Cart": {
+        "title": "Tu Compra",
+        "empty": "Tu carrito está vacío.",
+        "continue_shopping": "Seguir Explorando",
+        "subtotal": "Subtotal",
+        "total": "Total",
+        "checkout": "Ir a Pagar",
+        "shipping_note": "Envíos calculados en el siguiente paso."
+    },
+    "ProductDetail": {
+        "loading": "Cargando experiencia...",
+        "not_found": "Vino no encontrado",
+        "back_home": "Volver a la Bodega",
+        "back_shop": "Volver a la Tienda",
+        "price_label": "Precio Caja (6 Bot.)",
+        "out_of_stock": "Agotado Temporalmente",
+        "shipping_chile": "Envío a todo Chile",
+        "secure_buy": "Compra Segura",
+        "download_tech_sheet": "Descargar Ficha Técnica",
+        "tasting_notes": "Notas de Cata",
+        "awards": "Premios & Reconocimientos",
+        "tech_sheet_title": "Ficha Técnica",
+        "year": "Año",
+        "variety": "Variedad",
+        "origin": "Origen",
+        "aging_potential": "Potencial de Guarda",
+        "barrel_aging": "Guarda en Barrica",
+        "analysis": {
+            "alcohol": "Alcohol",
+            "residual_sugar": "Azúcar R.",
+            "total_ph": "pH",
+            "volatile_acidity": "Acidez Volátil",
+            "total_acidity": "Acidez Total"
+        }
+    },
+    "Home": {
+        "scroll_discover": "Descubre"
+    },
+    "WineCarousel": {
+        "loading": "Cargando vinos...",
+        "collection_label": "Colección Exclusiva",
+        "box_of_6": "Caja de 6 Botellas",
+        "buy": "Comprar",
+        "sold_out": "Agotado",
+        "view": "Conocer",
+        "few_left": "¡Solo quedan {stock} unidades!"
+    },
+    "StoryScroll": {
+        "philosophy": "Nuestra Filosofía",
+        "earth": "Tierra",
+        "gravity": "Gravedad",
+        "description": "En Viña OchoTierras trabajamos con la dedicación de un artesano. Las personas y sus experiencias tienen un rol central en la creación de nuestros vinos.",
+        "gravity_design": "Diseño por Gravedad",
+        "winery_description": "La bodega fue construida bajo el nivel del suelo, permitiendo usar la gravedad para mover el vino suavemente. Sin bombas. Preservando la condición excepcional de cada gota.",
+        "explore_winery": "Explorar Bodega",
+        "discover": "Descubre"
+    },
+    "DiscoverySection": {
+        "explore_universe": "Explora El Universo OchoTierras",
+        "discover_more": "Descubre",
+        "more": "Más",
+        "items": {
+            "tourism": "Turismo",
+            "tourism_subtitle": "Experiencias Únicas",
+            "wines": "Vinos",
+            "wines_subtitle": "Nuestra Colección",
+            "shop": "Tienda",
+            "shop_subtitle": "Compra Online",
+            "contact": "Contacto",
+            "contact_subtitle": "Hablemos de Negocios",
+            "winery": "Bodega",
+            "winery_subtitle": "Arquitectura & Gravedad"
+        }
+    },
+    "Nosotros": {
+        "badge": "Desde 1993",
+        "title": "Nuestra Historia",
+        "subtitle": "Una bodega de producción limitada en el corazón del Valle del Limarí.",
+        "timeline": {
+            "title_roots": "Raíces",
+            "title_deep": "Profundas",
+            "year_1993": "La historia comienza cuando se plantaron las primeras parras en nuestras tierras, buscando el terroir perfecto.",
+            "year_2005": "Nace Viña Ochotierras como tal. Comenzamos a hacer nuestros propios y únicos vinos prácticamente a mano, cuidando cada detalle para lograr la máxima expresión de nuestro Valle."
+        },
+        "valley": {
+            "title": "Valle del Limarí",
+            "description_1": "Tierra de contrastes. Suelos minerales y sol del norte, acariciados por la \"Camanchaca\".",
+            "description_2": "Nuestras viñas crecen en un entorno semi-désertico. La niebla fría proveniente del Pacífico modera las temperaturas, permitiendo una maduración lenta que otorga acidez vibrante, frescura y una marcada mineralidad a nuestros vinos.",
+            "luminosity": "Alta Luminosidad",
+            "camanchaca": "Camanchaca"
+        },
+        "philosophy": {
+            "title": "Nuestra Filosofía",
+            "quote": "\"Creemos en la mínima intervención como camino a la excelencia.\"",
+            "harvest_title": "Vendimia Manual",
+            "harvest_desc": "Cada racimo es seleccionado y cosechado a mano para asegurar que solo la mejor fruta llegue a la bodega. No utilizamos maquinaria que pueda dañar las uvas.",
+            "gravity_title": "Movimiento por Gravedad",
+            "gravity_desc": "Minimizamos el uso de bombas, moviendo el vino suavemente por gravedad. Esto preserva los aromas naturales y la estructura tánica, entregando vinos redondos y elegantes."
+        }
+    },
+    "Bodega": {
+        "badge": "Arquitectura & Naturaleza",
+        "title": "Bodega y",
+        "title_highlight": "Viñedos",
+        "subtitle": "Diseñadas para respetar la fruta y el entorno.",
+        "terroir": {
+            "location_title": "Ubicación Privilegiada",
+            "location_desc": "Nuestra propiedad se encuentra ubicada a 30 km. de la costa. Esta cercanía al mar permite que las brisas frescas del Pacífico regulen las temperaturas extremas del valle, creando un microclima ideal.",
+            "sea_dist_label": "Distancia al Mar",
+            "surface_label": "Superficie Total",
+            "soils_title": "Suelos",
+            "soils_desc": "Suelos franco arenosos, con presencia de gravas y carbonato de calcio. Esta composición mineral aporta una estructura única, mineralidad y elegancia a nuestros vinos.",
+            "varieties_title": "Variedades",
+            "quote": "\"La calidad del vino nace en el viñedo.\""
+        },
+        "cellar": {
+            "title": "La Bodega",
+            "description": "La bodega destaca por su diseño arquitectónico construido bajo el nivel del suelo. Esta decisión no es estética, es funcional y filosófica.",
+            "gravity_title": "Gravedad",
+            "gravity_desc": "Utilizamos la fuerza de gravedad para el movimiento de nuestros vinos, evitando bombas que oxigenen o maltraten el vino.",
+            "temp_title": "Temperatura",
+            "temp_desc": "Al estar bajo tierra, mantenemos una temperatura natural estable y fresca, ideal para la crianza y guarda de nuestros vinos.",
+            "efficiency_title": "Eficiencia",
+            "efficiency_desc": "Un diseño eficiente que reduce el consumo energético y minimiza nuestro impacto ambiental."
+        }
+    },
+    "Turismo": {
+        "badge": "Experiencias",
+        "title_1": "Visita Viña",
+        "title_2": "Ochotierras",
+        "description": "Sumérgete en el Valle del Limarí. Recorre nuestros viñedos, conoce nuestro proceso gravitacional y degusta vinos inolvidables.",
+        "pta_button": "Reservar Visita",
+        "tour": {
+            "title": "Tour & Degustación",
+            "description": "Una experiencia completa diseñada para los amantes del vino. Comenzamos con un paseo por nuestros viñedos para entender el terroir del Limarí, seguido de un recorrido por nuestra bodega gravitacional donde conocerás los secretos de nuestra elaboración. Finalizamos con una degustación guiada de nuestros vinos Icono.",
+            "price_label": "Valor por persona",
+            "duration_label": "Duración",
+            "duration_val": "1 hora 30 min",
+            "includes_label": "Incluye",
+            "include_1": "Recorrido por viñedos y bodega",
+            "include_2": "Degustación de 3 vinos (Línea Reserva y Gran Reserva)",
+            "include_3": "Tabla de quesos y frutos secos",
+            "note": "* Mínimo 2 personas. Reservas con 24 horas de anticipación."
+        }
+    },
+    "Contacto": {
+        "title": "Contacto",
+        "subtitle": "Estamos aquí para responder tus consultas.",
+        "info": {
+            "title": "Información",
+            "location_title": "Ubicación",
+            "location_val": "Ruta D 505, km 11 desde Ovalle.\nValle del Limarí, Chile.",
+            "phone_title": "Contacto General",
+            "phone_val_1": "+56 94453 8170 (WhatsApp)",
+            "phone_val_2": "+56 53 2 626211 (Solo WhatsApp)",
+            "sales_title": "Ventas Nacional / Exportación",
+            "china_title": "Ventas Colonia China",
+            "email_title": "Email General"
+        },
+        "form": {
+            "title": "Envíanos un mensaje",
+            "name": "Nombre",
+            "phone": "Teléfono",
+            "email": "Email",
+            "message": "Mensaje",
+            "submit": "Enviar Mensaje",
+            "placeholder_name": "Tu nombre",
+            "placeholder_phone": "+56 9...",
+            "placeholder_email": "tu@email.com",
+            "placeholder_message": "¿En qué podemos ayudarte?"
+        }
+    },
+    "NuestrosVinos": {
+        "loading": "Cargando nuestra colección...",
+        "collection_subtitle": "Nuestra Colección",
+        "title_main": "Nuestros",
+        "title_highlight": "Vinos",
+        "description": "Descubre la expresión única del Valle del Limarí en cada una de nuestras líneas.",
+        "view_detail": "Ver Detalle",
+        "price_label": "Precio",
+        "buy_button": "Comprar",
+        "empty_message": "No hay vinos disponibles en este momento."
+    }
+}

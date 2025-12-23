@@ -8,11 +8,17 @@ import { Button, buttonVariants } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { useLocale, useTranslations } from "next-intl"
 
 interface Wine {
     id: number;
     name: string;
+    nameEn?: string;
     subtitle?: string;
+    subtitleEn?: string; // If api provides it, though we didn't explicitly map it in api route for wines in collection-wines (product map). Wait, check api.php again. Product map has subtitle but not subtitleEn explicitly? 
+    // Checking api.php again... product map: 'subtitle' => $product->subtitle. No 'subtitleEn' in API response map. 
+    // However, I added nameEn, descriptionEn. 
+    // Let's stick to what I added to API: nameEn, descriptionEn.
     type?: string;
     price: number;
     image?: string;
@@ -20,6 +26,7 @@ interface Wine {
     accentColor?: string;
     accentColorHex?: string;
     description?: string;
+    descriptionEn?: string;
     stock?: number;
     slug?: string;
 }
@@ -68,6 +75,10 @@ interface WineCarouselProps {
 }
 
 export function WineCarousel({ wines }: WineCarouselProps) {
+    const t = useTranslations('WineCarousel');
+    const locale = useLocale();
+    const isEnglish = locale === 'en';
+
     const [data, setData] = useState<Wine[]>(wines || []);
     const [isLoading, setIsLoading] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0)
@@ -99,10 +110,17 @@ export function WineCarousel({ wines }: WineCarouselProps) {
         }
     }, [wines]);
 
-    const activeWine = data[activeIndex];
+    const rawActiveWine = data[activeIndex];
+
+    // Compute Localized Wine
+    const activeWine = rawActiveWine ? {
+        ...rawActiveWine,
+        name: isEnglish ? (rawActiveWine.nameEn || rawActiveWine.name) : rawActiveWine.name,
+        description: isEnglish ? (rawActiveWine.descriptionEn || rawActiveWine.description) : rawActiveWine.description,
+    } : null;
 
     if (!activeWine) {
-        if (isLoading) return <div className="h-[80vh] flex items-center justify-center bg-[#F5F5F7] text-brand-dark">Cargando vinos...</div>;
+        if (isLoading) return <div className="h-[80vh] flex items-center justify-center bg-[#F5F5F7] text-brand-dark">{t('loading')}</div>;
         return null; // Don't show anything if no data
     }
 
@@ -203,7 +221,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
 
                 {/* Navigation & Status - Relative on Mobile for stacking, Absolute on Desktop */}
                 <div className="relative md:absolute top-0 left-0 right-0 flex justify-center md:justify-between items-center px-2 md:px-12 py-4 md:py-8 z-20 w-full mb-6 md:mb-0">
-                    <span className="text-sm md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-gray-400 text-center">Colección Exclusiva</span>
+                    <span className="text-sm md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-gray-400 text-center">{t('collection_label')}</span>
                     <div className="hidden md:flex gap-2">
                         {data.map((_, idx) => (
                             <div
@@ -319,7 +337,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                                 ${activeWine.price.toLocaleString("es-CL")}
                                             </span>
                                             <span className="text-xs text-gray-400 italic mt-1 font-serif">
-                                                caja de 6 botellas
+                                                {t('box_of_6')}
                                             </span>
                                         </motion.div>
 
@@ -336,7 +354,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                                     }`}
                                             >
                                                 <ShoppingBag className="w-4 h-4 mr-2" />
-                                                {activeWine.stock === 0 ? 'Agotado' : 'Comprar'}
+                                                {activeWine.stock === 0 ? t('sold_out') : t('buy')}
                                             </Button>
 
                                             {/* Conocer el Vino Button */}
@@ -349,7 +367,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                                     )}
                                                 >
                                                     <Eye className="w-4 h-4 mr-2" />
-                                                    Conocer
+                                                    {t('view')}
                                                 </Link>
                                             )}
 
@@ -361,7 +379,7 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                                     transition={{ delay: 1 }}
                                                     className="text-center md:text-left text-xs font-bold text-red-600 mt-2 uppercase tracking-tight"
                                                 >
-                                                    ¡Solo quedan {activeWine.stock} unidades!
+                                                    {t('few_left', { stock: activeWine.stock })}
                                                 </motion.p>
                                             )}
                                         </motion.div>
