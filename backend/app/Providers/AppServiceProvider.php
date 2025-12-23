@@ -23,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
         // Forzamos HTTPS y Dominio SIEMPRE, sin importar el entorno
         URL::forceScheme('https');
         URL::forceRootUrl('https://api.ochotierras.cl');
-        
+
         // Aseguramos que el disco publico use la URL correcta
-        config(['filesystems.disks.public.url' => 'https://api.ochotierras.cl/storage'\]\)\;
+        config(['filesystems.disks.public.url' => 'https://api.ochotierras.cl/storage']);
     }
 }
