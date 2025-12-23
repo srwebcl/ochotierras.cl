@@ -78,7 +78,8 @@ class HeroSectionResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('images')
                             ->label('Imágenes del Slider')
-                            ->image()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/jpg'])
+                            ->maxSize(10240) // 10MB limit
                             ->multiple()
                             ->reorderable()
                             ->directory('hero-images')
