@@ -46,7 +46,7 @@ export function DiscoverySection() {
             id: 4,
             title: t('items.contact'),
             subtitle: t('items.contact_subtitle'),
-            image: "/images/general/ochotierras-lizana.jpg",
+            image: "/images/general/turismo.jpeg",
             link: "/contacto",
         },
         {

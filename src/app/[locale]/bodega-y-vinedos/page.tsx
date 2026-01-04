@@ -4,36 +4,20 @@ import { Section } from "@/components/ui/Section"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 
+import { CinematicHero } from "@/components/CinematicHero"
+
 export default function Bodega() {
     const t = useTranslations('Bodega');
 
     return (
-        <div className="pt-20">
-            {/* Hero - Full Screen Parallax */}
-            <section className="relative h-screen flex items-center justify-center overflow-hidden bg-brand-dark">
-                <div className="absolute inset-0 z-0 opacity-40">
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-brand-dark z-10" />
-                    <Image
-                        src="/images/general/hero-bodega.jpeg"
-                        alt="Bodega Ochotierras"
-                        fill
-                        className="object-cover scale-105"
-                        priority
-                    />
-                </div>
-
-                <div className="relative z-20 text-center px-4 max-w-5xl">
-                    <span className="block text-brand-gold uppercase tracking-[0.3em] text-sm md:text-base mb-6 font-bold">
-                        {t('badge')}
-                    </span>
-                    <h1 className="text-6xl md:text-8xl font-serif font-bold text-white mb-8 tracking-tighter loading-tight">
-                        {t('title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white">{t('title_highlight')}</span>
-                    </h1>
-                    <p className="max-w-2xl mx-auto text-xl text-gray-200 font-light leading-relaxed">
-                        {t('subtitle')}
-                    </p>
-                </div>
-            </section>
+        <div>
+            {/* Cinematic Hero */}
+            <CinematicHero
+                title={<>{t('title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white">{t('title_highlight')}</span></>}
+                badge={t('badge')}
+                subtitle={t('subtitle')}
+                backgroundImage="/images/general/hero-bodega.jpeg"
+            />
 
             {/* Terroir Detail */}
             <Section className="bg-white text-brand-dark relative z-10">
@@ -75,7 +59,7 @@ export default function Bodega() {
                     </div>
                     <div className="relative h-[800px] w-full bg-gray-100 rounded-lg overflow-hidden shadow-2xl">
                         <Image
-                            src="/images/general/vineyard_hero_new.png"
+                            src="/images/general/vinedos.jpeg"
                             alt="Viñedos Ochotierras"
                             fill
                             className="object-cover"

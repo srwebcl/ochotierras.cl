@@ -6,22 +6,19 @@ import Image from "next/image"
 import { MapPin, Phone, Mail, Clock } from "lucide-react"
 import { useTranslations } from "next-intl"
 
+import { CinematicHero } from "@/components/CinematicHero"
+
 export default function Contacto() {
     const t = useTranslations('Contacto');
 
     return (
-        <div className="pt-20">
-            {/* Hero */}
-            <section className="relative h-[50vh] flex items-center justify-center overflow-hidden bg-brand-dark">
-                <div className="absolute inset-0 z-0">
-                    <Image src="/images/general/hero-nosotros.jpeg" alt="Contacto" fill className="object-cover opacity-40" />
-                    <div className="absolute inset-0 bg-brand-dark/50" />
-                </div>
-                <div className="container relative z-10 px-4 text-center">
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6">{t('title')}</h1>
-                    <p className="text-xl text-gray-200 font-light">{t('subtitle')}</p>
-                </div>
-            </section>
+        <div>
+            {/* Cinematic Hero */}
+            <CinematicHero
+                title={t('title')}
+                subtitle={t('subtitle')}
+                backgroundImage="/images/general/hero-nosotros.jpeg"
+            />
 
             <Section className="bg-white">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">

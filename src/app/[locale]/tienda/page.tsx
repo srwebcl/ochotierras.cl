@@ -3,6 +3,7 @@
 import { Section } from "@/components/ui/Section"
 import Image from "next/image"
 import { StoreProductGrid } from "@/components/StoreProductGrid"
+import { StoreHeroCarousel } from "@/components/StoreHeroCarousel"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
@@ -48,33 +49,8 @@ export default function Tienda() {
 
     return (
         <div className="pt-20 bg-gray-50 min-h-screen">
-            {/* Powerful Hero */}
-            <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-brand-dark">
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src="/images/general/tienda-fondo.jpeg"
-                        alt="Tienda Background"
-                        fill
-                        className="object-cover opacity-50 scale-105"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-transparent to-brand-dark/90 z-10" />
-                </div>
-
-                <div className="container relative z-20 text-center px-4 max-w-5xl">
-                    <span className="inline-block py-1 px-3 border border-brand-gold/50 rounded-full text-brand-gold text-sm tracking-[0.2em] uppercase mb-6 animate-fade-in backdrop-blur-sm">
-                        {t('catalog_tag')}
-                    </span>
-                    <h1 className="text-6xl md:text-8xl font-serif font-bold text-white mb-8 tracking-tight drop-shadow-2xl animate-fade-in-up">
-                        {t('title')}
-                    </h1>
-                    <p className="text-xl md:text-2xl text-gray-200 font-light max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
-                        {t.rich('subtitle', {
-                            italic: (chunks) => <span className="text-brand-gold font-serif italic">{chunks}</span>
-                        })}
-                    </p>
-                </div>
-            </section>
+            {/* Mobile-First Hero Carousel */}
+            <StoreHeroCarousel />
 
             {/* Sticky Floating Filters */}
             <div className="sticky top-[80px] z-40 bg-white/95 backdrop-blur-md shadow-md border-y border-gray-100 transition-all duration-300">

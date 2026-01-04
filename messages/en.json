@@ -270,5 +270,26 @@
         "price_label": "Price",
         "buy_button": "Buy Now",
         "empty_message": "No wines available at the moment."
+    },
+    "CollectionDetail": {
+        "loading": "Loading experience...",
+        "not_found": "Wine not found",
+        "back_home": "Back to Home",
+        "download_tech_sheet": "Download Technical Sheet",
+        "tasting_notes": "Tasting Notes",
+        "awards": "Awards & Recognition",
+        "tech_sheet_title": "Technical Sheet",
+        "year": "Vintage",
+        "variety": "Variety",
+        "origin": "Origin",
+        "aging_potential": "Aging Potential",
+        "barrel_aging": "Barrel Aging",
+        "analysis": {
+            "alcohol": "Alcohol",
+            "residual_sugar": "Residual Sugar",
+            "total_ph": "pH",
+            "volatile_acidity": "Volatile Acidity",
+            "total_acidity": "Total Acidity"
+        }
     }
 }

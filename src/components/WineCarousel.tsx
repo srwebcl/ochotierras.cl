@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import { useState } from "react"
-import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion"
-import { ChevronLeft, ChevronRight, ShoppingBag, Eye } from "lucide-react"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronLeft, ChevronRight, Eye } from "lucide-react"
+import { buttonVariants } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -15,60 +15,17 @@ interface Wine {
     name: string;
     nameEn?: string;
     subtitle?: string;
-    subtitleEn?: string; // If api provides it, though we didn't explicitly map it in api route for wines in collection-wines (product map). Wait, check api.php again. Product map has subtitle but not subtitleEn explicitly? 
-    // Checking api.php again... product map: 'subtitle' => $product->subtitle. No 'subtitleEn' in API response map. 
-    // However, I added nameEn, descriptionEn. 
-    // Let's stick to what I added to API: nameEn, descriptionEn.
+    subtitleEn?: string;
     type?: string;
     price: number;
     image?: string;
     bgGradient?: string;
-    accentColor?: string;
     accentColorHex?: string;
     description?: string;
     descriptionEn?: string;
     stock?: number;
     slug?: string;
 }
-
-const DEFAULT_WINES: Wine[] = [
-    {
-        id: 1,
-        name: "Chardonnay",
-        subtitle: "Reserva",
-        type: "Blanco",
-        price: 9000,
-        image: "/images/bottles/chardonnay-reserva.webp",
-        bgGradient: "radial-gradient(circle at center, #ffd700 0%, transparent 70%)",
-        accentColorHex: "#D4AF37",
-        description: "Fresco, mineral y elegante. La expresión pura del Limarí.",
-        slug: "chardonnay-reserva"
-    },
-    {
-        id: 2,
-        name: "Reserva Privada",
-        subtitle: "Syrah",
-        type: "Alta Gama",
-        price: 18900,
-        image: "/images/bottles/reserva-privada-syrah.webp",
-        bgGradient: "radial-gradient(circle at center, #5e0916 0%, transparent 70%)",
-        accentColorHex: "#b91c1c",
-        description: "Elegancia estructural. Un tinto con carácter y profundidad inigualable.",
-        slug: "reserva-privada-carmenere-syrah"
-    },
-    {
-        id: 3,
-        name: "Gran Reserva",
-        subtitle: "Icono",
-        type: "Icono",
-        price: 24900,
-        image: "/images/bottles/vino-gran-reserva-24-barricas.webp",
-        bgGradient: "radial-gradient(circle at center, #2a2a2a 0%, transparent 70%)",
-        accentColorHex: "#1a1a1a",
-        description: "24 meses en barrica. Nuestra obra maestra de ensamblaje.",
-        slug: "gran-reserva"
-    }
-]
 
 interface WineCarouselProps {
     wines?: Wine[];
@@ -327,65 +284,31 @@ export function WineCarousel({ wines }: WineCarouselProps) {
                                         {activeWine.description}
                                     </motion.p>
 
-                                    <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 justify-center md:justify-start">
-                                        <motion.div
-                                            custom={3}
-                                            variants={textStaggerVariants}
-                                            className="flex flex-col items-center md:items-start"
-                                        >
-                                            <span className="text-3xl md:text-4xl font-bold text-brand-dark leading-none">
-                                                ${activeWine.price.toLocaleString("es-CL")}
-                                            </span>
-                                            <span className="text-xs text-gray-400 italic mt-1 font-serif">
-                                                {t('box_of_6')}
-                                            </span>
-                                        </motion.div>
+                                    {/* Price Removed for Collection Showcase */}
 
-                                        <motion.div
-                                            custom={4}
-                                            variants={textStaggerVariants}
-                                            className="w-full md:w-auto flex flex-col md:flex-row gap-4"
-                                        >
-                                            <Button
-                                                disabled={activeWine.stock === 0}
-                                                className={`w-full md:w-auto h-12 md:h-14 px-8 rounded-full uppercase tracking-widest text-xs md:text-sm font-bold shadow-lg transition-all duration-300 ${activeWine.stock === 0
-                                                    ? 'bg-gray-400 cursor-not-allowed text-gray-200'
-                                                    : 'bg-brand-dark text-white hover:bg-brand-red hover:shadow-xl hover:scale-105'
-                                                    }`}
+                                    <motion.div
+                                        custom={4}
+                                        variants={textStaggerVariants}
+                                        className="w-full md:w-auto flex flex-col md:flex-row gap-4"
+                                    >
+                                        {/* Buy Button Removed for Collection Showcase */}
+
+                                        {/* Conocer el Vino Button */}
+                                        {activeWine.slug && (
+                                            <Link
+                                                href={`/coleccion/${activeWine.slug}`}
+                                                className={cn(
+                                                    buttonVariants({ variant: "outline" }),
+                                                    "w-full md:w-auto h-12 md:h-14 px-8 rounded-full uppercase tracking-widest text-xs md:text-sm font-bold border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white transition-all duration-300"
+                                                )}
                                             >
-                                                <ShoppingBag className="w-4 h-4 mr-2" />
-                                                {activeWine.stock === 0 ? t('sold_out') : t('buy')}
-                                            </Button>
+                                                <Eye className="w-4 h-4 mr-2" />
+                                                {t('view')}
+                                            </Link>
+                                        )}
 
-                                            {/* Conocer el Vino Button */}
-                                            {activeWine.slug && (
-                                                <Link
-                                                    href={`/tienda/${activeWine.slug}`}
-                                                    className={cn(
-                                                        buttonVariants({ variant: "outline" }),
-                                                        "w-full md:w-auto h-12 md:h-14 px-8 rounded-full uppercase tracking-widest text-xs md:text-sm font-bold border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white transition-all duration-300"
-                                                    )}
-                                                >
-                                                    <Eye className="w-4 h-4 mr-2" />
-                                                    {t('view')}
-                                                </Link>
-                                            )}
-
-                                            {/* Stock Status Badge */}
-                                            {activeWine.stock !== undefined && activeWine.stock > 0 && activeWine.stock <= 5 && (
-                                                <motion.p
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    transition={{ delay: 1 }}
-                                                    className="text-center md:text-left text-xs font-bold text-red-600 mt-2 uppercase tracking-tight"
-                                                >
-                                                    {t('few_left', { stock: activeWine.stock })}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-                                    </div>
+                                    </motion.div>
                                 </div>
-
                             </motion.div>
                         </AnimatePresence>
                     </div>

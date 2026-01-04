@@ -10,7 +10,7 @@ interface CartItem extends Product {
 interface CartContextType {
     items: CartItem[]
     isOpen: boolean
-    addToCart: (product: Product) => void
+    addToCart: (product: Product, quantity?: number) => void
     removeFromCart: (productId: number) => void
     updateQuantity: (productId: number, quantity: number) => void
     toggleCart: () => void
@@ -46,17 +46,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
     }, [items, isLoaded])
 
-    const addToCart = useCallback((product: Product) => {
+    const addToCart = useCallback((product: Product, quantity: number = 1) => {
         setItems(prev => {
             const existing = prev.find(item => item.id === product.id)
             if (existing) {
                 return prev.map(item =>
                     item.id === product.id
-                        ? { ...item, quantity: item.quantity + 1 }
+                        ? { ...item, quantity: item.quantity + quantity }
                         : item
                 )
             }
-            return [...prev, { ...product, quantity: 1 }]
+            return [...prev, { ...product, quantity }]
         })
         setIsOpen(true)
     }, [])

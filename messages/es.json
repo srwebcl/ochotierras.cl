@@ -215,22 +215,56 @@
         }
     },
     "Turismo": {
-        "badge": "Experiencias",
-        "title_1": "Visita Viña",
-        "title_2": "Ochotierras",
-        "description": "Sumérgete en el Valle del Limarí. Recorre nuestros viñedos, conoce nuestro proceso gravitacional y degusta vinos inolvidables.",
+        "title_1": "Experiencias",
+        "title_2": "Inolvidables",
+        "badge": "Enoturismo",
+        "description": "Ven a conocer el origen de nuestros vinos en el corazón del Valle del Limarí.",
         "pta_button": "Reservar Visita",
-        "tour": {
-            "title": "Tour & Degustación",
-            "description": "Una experiencia completa diseñada para los amantes del vino. Comenzamos con un paseo por nuestros viñedos para entender el terroir del Limarí, seguido de un recorrido por nuestra bodega gravitacional donde conocerás los secretos de nuestra elaboración. Finalizamos con una degustación guiada de nuestros vinos Icono.",
-            "price_label": "Valor por persona",
-            "duration_label": "Duración",
-            "duration_val": "1 hora 30 min",
-            "includes_label": "Incluye",
-            "include_1": "Recorrido por viñedos y bodega",
-            "include_2": "Degustación de 3 vinos (Línea Reserva y Gran Reserva)",
-            "include_3": "Tabla de quesos y frutos secos",
-            "note": "* Mínimo 2 personas. Reservas con 24 horas de anticipación."
+        "intro": {
+            "title": "Viña Ochotierras: Vive la Esencia del Valle del Limarí",
+            "p1": "En el corazón del Valle del Limarí se encuentra la Viña Ochotierras, un lugar donde cada copa de vino cuenta una historia. Aquí, tradición, paisaje y pasión se unen para ofrecerte una experiencia enoturística inolvidable.",
+            "p2": "Visitar Ochotierras es más que recorrer una viña: es sumergirse en los sabores, aromas y paisajes que te conectan con la esencia del norte chico en Chile."
+        },
+        "express": {
+            "title": "Visita Express",
+            "subtitle": "Un Encuentro con el Sabor del Valle",
+            "description": "Perfecta para quienes van de paso y desean conocer el alma de nuestros vinos. Esta visita breve pero encantadora permite recorrer la bodega, conocer los secretos básicos del proceso de vinificación y disfrutar del entorno natural del Limarí.",
+            "includes_label": "Incluye:",
+            "includes": [
+                "Recorrido guiado por la bodega.",
+                "Explicación de nuestros procesos de vinificación."
+            ],
+            "duration": "15 minutos aprox.",
+            "price": "Sin costo",
+            "note": "Ideal para quienes desean disfrutar una experiencia ligera, sin reserva previa, pero llena de encanto."
+        },
+        "premium": {
+            "title": "Visita Premium",
+            "subtitle": "Sumérgete en el Arte del Vino",
+            "description": "Si deseas vivir el vino con todos tus sentidos, la Visita Premium es para ti. Acompañado por nuestros guías, recorrerás cada espacio donde la magia sucede: desde la vendimia hasta las barricas. Conocerás nuestra historia de Ochotierras, sus procesos de elaboración y la dedicación que hay detrás de cada botella. La experiencia culmina con una degustación de vinos seleccionados, maridados con productos locales que reflejan lo mejor del Valle del Limarí.",
+            "includes_label": "Incluye:",
+            "includes": [
+                "Recorrido guiado completo por la bodega y los viñedos.",
+                "Relato histórico y cultural de Viña Ochotierras.",
+                "Explicación detallada de la elaboración de nuestros vinos.",
+                "Degustación de 2 vinos seleccionados.",
+                "Tabla de productos locales: queso de cabra, frutos secos y más delicias del Limarí."
+            ],
+            "duration": "2 horas aprox.",
+            "price": "$20.000",
+            "price_note": "Valor por persona",
+            "conditions_label": "A considerar:",
+            "conditions": [
+                "Mínimo 4 personas.",
+                "Reserva con 24 hrs de anticipación.",
+                "Se concreta la reserva al cancelar el 100%."
+            ],
+            "note": "Una experiencia sensorial ideal para quienes disfrutan del vino, la naturaleza y la autenticidad artesanal."
+        },
+        "booking": {
+            "title": "Reserva tu Experiencia",
+            "description": "Déjate envolver por la tranquilidad del Valle del Limarí y descubre el arte de hacer vino en un entorno único.",
+            "button": "Reserva tu Experiencia"
         }
     },
     "Contacto": {
@@ -263,12 +297,44 @@
     "NuestrosVinos": {
         "loading": "Cargando nuestra colección...",
         "collection_subtitle": "Nuestra Colección",
-        "title_main": "Nuestros",
+        "title_main": "NUESTROS VINOS",
         "title_highlight": "Vinos",
         "description": "Descubre la expresión única del Valle del Limarí en cada una de nuestras líneas.",
         "view_detail": "Ver Detalle",
         "price_label": "Precio",
         "buy_button": "Comprar",
-        "empty_message": "No hay vinos disponibles en este momento."
+        "empty_message": "No hay vinos disponibles en este momento.",
+        "categories": {
+            "reserva_especial": {
+                "description": "Nuestra línea Reserva Especial reune a tres vinos de las variedades Cabernet Sauvignon, Syrah y un ensamblaje (Cabertnet Sauvignon / Syrah). Esta línea de vinos de Viña OchoTierras es única y representa la escencia del Valle del Limarí. Cada vino es elaborado con uvas provenientes de un solo viñedo, que ha sido cuidadosamente estudiado para determinar aquellos sectores que producirán las uvas requeridas para alcanzar la calidad de nuestros vinos Reserva Especial."
+            },
+            "reserva_privada": {
+                "description": "Nuestra línea de vinos reserva privada esta compuesta de dos variedades Carmenere y syrah. En su elaboración se utilizo uva proveniente de un único viñedo para posteriormente ser guardad en roble francés durante 10 a 12 meses, resultando vinos de gran carácter y sedosidad que representan fielmente a nuestro terruño."
+            },
+            "gran_reserva": {
+                "description": "Nuestros mejores vinos son seleccionados cada año después de una guarda de 14 a 18 meses en barricas de roble francés, con una producción anual de alrededor de 17.000 botellas. Es una línea exclusiva y cada cosecha una edición limitada. Vinos elegantes, exquisitos y complejos. En su etiqueta hemos impreso la cantidad de barricas utilizadas en la elaboración, su acabado lo realizamos a mano, numerando cada botella y finalizando el sellado con lacre."
+            }
+        }
+    },
+    "CollectionDetail": {
+        "loading": "Cargando experiencia...",
+        "not_found": "Vino no encontrado",
+        "back_home": "Volver a Inicio",
+        "download_tech_sheet": "Descargar Ficha Técnica",
+        "tasting_notes": "Notas de Cata",
+        "awards": "Premios & Reconocimientos",
+        "tech_sheet_title": "Ficha Técnica",
+        "year": "Año",
+        "variety": "Variedad",
+        "origin": "Origen",
+        "aging_potential": "Potencial de Guarda",
+        "barrel_aging": "Guarda en Barrica",
+        "analysis": {
+            "alcohol": "Alcohol",
+            "residual_sugar": "Azúcar R.",
+            "total_ph": "pH",
+            "volatile_acidity": "Acidez Volátil",
+            "total_acidity": "Acidez Total"
+        }
     }
 }

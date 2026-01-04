@@ -4,29 +4,20 @@ import { Section } from "@/components/ui/Section"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 
+import { CinematicHero } from "@/components/CinematicHero"
+
 export default function Nosotros() {
     const t = useTranslations('Nosotros');
 
     return (
-        <div className="pt-20">
-            {/* Hero / Header - Parallax Style */}
-            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-brand-dark fixed-parallax">
-                    {/* Use vineyard hero as background */}
-                    <div className="absolute inset-0 bg-[url('/images/general/hero-nosotros.jpeg')] bg-cover bg-center opacity-40" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/50 to-transparent" />
-                </div>
-
-                <div className="container relative z-10 px-4 text-center">
-                    <div className="inline-block border text-brand-gold border-brand-gold px-4 py-1 mb-6 text-sm uppercase tracking-widest font-bold">
-                        {t('badge')}
-                    </div>
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 tracking-tight">{t('title')}</h1>
-                    <p className="max-w-3xl mx-auto text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
-                        {t('subtitle')}
-                    </p>
-                </div>
-            </section>
+        <div>
+            {/* Cinematic Hero */}
+            <CinematicHero
+                title={t('title')}
+                badge={t('badge')}
+                subtitle={t('subtitle')}
+                backgroundImage="/images/general/hero-nosotros.jpeg"
+            />
 
             {/* Story Timeline */}
             <Section className="bg-white text-brand-dark py-32">
