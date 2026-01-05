@@ -253,3 +253,5 @@ Route::post('/shipping/calculate', function (Request $request) {
         'price' => 0,
     ]);
 });
+
+Route::get('/store-banners', [App\Http\Controllers\Api\StoreBannerController::class, 'index']);

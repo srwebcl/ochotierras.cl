@@ -1,6 +1,7 @@
 "use client"
 
 import { Section } from "@/components/ui/Section"
+import { useSearchParams } from "next/navigation"
 import Image from "next/image"
 import { StoreProductGrid } from "@/components/StoreProductGrid"
 import { StoreHeroCarousel } from "@/components/StoreHeroCarousel"
@@ -25,7 +26,9 @@ export default function Tienda() {
     const [selectedCategory, setSelectedCategory] = useState<string>('todos')
     const [categories, setCategories] = useState<Category[]>([])
 
-    // Fetch categories on mount
+    const searchParams = useSearchParams()
+
+    // Fetch categories on mount and handle initial query param
     useEffect(() => {
         fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/categories`)
             .then(res => res.json())
@@ -37,15 +40,48 @@ export default function Tienda() {
             .catch(err => console.error("Error fetching categories:", err))
     }, [])
 
+    // Handle URL query param for category
+    // Handle URL query param for category
+    useEffect(() => {
+        const categoryParam = searchParams.get('category')
+        if (categoryParam) {
+            setSelectedCategory(categoryParam)
+            // Wait for render then scroll
+            setTimeout(() => {
+                const targetId = categoryParam === 'packs' ? 'packs' : 'product-grid';
+                const section = document.getElementById(targetId)
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500)
+        } else {
+            // Handle Hash Scroll specifically for direct links (e.g. from Hero)
+            // We use a small timeout to allow layout to settle (PackList async load)
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1); // remove #
+                setTimeout(() => {
+                    const section = document.getElementById(targetId);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 300); // Reduced delay since layout is now stable with Skeleton
+            }
+        }
+    }, [searchParams])
+
     const handleCategoryClick = (slug: string) => {
         setSelectedCategory(slug)
-        // Smooth scroll to grid (optional, but nice)
-        const grid = document.getElementById('product-grid')
-        if (grid) {
-            const yOffset = -150; // Offset for sticky header
-            const y = grid.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-        }
+
+        // Determine target section
+        const targetId = slug === 'packs' ? 'packs' : 'product-grid';
+
+        // Smooth scroll to grid
+        setTimeout(() => {
+            const section = document.getElementById(targetId)
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100)
     }
 
     return (
@@ -56,7 +92,7 @@ export default function Tienda() {
 
             {/* Packs Section - Full Width Dark Strip (Now Outside Section for True Full Width) */}
             {(selectedCategory === 'todos' || selectedCategory === 'packs') && (
-                <div className="w-full bg-neutral-900 py-16 shadow-2xl relative z-20">
+                <div id="packs" className="w-full bg-neutral-900 py-16 shadow-2xl relative z-20 scroll-mt-4">
                     <div className="container mx-auto px-4">
                         <div className="flex items-center gap-4 mb-12">
                             <div className="h-px bg-brand-gold/50 flex-1"></div>
@@ -71,7 +107,7 @@ export default function Tienda() {
             )}
 
             {/* Product Grid */}
-            <Section id="product-grid" className="bg-gray-50 min-h-[600px] pb-32 pt-16">
+            <Section id="product-grid" className="bg-gray-50 min-h-[600px] pb-32 pt-16 scroll-mt-4">
                 <div className="container mx-auto px-4">
                     {/* Standard Wine Grid */}
                     <div className="flex items-center gap-4 mb-8">

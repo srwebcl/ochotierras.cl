@@ -10,13 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('product_bundles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('bundle_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->integer('quantity')->default(1);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('product_bundles')) {
+            Schema::create('product_bundles', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('bundle_id')->constrained('products')->onDelete('cascade');
+                $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+                $table->integer('quantity')->default(1);
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

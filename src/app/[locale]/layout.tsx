@@ -76,7 +76,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning className="scroll-smooth">
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-brand-dark text-white`}
         suppressHydrationWarning
