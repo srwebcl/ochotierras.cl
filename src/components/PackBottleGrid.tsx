@@ -18,7 +18,8 @@ interface PackBottleGridProps {
 export function PackBottleGrid({ items, className }: PackBottleGridProps) {
     // Flatten items to get a list of all bottles to display (e.g. 2 Syrah, 2 Carmenere -> [S, S, C, C])
     // Limit to 6 MAX for visual sanity, though packs are usually 6.
-    const bottles = items.flatMap(item => Array(item.quantity).fill(item)).slice(0, 6);
+    // Ensure quantity is treated as a number (API pivot might return string)
+    const bottles = items.flatMap(item => Array(Number(item.quantity)).fill(item)).slice(0, 6);
 
     // Calculate overlap and layout dynamics
     const total = bottles.length;
