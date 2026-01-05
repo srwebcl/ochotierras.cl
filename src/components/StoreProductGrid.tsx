@@ -97,8 +97,13 @@ export function StoreProductGrid({ filterCategory }: StoreProductGridProps) {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-8">
-            {filteredProducts.map((product) => (
-                <CompactProductCard key={product.id} product={product} locale={locale} />
+            {filteredProducts.map((product, index) => (
+                <CompactProductCard
+                    key={product.id}
+                    product={product}
+                    locale={locale}
+                    priority={index < 3}
+                />
             ))
             }
         </div>

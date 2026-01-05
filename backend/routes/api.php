@@ -122,6 +122,7 @@ Route::get('/collection-wines', function () {
 
 Route::get('/products', function () {
     return \App\Models\Product::where('is_active', true)
+        ->where('is_pack', false) // Exclude packs
         ->with('category')
         ->get()
         ->map(function ($product) {
@@ -156,6 +157,54 @@ Route::get('/products', function () {
                 'tastingNotesEn' => $product->tasting_notes_en,
                 'pairingEn' => $product->pairing_en,
                 'serviceTempEn' => $product->service_temp_en,
+            ];
+        });
+});
+
+Route::get('/packs', function () {
+    return \App\Models\Product::where('is_active', true)
+        ->where('is_pack', true) // Only packs
+        ->with('bundleItems') // Includes pivot data
+        ->get()
+        ->map(function ($product) {
+            // Calculate virtual stock based on components
+            $minComponentStock = null;
+            if ($product->bundleItems->isNotEmpty()) {
+                foreach ($product->bundleItems as $component) {
+                    $available = floor($component->stock / max(1, $component->pivot->quantity));
+                    if ($minComponentStock === null || $available < $minComponentStock) {
+                        $minComponentStock = $available;
+                    }
+                }
+            } else {
+                $minComponentStock = 0;
+            }
+
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'nameEn' => $product->name_en,
+                'subtitle' => $product->subtitle,
+                'subtitleEn' => $product->subtitle_en,
+                'price' => (int) $product->price,
+                // Use calculated stock for display, but fallback to manual stock if 0/null to avoid errors if logic fails
+                'stock' => (int) max(0, $minComponentStock),
+                'image' => $product->image ? \Illuminate\Support\Facades\Storage::url($product->image) : null,
+                'description' => $product->description,
+                'descriptionEn' => $product->description_en,
+                'slug' => $product->slug,
+                // Expanded includes for dynamic frontend rendering
+                'includes' => $product->bundleItems->map(fn($item) => [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'quantity' => $item->pivot->quantity,
+                    'image' => $item->image ? \Illuminate\Support\Facades\Storage::url($item->image) : null,
+                    'technical_details' => $item->technical_details,
+                    'tasting_notes' => $item->tasting_notes,
+                    'tasting_notes_en' => $item->tasting_notes_en,
+                    'strain' => $item->strain,
+                    'vintage_year' => $item->vintage_year,
+                ]),
             ];
         });
 });

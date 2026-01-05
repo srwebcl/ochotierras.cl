@@ -34,14 +34,31 @@ class PaymentController extends Controller
         try {
             DB::beginTransaction();
 
-            // 1. Validar Stock Estricto
+            // 1. Validar Stock Estricto (Recursivo para Packs)
             foreach ($validated['items'] as $item) {
                 $product = Product::lockForUpdate()->find($item['id']);
-                if ($product->stock < $item['quantity']) {
-                    DB::rollBack();
-                    return response()->json([
-                        'error' => "Stock insuficiente para: {$product->name}. Quedan: {$product->stock}"
-                    ], 400);
+
+                if ($product->is_pack) {
+                    // Validar componentes del pack
+                    foreach ($product->bundleItems as $component) {
+                        $requiredQty = $item['quantity'] * $component->pivot->quantity;
+                        $componentStock = Product::lockForUpdate()->find($component->id); // Re-lock component
+
+                        if ($componentStock->stock < $requiredQty) {
+                            DB::rollBack();
+                            return response()->json([
+                                'error' => "Stock insuficiente en Pack para: {$componentStock->name}. Requerido: {$requiredQty}"
+                            ], 400);
+                        }
+                    }
+                } else {
+                    // Producto normal
+                    if ($product->stock < $item['quantity']) {
+                        DB::rollBack();
+                        return response()->json([
+                            'error' => "Stock insuficiente para: {$product->name}. Quedan: {$product->stock}"
+                        ], 400);
+                    }
                 }
             }
 
@@ -54,7 +71,7 @@ class PaymentController extends Controller
                 'status' => 'PENDING',
                 'total' => $validated['total'],
                 'site_transaction_id' => 'ORD-' . strtoupper(uniqid()),
-                'marketing_opt_in' => false, // TODO: Add to frontend payload if needed
+                'marketing_opt_in' => false,
             ]);
 
             // 3. Crear Items
@@ -71,11 +88,7 @@ class PaymentController extends Controller
 
             DB::commit();
 
-            // 4. Integración Getnet (Simulada por ahora para avanzar)
-            // TODO: Integrar SDK oficial de Getnet/PlacetoPay aquí.
-            // Por ahora, simularemos que vamos a una URL de éxito directa para probar el flujo.
-
-            // En producción, esto retornaría $response->processUrl de Getnet
+            // 4. Integración Getnet (Simulada)
             $mockProcessUrl = url("/api/payment/confirm-mock?order_id={$order->id}");
 
             return response()->json([
@@ -107,17 +120,25 @@ class PaymentController extends Controller
     private function handleSuccess(Order $order, $paymentId)
     {
         if ($order->status === 'PAID') {
-            // Ya estaba pagada, redirigir directo
             return redirect('http://localhost:3000/checkout/success?order=' . $order->site_transaction_id);
         }
 
         try {
             DB::beginTransaction();
 
-            // 1. Descontar Stock
+            // 1. Descontar Stock (Recursivo para Packs)
             foreach ($order->items as $item) {
                 $product = Product::lockForUpdate()->find($item->product_id);
-                if ($product) {
+
+                if ($product && $product->is_pack) {
+                    // Descontar componentes
+                    foreach ($product->bundleItems as $component) {
+                        $qtyToDeduct = $item->quantity * $component->pivot->quantity;
+                        $component->decrement('stock', $qtyToDeduct);
+                    }
+                    // Nota: No descontamos stock del pack en sí, ya que es virtual. 
+                    // Opcionalmente podríamos tener un stock "caché" en el pack, pero la fuente de verdad son los hijos.
+                } elseif ($product) {
                     $product->decrement('stock', $item->quantity);
                 }
             }
@@ -130,7 +151,6 @@ class PaymentController extends Controller
 
             DB::commit();
 
-            // 3. Redirigir al frontend
             return redirect('http://localhost:3000/checkout/success?order=' . $order->site_transaction_id);
 
         } catch (\Exception $e) {

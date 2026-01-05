@@ -87,7 +87,10 @@ export default function ProductPage() {
                 setError(true)
             })
             .finally(() => setIsLoading(false))
+            .finally(() => setIsLoading(false))
     }, [slug])
+
+
 
     const localizedName = product ? (isEnglish && product.nameEn ? product.nameEn : product.name) : '';
     const localizedDescription = product ? (isEnglish && product.descriptionEn ? product.descriptionEn : product.description) : '';
@@ -133,14 +136,14 @@ export default function ProductPage() {
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="relative h-[500px] md:h-[700px] w-full max-w-[400px]"
+                            className="relative h-[400px] md:h-[700px] w-full max-w-[300px] md:max-w-[400px] mt-8 md:mt-0"
                         >
                             <Image
                                 src={activeImage || product.image || '/images/bottles/placeholder.webp'}
                                 alt={localizedName}
                                 fill
                                 unoptimized
-                                className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                                className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-500"
                                 priority
                             />
                         </motion.div>
@@ -178,21 +181,21 @@ export default function ProductPage() {
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-white"
+                        className="text-white flex flex-col items-center md:items-start text-center md:text-left"
                     >
                         <Link href="/tienda" className="inline-flex items-center gap-2 text-brand-gold mb-6 hover:underline text-sm uppercase tracking-widest font-bold">
                             <ArrowLeft size={16} /> {t('back_shop')}
                         </Link>
 
                         <span className="block text-brand-gold/80 text-lg font-serif italic mb-2">{localizedSubtitle}</span>
-                        <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight mb-6">{localizedName}</h1>
+                        <h1 className="text-4xl md:text-7xl font-serif font-bold leading-tight mb-6">{localizedName}</h1>
 
-                        <div className="prose prose-lg prose-invert text-gray-300 mb-8 max-w-xl font-light">
+                        <div className="prose prose-lg prose-invert text-gray-300 mb-8 max-w-xl font-light mx-auto md:mx-0">
                             <p>{localizedDescription}</p>
                         </div>
 
-                        <div className="flex flex-col md:flex-row gap-8 items-start md:items-center border-t border-white/10 pt-8 mb-8">
-                            <div>
+                        <div className="flex flex-col gap-6 items-center md:items-start border-t border-white/10 pt-8 mb-8 w-full md:w-auto">
+                            <div className="text-center md:text-left">
                                 <span className="block text-xs uppercase text-gray-400 mb-1">{t('price_label')}</span>
                                 <span className="text-4xl font-bold text-white">${product.price.toLocaleString('es-CL')}</span>
                             </div>
@@ -226,6 +229,9 @@ export default function ProductPage() {
                     </motion.div>
                 </div>
             </div>
+
+
+
 
             {/* Technical Information & Story */}
             <div className="container mx-auto px-4 py-24">
@@ -296,6 +302,12 @@ export default function ProductPage() {
                                         total_ph: { key: 'total_ph', icon: <Thermometer size={16} /> },
                                         volatile_acidity: { key: 'volatile_acidity', icon: <Thermometer size={16} /> },
                                         total_acidity: { key: 'total_acidity', icon: <Thermometer size={16} /> },
+                                        // Mappings for keys coming as natural text from DB
+                                        "Alcohol": { key: 'alcohol', icon: <Droplet size={16} /> },
+                                        "Azúcar Residual": { key: 'residual_sugar', icon: <Grape size={16} /> },
+                                        "pH": { key: 'total_ph', icon: <Thermometer size={16} /> },
+                                        "Acidez Volátil": { key: 'volatile_acidity', icon: <Thermometer size={16} /> },
+                                        "Acidez Total": { key: 'total_acidity', icon: <Thermometer size={16} /> },
                                     };
 
                                     const meta = metaMap[key] || { key: key, icon: <Check size={16} /> };
@@ -306,7 +318,7 @@ export default function ProductPage() {
 
                                     return (
                                         <div key={key} className="flex justify-between items-center py-2 border-b border-gray-100">
-                                            <dt className="flex items-center gap-2 text-gray-500"> {meta.icon} {t(`analysis.${key}`)}</dt>
+                                            <dt className="flex items-center gap-2 text-gray-500"> {meta.icon} {t(`analysis.${meta.key}`)}</dt>
                                             <dd className="font-bold text-brand-dark">{value as string}</dd>
                                         </div>
                                     )
@@ -330,6 +342,7 @@ export default function ProductPage() {
                     </div>
                 </div>
             </div>
-        </div>
+
+        </div >
     )
 }

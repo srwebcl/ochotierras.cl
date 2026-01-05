@@ -40,6 +40,12 @@ class ProductResource extends Resource
                             ->schema([
                                 Forms\Components\Group::make()
                                     ->schema([
+                                        Forms\Components\Toggle::make('is_pack')
+                                            ->label('Es un Pack')
+                                            ->helperText('Activa esto si el producto se compone de otros vinos.')
+                                            ->live()
+                                            ->columnSpanFull(),
+
                                         Forms\Components\TextInput::make('name')
                                             ->label('Nombre del Producto')
                                             ->required()
@@ -159,39 +165,28 @@ class ProductResource extends Resource
                             ]),
 
                         Forms\Components\Tabs\Tab::make('Contenido Pack / Caja Mixta')
+                            ->visible(fn(Forms\Get $get) => $get('is_pack'))
                             ->schema([
-                                Forms\Components\Toggle::make('is_pack')
-                                    ->label('Es un Pack o Caja Mixta')
-                                    ->helperText('Activa esto si el producto se compone de otros vinos.')
-                                    ->live(),
-
-                                Forms\Components\Repeater::make('bundleItems')
+                                Forms\Components\Repeater::make('bundleConnections')
                                     ->relationship()
+                                    ->label('Vinos en el Pack')
                                     ->schema([
                                         Forms\Components\Select::make('product_id')
                                             ->label('Vino')
-                                            ->relationship('bundleItems', 'name') // Note: Using the same relationship name might be ambiguous in select, but relation manager usually handles it. Actually, for a ManyToMany pivot with extra attributes, we typically use the relationship name. But wait, we are inside a repeater for 'bundleItems'. 
-                                            // The relationship is defined in Product model as public function bundleItems().
-                                            // The select should point to the related model options. 
-                                            // Since it's a many-to-many to self (Product), we can list all products.
-                                            // Ideally, we select distinct products.
-                                            // Correction: Repeater relationship() works for HasMany/MorphMany. For BelongsToMany, it's tricker in standard resource forms without specific logic or relation manager.
-                                            // However, Filament v3 supports this via relationships if setup correctly. But simpler is to use a RelationManager or managing it via a separate main relationship. 
-                                            // Wait, the prompt asked for a Repeater. Filament supports BelongsToMany repeaters if the relationship handles the pivot.
-                                            // Let's try standard options since "bundleItems" is a BelongsToMany.
-                                            // Actually, for BelongsToMany in a form repeater, we often need to ensure we are editing the pivot.
-                                            // A common pattern in Filament for ManyToMany is a Table Relation Manager, OR using a Repeater if we treat it like nested data but that requires specific handling or a dedicated intermediate model if we want it to feel like "Items". 
-                                            // Given the requirements "Repeater para seleccionar otros productos", let's assume we use the relationship.
                                             ->options(Product::where('is_pack', false)->pluck('name', 'id'))
                                             ->required()
-                                            ->searchable(),
+                                            ->searchable()
+                                            ->reactive() // Make it reactive to update label or other fields if needed
+                                            ->columnSpan(1),
                                         Forms\Components\TextInput::make('quantity')
                                             ->label('Cantidad')
                                             ->numeric()
                                             ->default(1)
-                                            ->required(),
+                                            ->minValue(1)
+                                            ->required()
+                                            ->columnSpan(1),
                                     ])
-                                    ->itemLabel(fn(array $state): ?string => Product::find($state['product_id'] ?? null)?->name ?? null)
+                                    ->itemLabel(fn(array $state): ?string => Product::find($state['product_id'] ?? null)?->name ?? 'Seleccionar Vino')
                                     ->visible(fn(Forms\Get $get) => $get('is_pack'))
                                     ->defaultItems(0)
                                     ->addActionLabel('Agregar Vino al Pack')
@@ -205,6 +200,7 @@ class ProductResource extends Resource
                                     ->relationship('category', 'name')
                                     ->preload()
                                     ->searchable()
+                                    ->hidden(fn(Forms\Get $get) => $get('is_pack')) // Hide for packs
                                     ->createOptionForm([
                                         Forms\Components\TextInput::make('name')
                                             ->required()

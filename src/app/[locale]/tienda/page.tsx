@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section"
 import Image from "next/image"
 import { StoreProductGrid } from "@/components/StoreProductGrid"
 import { StoreHeroCarousel } from "@/components/StoreHeroCarousel"
+import { PackList } from "@/components/PackList"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
@@ -52,43 +53,33 @@ export default function Tienda() {
             {/* Mobile-First Hero Carousel */}
             <StoreHeroCarousel />
 
-            {/* Sticky Floating Filters */}
-            <div className="sticky top-[80px] z-40 bg-white/95 backdrop-blur-md shadow-md border-y border-gray-100 transition-all duration-300">
-                <div className="container mx-auto px-4">
-                    <div className="flex justify-center items-center py-4 overflow-x-auto no-scrollbar gap-2 md:gap-4">
-                        <button
-                            onClick={() => handleCategoryClick('todos')}
-                            className={cn(
-                                "whitespace-nowrap px-6 py-2 rounded-full border transition-all duration-300 text-sm md:text-base font-medium tracking-wide",
-                                selectedCategory === 'todos'
-                                    ? "bg-brand-dark text-white border-brand-dark shadow-lg scale-105"
-                                    : "bg-transparent text-gray-600 border-gray-200 hover:border-brand-dark/50 hover:text-brand-dark"
-                            )}
-                        >
-                            {t('filters.all')}
-                        </button>
 
-                        {categories.map((cat) => (
-                            <button
-                                key={cat.id}
-                                onClick={() => handleCategoryClick(cat.slug)}
-                                className={cn(
-                                    "whitespace-nowrap px-6 py-2 rounded-full border transition-all duration-300 text-sm md:text-base font-medium tracking-wide uppercase",
-                                    selectedCategory === cat.slug
-                                        ? "bg-brand-dark text-white border-brand-dark shadow-lg scale-105"
-                                        : "bg-transparent text-gray-600 border-gray-200 hover:border-brand-dark/50 hover:text-brand-dark"
-                                )}
-                            >
-                                {isEnglish && cat.nameEn ? cat.nameEn : cat.name}
-                            </button>
-                        ))}
+            {/* Packs Section - Full Width Dark Strip (Now Outside Section for True Full Width) */}
+            {(selectedCategory === 'todos' || selectedCategory === 'packs') && (
+                <div className="w-full bg-neutral-900 py-16 shadow-2xl relative z-20">
+                    <div className="container mx-auto px-4">
+                        <div className="flex items-center gap-4 mb-12">
+                            <div className="h-px bg-brand-gold/50 flex-1"></div>
+                            <h2 className="text-3xl md:text-4xl font-serif text-white font-bold uppercase tracking-widest text-center">
+                                Packs de Vinos <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-yellow-200 to-brand-gold animate-gradient-x">Ochotierras</span>
+                            </h2>
+                            <div className="h-px bg-brand-gold/50 flex-1"></div>
+                        </div>
+                        <PackList locale={locale} />
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Product Grid */}
-            <Section id="product-grid" className="pb-32 bg-gray-50 min-h-[600px]">
+            <Section id="product-grid" className="bg-gray-50 min-h-[600px] pb-32 pt-16">
                 <div className="container mx-auto px-4">
+                    {/* Standard Wine Grid */}
+                    <div className="flex items-center gap-4 mb-8">
+                        <h2 className="text-xl md:text-2xl font-serif text-gray-400 font-medium uppercase tracking-widest">
+                            Nuestros Vinos
+                        </h2>
+                        <div className="h-px bg-gray-200 flex-1"></div>
+                    </div>
                     <StoreProductGrid filterCategory={selectedCategory} />
                 </div>
             </Section>

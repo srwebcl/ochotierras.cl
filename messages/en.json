@@ -119,6 +119,7 @@
             "alcohol": "Alcohol",
             "residual_sugar": "Residual Sugar",
             "total_ph": "pH",
+            "pH": "pH",
             "volatile_acidity": "Volatile Acidity",
             "total_acidity": "Total Acidity"
         }

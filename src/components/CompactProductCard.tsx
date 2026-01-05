@@ -27,9 +27,10 @@ interface Product {
 interface CompactProductCardProps {
     product: Product
     locale?: string
+    priority?: boolean
 }
 
-export function CompactProductCard({ product, locale = 'es' }: CompactProductCardProps) {
+export function CompactProductCard({ product, locale = 'es', priority = false }: CompactProductCardProps) {
     const isEnglish = locale === 'en';
     const localizedName = isEnglish && product.nameEn ? product.nameEn : product.name;
     const { addToCart } = useCart();
@@ -115,6 +116,7 @@ export function CompactProductCard({ product, locale = 'es' }: CompactProductCar
                             fill
                             className="object-contain drop-shadow-md group-hover:drop-shadow-xl"
                             sizes="(max-width: 768px) 50vw, 33vw"
+                            priority={priority}
                             onError={() => setImgSrc('/images/bottles/chardonnay-reserva.webp')}
                         />
                     </Link>

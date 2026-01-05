@@ -48,12 +48,12 @@
         "quote": "Vinos nacidos de la gravedad y el silencio del Valle del Limarí. Una expresión pura de nuestra tierra.",
         "contact": "Contacto",
         "explore": "Explorar",
-        "sales": "Ventas y Exportación",
+        "sales": "Ventas",
         "national_sales": "Ventas Nacionales / Turismo",
         "china_sales": "Ventas China / Colonia China",
         "privacy": "Privacidad",
         "terms": "Términos",
-        "developed_by": "Desarrollado por",
+        "developed_by": "Desarrollado con ⚡ por",
         "rights_reserved": "Todos los derechos reservados."
     },
     "Metadata": {
@@ -119,6 +119,7 @@
             "alcohol": "Alcohol",
             "residual_sugar": "Azúcar R.",
             "total_ph": "pH",
+            "pH": "pH",
             "volatile_acidity": "Acidez Volátil",
             "total_acidity": "Acidez Total"
         }
@@ -272,14 +273,17 @@
         "subtitle": "Estamos aquí para responder tus consultas.",
         "info": {
             "title": "Información",
+            "schedule_title": "Horario de Atención",
+            "schedule_val": "Lunes a Viernes de 08:30 a 17:30 hrs.",
             "location_title": "Ubicación",
             "location_val": "Ruta D 505, km 11 desde Ovalle.\nValle del Limarí, Chile.",
-            "phone_title": "Contacto General",
-            "phone_val_1": "+56 94453 8170 (WhatsApp)",
-            "phone_val_2": "+56 53 2 626211 (Solo WhatsApp)",
+            "phone_title": "Teléfono / WhatsApp",
+            "phone_val_1": "+56 94453 8170",
+            "whatsapp_label": "WhatsApp",
+            "phone_val_2": "+56 53 2 626211",
             "sales_title": "Ventas Nacional / Exportación",
-            "china_title": "Ventas Colonia China",
-            "email_title": "Email General"
+            "china_title": "Ventas en Chile para Colonia China",
+            "email_title": "Correo"
         },
         "form": {
             "title": "Envíanos un mensaje",

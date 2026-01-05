@@ -59,11 +59,18 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    // Relationship for API (simple retrieval)
     public function bundleItems()
     {
         return $this->belongsToMany(Product::class, 'product_bundles', 'bundle_id', 'product_id')
             ->withPivot('quantity')
             ->withTimestamps();
+    }
+
+    // Relationship for Filament (Form editing via HasMany Repeater)
+    public function bundleConnections()
+    {
+        return $this->hasMany(BundleItem::class, 'bundle_id');
     }
 
     protected $casts = [
