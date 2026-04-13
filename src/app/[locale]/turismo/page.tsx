@@ -7,11 +7,14 @@ import Link from "next/link"
 
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
+import { TourismReservationModal } from "@/components/TourismReservationModal"
 
 import { CinematicHero } from "@/components/CinematicHero"
 
 export default function Turismo() {
     const t = useTranslations('Turismo');
+    const [isReservationOpen, setIsReservationOpen] = useState(false);
 
     return (
         <div>
@@ -22,8 +25,11 @@ export default function Turismo() {
                 description={t('description')}
                 backgroundImage="/images/general/hero-turismo.jpeg"
             >
-                <Button className="bg-brand-red text-white hover:bg-white hover:text-brand-dark px-10 py-7 text-sm uppercase tracking-widest font-bold transition-all duration-300 transform hover:translate-x-2">
-                    <Link href="/contacto">{t('pta_button')}</Link>
+                <Button 
+                    onClick={() => setIsReservationOpen(true)}
+                    className="bg-brand-red text-white hover:bg-white hover:text-brand-dark px-10 py-7 text-sm uppercase tracking-widest font-bold transition-all duration-300 transform hover:translate-x-2"
+                >
+                    {t('pta_button')}
                 </Button>
             </CinematicHero>
 
@@ -154,11 +160,20 @@ export default function Turismo() {
                 <div className="mt-20 text-center">
                     <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4">{t('booking.title')}</h3>
                     <p className="text-gray-600 mb-8 max-w-2xl mx-auto">{t('booking.description')}</p>
-                    <Button className="bg-brand-red text-white hover:bg-brand-dark px-12 py-6 text-sm uppercase tracking-widest font-bold transition-all duration-300 shadow-lg hover:shadow-xl">
-                        <Link href="/contacto">{t('booking.button')}</Link>
+                    <Button 
+                        onClick={() => setIsReservationOpen(true)}
+                        className="bg-brand-red text-white hover:bg-brand-dark px-12 py-6 text-sm uppercase tracking-widest font-bold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                        {t('booking.button')}
                     </Button>
                 </div>
             </Section>
+
+            {/* Modal */}
+            <TourismReservationModal 
+                isOpen={isReservationOpen} 
+                onClose={() => setIsReservationOpen(false)} 
+            />
         </div>
     )
 }

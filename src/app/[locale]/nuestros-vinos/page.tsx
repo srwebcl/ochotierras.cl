@@ -68,6 +68,7 @@ export default function NuestrosVinosPage() {
         if (slug.includes('reserva-especial')) return t('categories.reserva_especial.description');
         if (slug.includes('reserva-privada')) return t('categories.reserva_privada.description');
         if (slug.includes('gran-reserva')) return t('categories.gran_reserva.description');
+        if (slug.includes('chardonnay')) return t('categories.chardonnay_reserva.description');
         return "";
     };
 

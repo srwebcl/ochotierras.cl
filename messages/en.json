@@ -69,7 +69,12 @@
     },
     "HomePage": {
         "title": "Welcome to Ochotierras",
-        "about": "Go to About"
+        "about": "Go to About",
+        "our_winery": {
+            "title": "Our Winery",
+            "p1": "At Viña OchoTierras we work with the dedication of an artisan; people and their experiences play a central role in the creation of our wines, where a significant part of the process is done by hand.",
+            "p2": "The Viña OchoTierras winery was designed to produce quality wines. Built below ground level, it allows us to use gravity in part of the elaboration process, reducing the use of pumps and preserving the exceptional condition of the wines."
+        }
     },
     "Tienda": {
         "catalog_tag": "Official Catalog",
@@ -137,13 +142,10 @@
         "few_left": "Only {stock} units left!"
     },
     "StoryScroll": {
-        "philosophy": "Our Philosophy",
-        "earth": "Earth",
-        "gravity": "Gravity",
-        "description": "At Viña OchoTierras we work with the dedication of an artisan. People and their experiences play a central role in the creation of our wines.",
-        "gravity_design": "Gravity Design",
-        "winery_description": "The winery was built below ground level, allowing gravity to be used to move the wine gently. No pumps. Preserving the exceptional condition of every drop.",
-        "explore_winery": "Explore Winery",
+        "title": "Contact",
+        "escribenos": "Write to us",
+        "hablemos": "Let's talk",
+        "description": "We are here to answer your questions about our wines, winery visits, or special sales.",
         "discover": "Discover"
     },
     "DiscoverySection": {
@@ -166,17 +168,19 @@
     "Nosotros": {
         "badge": "Since 1993",
         "title": "Our History",
-        "subtitle": "A limited production winery in the heart of Limarí Valley.",
+        "subtitle": "Viña Ochotierras is a limited production winery located in the heart of the Limarí Valley, whose history began in 1993 when we planted our first fine grape vineyards. Since then, we began our work as viticulturists, and since 2005, we have been crafting our own unique wines virtually by hand and under the highest oenological quality standards.",
+        "winery_text": "We have a winery equipped with small tanks and designed to minimize the use of pumps. Combined with our demanding production process (hand-harvesting, selection, and manual pressing), this allows us to craft wines with character, transferring the essence of the terroir into every bottle.",
+        "strains": "Our varieties are Chardonnay, Cabernet Sauvignon, Carmenere, and Syrah.",
         "timeline": {
             "title_roots": "Deep",
             "title_deep": "Roots",
-            "year_1993": "The story begins when the first vines were planted on our lands, searching for the perfect terroir.",
-            "year_2005": "Viña OchoTierras is born. We started making our own unique wines practically by hand, caring for every detail to achieve the maximum expression of our Valley."
+            "year_1993": "Planting of the first fine grape vineyards.",
+            "year_2005": "Birth of Viña Ochotierras' own wine production."
         },
         "valley": {
             "title": "Limarí Valley",
-            "description_1": "Land of contrasts. Mineral soils and northern sun, caressed by the \"Camanchaca\".",
-            "description_2": "Our vines grow in a semi-desert environment. The cold fog from the Pacific moderates temperatures, allowing slow ripening that grants vibrant acidity, freshness, and marked minerality to our wines.",
+            "description_1": "Located 400 km north of Santiago, in the Coquimbo Region. It is a semi-arid area with low rainfall (less than 100 mm per year), high luminosity, and mineral soils.",
+            "description_2": "Its climate is strongly influenced by the Pacific Ocean due to the presence of 'la Camanchaca,' a cold fog that creeps in from the West every morning into the valley and retreats at noon when one of the brightest skies in the world emerges. The combination of cold mornings, high luminosity, and mineral soils gives the wines a singular character of freshness, minerality, and elegance.",
             "luminosity": "High Luminosity",
             "camanchaca": "Camanchaca"
         },
@@ -190,23 +194,23 @@
         }
     },
     "Bodega": {
-        "badge": "Architecture & Nature",
+        "badge": "Nature & Architecture",
         "title": "Winery &",
         "title_highlight": "Vineyards",
         "subtitle": "Designed to respect the fruit and the environment.",
         "terroir": {
-            "location_title": "Privileged Location",
-            "location_desc": "Our property is located 30 km from the coast. This proximity to the sea allows fresh Pacific breezes to regulate extreme valley temperatures, creating an ideal microclimate.",
-            "sea_dist_label": "Dist to Sea",
+            "location_title": "Vineyards",
+            "location_desc": "Our vineyards are planted 30 km from the coast, in front of the village of Limarí. Consisting of Syrah, Cabernet Sauvignon, Carmenère, Sauvignon Blanc, and Chardonnay varieties.",
+            "sea_dist_label": "Dist. to Sea",
             "surface_label": "Total Surface",
-            "soils_title": "Soils",
-            "soils_desc": "Sandy loam soils, with presence of gravel and calcium carbonate. This mineral composition provides unique structure, minerality, and elegance to our wines.",
+            "soils_title": "Management & Soils",
+            "soils_desc": "The training system of the vineyards is a simple trellis, on sandy loam soil in the bed of the Limarí River. The plantations are irrigated by a drip system, and the management of the vineyards is focused on obtaining quality grapes, reaching yields of 6,000 to 8,000 kg/ha.",
             "varieties_title": "Varieties",
             "quote": "\"Wine quality is born in the vineyard.\""
         },
         "cellar": {
             "title": "The Winery",
-            "description": "The winery stands out for its architectural design built below ground level. This decision is not aesthetic, it is functional and philosophical.",
+            "description": "The Viña OchoTierras winery was designed to produce quality wines. Built below ground level, it allows us to use gravity in part of the winemaking process, reducing the use of pumps and preserving the exceptional condition of the wines.",
             "gravity_title": "Gravity",
             "gravity_desc": "We use the force of gravity to move our wines, avoiding pumps that oxygenate or mistreat the wine.",
             "temp_title": "Temperature",
@@ -264,13 +268,23 @@
     "NuestrosVinos": {
         "loading": "Loading our collection...",
         "collection_subtitle": "Our Collection",
-        "title_main": "Our",
-        "title_highlight": "Wines",
+        "title_main": "OUR WINES",
         "description": "Discover the unique expression of Limarí Valley in each of our lines.",
         "view_detail": "View Details",
-        "price_label": "Price",
-        "buy_button": "Buy Now",
-        "empty_message": "No wines available at the moment."
+        "categories": {
+            "reserva_especial": {
+                "description": "Our Special Reserve line brings together three wines of the Cabernet Sauvignon, Syrah and an assemblage (Cabernet Sauvignon / Syrah) varieties. This line of wines from Viña OchoTierras is unique and represents the essence of the Limarí Valley. Each wine is made with grapes coming from a single vineyard, which has been carefully studied to determine those sectors that will produce the grapes required to achieve the quality of our Special Reserve wines."
+            },
+            "reserva_privada": {
+                "description": "Our Private Reserve wine line is composed of two varieties: Carmenere and Syrah. In its preparation, grapes from a single vineyard were used to be later aged in French oak for 10 to 12 months, resulting in wines of great character and silkiness that faithfully represent our terroir."
+            },
+            "gran_reserva": {
+                "description": "Our best wines are selected each year after aging for 14 to 18 months in French oak barrels, with an annual production of around 17,000 bottles. It is an exclusive line and each vintage is a limited edition. Elegant, exquisite and complex wines. On their label we have printed the number of barrels used in the preparation, its finishing is done by hand, numbering each bottle and finishing the sealing with sealing wax."
+            },
+            "chardonnay_reserva": {
+                "description": "Harvesting and selection of the grapes are done manually, and throughout the entire winemaking process we take care of every detail so that our wines faithfully express the unique characteristics of this valley.\n\nThis Chardonnay is a wine of a soft golden color. On the nose, tropical fruit aromas and mineral notes typical of the Limarí Valley stand out. On the palate it is unctuous with balanced acidity and good body, making it an excellent reserve."
+            }
+        }
     },
     "CollectionDetail": {
         "loading": "Loading experience...",

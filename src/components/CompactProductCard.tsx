@@ -9,6 +9,7 @@ import { useCart } from "@/context/CartContext"
 import { Product as CartProduct } from "@/data/products"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { PackBottleGrid } from "./PackBottleGrid"
 
 interface Product {
     id: number;
@@ -108,17 +109,9 @@ export function CompactProductCard({ product, locale = 'es', priority = false }:
                         glowClasses
                     )} />
 
-                    {/* Bottle */}
+                    {/* Bottles (Box of 6) */}
                     <Link href={`/tienda/${product.slug}`} className="relative z-10 w-full h-full flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-105">
-                        <Image
-                            src={imgSrc}
-                            alt={localizedName}
-                            fill
-                            className="object-contain drop-shadow-md group-hover:drop-shadow-xl"
-                            sizes="(max-width: 768px) 50vw, 33vw"
-                            priority={priority}
-                            onError={() => setImgSrc('/images/bottles/chardonnay-reserva.webp')}
-                        />
+                        <PackBottleGrid items={[{ id: product.id, name: product.name, quantity: 6, image: imgSrc }]} />
                     </Link>
                 </div>
 

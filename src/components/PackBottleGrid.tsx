@@ -46,10 +46,8 @@ export function PackBottleGrid({ items, className }: PackBottleGridProps) {
                 // Shift left if on left side, right if on right side, relative to natural flex position?
                 // Actually negative margins are easier for flex, let's stick to negative margins but add transforms.
 
-                const xParams = index === 0 ? '' : '-ml-8 md:-ml-12'; // Tight overlap
-
-                // Rotation: REMOVED as per user request (Straight alignment)
-                const rotateDeg = 0;
+                // shift more aggressively to the left for tighter group
+                const xParams = index === 0 ? '' : '-ml-12 md:-ml-16'; // Very tight overlap
 
                 // Y Offset: Arch effect (Center is higher or lower? Let's make center slightly forward/lower for impact)
                 const yOffset = Math.abs(index - centerIndex) * 4;

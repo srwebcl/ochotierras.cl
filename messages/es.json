@@ -69,7 +69,12 @@
     },
     "HomePage": {
         "title": "Bienvenido a Ochotierras",
-        "about": "Ir a Nosotros"
+        "about": "Ir a Nosotros",
+        "our_winery": {
+            "title": "Nuestra Viña",
+            "p1": "En Viña OchoTierras trabajamos con la dedicación de un artesano, las personas y sus experiencias tienen un rol central en la creación de nuestros vinos, donde una parte importante del proceso es realizado a mano.",
+            "p2": "La bodega de Viña OchoTierras fue diseñada para elaborar vinos de calidad, construida bajo el nivel del suelo, nos permite utilizar la gravedad en parte del proceso de elaboración, disminuyendo el uso de bombas y preservando la condición excepcional de los vinos."
+        }
     },
     "Tienda": {
         "catalog_tag": "Catálogo Oficial",
@@ -137,13 +142,10 @@
         "few_left": "¡Solo quedan {stock} unidades!"
     },
     "StoryScroll": {
-        "philosophy": "Nuestra Filosofía",
-        "earth": "Tierra",
-        "gravity": "Gravedad",
-        "description": "En Viña OchoTierras trabajamos con la dedicación de un artesano. Las personas y sus experiencias tienen un rol central en la creación de nuestros vinos.",
-        "gravity_design": "Diseño por Gravedad",
-        "winery_description": "La bodega fue construida bajo el nivel del suelo, permitiendo usar la gravedad para mover el vino suavemente. Sin bombas. Preservando la condición excepcional de cada gota.",
-        "explore_winery": "Explorar Bodega",
+        "title": "Contacto",
+        "escribenos": "Escríbenos",
+        "hablemos": "Hablemos",
+        "description": "Estamos aquí para responder tus consultas sobre nuestros vinos, visitas a la bodega o ventas especiales.",
         "discover": "Descubre"
     },
     "DiscoverySection": {
@@ -166,17 +168,19 @@
     "Nosotros": {
         "badge": "Desde 1993",
         "title": "Nuestra Historia",
-        "subtitle": "Una bodega de producción limitada en el corazón del Valle del Limarí.",
+        "subtitle": "Viña Ochotierras es una bodega de producción limitada ubicada en el corazón del Valle del Limarí, cuya historia comienza en el año 1993, cuando plantamos los primeros viñedos de uvas finas. Desde ese entonces comenzamos nuestro trabajo como viticultores y a partir del año 2005 hacemos nuestros propios y únicos vinos prácticamente a mano y bajo los más altos estándares de calidad enológica.",
+        "winery_text": "Tenemos una bodega habilitada con pequeños estanques que fue diseñada para minimizar el uso de bombas y junto al exigente proceso de elaboración (cosecha, selección y prensado manual), nos permite hacer vinos con carácter, traspasando la esencia del terruño a cada botella.",
+        "strains": "Nuestras cepas son Chardonnay, Cabernet Sauvignon, Carmenere y Syrah.",
         "timeline": {
             "title_roots": "Raíces",
             "title_deep": "Profundas",
-            "year_1993": "La historia comienza cuando se plantaron las primeras parras en nuestras tierras, buscando el terroir perfecto.",
-            "year_2005": "Nace Viña Ochotierras como tal. Comenzamos a hacer nuestros propios y únicos vinos prácticamente a mano, cuidando cada detalle para lograr la máxima expresión de nuestro Valle."
+            "year_1993": "Plantamos los primeros viñedos de uvas finas.",
+            "year_2005": "Comenzamos a elaborar nuestros propios vinos bajo estándares de alta calidad."
         },
         "valley": {
             "title": "Valle del Limarí",
-            "description_1": "Tierra de contrastes. Suelos minerales y sol del norte, acariciados por la \"Camanchaca\".",
-            "description_2": "Nuestras viñas crecen en un entorno semi-désertico. La niebla fría proveniente del Pacífico modera las temperaturas, permitiendo una maduración lenta que otorga acidez vibrante, frescura y una marcada mineralidad a nuestros vinos.",
+            "description_1": "Está ubicado a 400 km al norte de Santiago, en la Región de Coquimbo. Es una zona semiárida, de escasa pluviometría (menos de 100 mm al año), alta luminosidad y suelos minerales.",
+            "description_2": "Su clima está fuertemente influenciado por el océano Pacífico, debido a la presencia de “la Camanchaca”, fría niebla que se arrastra desde el Oeste cada mañana hacia el interior del valle y se retira al mediodía cuando uno de los cielos más luminosos del mundo se deja ver. La combinación de mañanas frías, alta luminosidad y suelos minerales otorgan a los vinos un carácter singular de frescura, mineralidad y elegancia.",
             "luminosity": "Alta Luminosidad",
             "camanchaca": "Camanchaca"
         },
@@ -190,30 +194,12 @@
         }
     },
     "Bodega": {
-        "badge": "Arquitectura & Naturaleza",
-        "title": "Bodega y",
-        "title_highlight": "Viñedos",
-        "subtitle": "Diseñadas para respetar la fruta y el entorno.",
-        "terroir": {
-            "location_title": "Ubicación Privilegiada",
-            "location_desc": "Nuestra propiedad se encuentra ubicada a 30 km. de la costa. Esta cercanía al mar permite que las brisas frescas del Pacífico regulen las temperaturas extremas del valle, creando un microclima ideal.",
-            "sea_dist_label": "Distancia al Mar",
-            "surface_label": "Superficie Total",
-            "soils_title": "Suelos",
-            "soils_desc": "Suelos franco arenosos, con presencia de gravas y carbonato de calcio. Esta composición mineral aporta una estructura única, mineralidad y elegancia a nuestros vinos.",
-            "varieties_title": "Variedades",
-            "quote": "\"La calidad del vino nace en el viñedo.\""
-        },
-        "cellar": {
-            "title": "La Bodega",
-            "description": "La bodega destaca por su diseño arquitectónico construido bajo el nivel del suelo. Esta decisión no es estética, es funcional y filosófica.",
-            "gravity_title": "Gravedad",
-            "gravity_desc": "Utilizamos la fuerza de gravedad para el movimiento de nuestros vinos, evitando bombas que oxigenen o maltraten el vino.",
-            "temp_title": "Temperatura",
-            "temp_desc": "Al estar bajo tierra, mantenemos una temperatura natural estable y fresca, ideal para la crianza y guarda de nuestros vinos.",
-            "efficiency_title": "Eficiencia",
-            "efficiency_desc": "Un diseño eficiente que reduce el consumo energético y minimiza nuestro impacto ambiental."
-        }
+        "badge": "OchoTierras",
+        "title": "Bodega & Viñedos",
+        "vinedos_title": "Viñedos",
+        "vinedos_text": "Nuestros viñedos están plantados a 30 km de la costa, frente al pueblo de Limarí. Constituidos por variedades Syrah, Cabernet Sauvignon, Carmenère, Sauvignon Blanc y Chardonnay.\n\nEl sistema de conducción de los viñedos es una espaldera simple, sobre un suelo franco arenoso en el lecho del río Limarí. Las plantaciones se riegan por sistema de goteo y el manejo de los viñedos está enfocado a la obtención de uvas de calidad, alcanzando rendimientos de 6.000 a 8.000 kg/ha.",
+        "bodega_title": "Bodega",
+        "bodega_text": "La bodega de Viña OchoTierras fue diseñada para elaborar vinos de calidad, construida bajo el nivel del suelo, nos permite utilizar la gravedad en parte del proceso de elaboración, disminuyendo el uso de bombas y preservando la condición excepcional de los vinos."
     },
     "Turismo": {
         "title_1": "Experiencias",
@@ -310,13 +296,16 @@
         "empty_message": "No hay vinos disponibles en este momento.",
         "categories": {
             "reserva_especial": {
-                "description": "Nuestra línea Reserva Especial reune a tres vinos de las variedades Cabernet Sauvignon, Syrah y un ensamblaje (Cabertnet Sauvignon / Syrah). Esta línea de vinos de Viña OchoTierras es única y representa la escencia del Valle del Limarí. Cada vino es elaborado con uvas provenientes de un solo viñedo, que ha sido cuidadosamente estudiado para determinar aquellos sectores que producirán las uvas requeridas para alcanzar la calidad de nuestros vinos Reserva Especial."
+                "description": "Nuestra línea Reserva Especial reune a tres vinos de las variedades Cabernet Sauvignon, Syrah y un ensamblaje (Cabertnet Sauvignon / Syrah). Esta línea de vinos de Viña OchoTierras es única y representa la esvencia del Valle del Limarí. Cada vino es elaborado con uvas provenientes de un solo viñedo, que ha sido cuidadosamente estudiado para determinar aquellos sectores que producirán las uvas requeridas para alcanzar la calidad de nuestros vinos Reserva Especial."
             },
             "reserva_privada": {
                 "description": "Nuestra línea de vinos reserva privada esta compuesta de dos variedades Carmenere y syrah. En su elaboración se utilizo uva proveniente de un único viñedo para posteriormente ser guardad en roble francés durante 10 a 12 meses, resultando vinos de gran carácter y sedosidad que representan fielmente a nuestro terruño."
             },
             "gran_reserva": {
                 "description": "Nuestros mejores vinos son seleccionados cada año después de una guarda de 14 a 18 meses en barricas de roble francés, con una producción anual de alrededor de 17.000 botellas. Es una línea exclusiva y cada cosecha una edición limitada. Vinos elegantes, exquisitos y complejos. En su etiqueta hemos impreso la cantidad de barricas utilizadas en la elaboración, su acabado lo realizamos a mano, numerando cada botella y finalizando el sellado con lacre."
+            },
+            "chardonnay_reserva": {
+                "description": "La cosecha y selección de las uvas se realiza manualmente y durante todo el proceso de elaboración cuidamos cada detalle para que nuestros vinos expresen fielmente las características únicas de este valle.\n\nEste Chardonnay es un vino de suave color dorado. En nariz destacan los aromas a frutas tropicales y notas minerales típicas del Valle del Limarí. En boca es untuoso con una acidez equilibrada y buen cuerpo que lo convierten en un excelente reserva."
             }
         }
     },
