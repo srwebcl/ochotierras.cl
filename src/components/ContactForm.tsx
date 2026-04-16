@@ -46,7 +46,8 @@ export function ContactForm() {
         }
     }
 
-    const inputClasses = "w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all text-gray-900 placeholder:text-gray-400 font-sans group-hover:border-gray-300 [&:-webkit-autofill]:[-webkit-text-fill-color:#111827] [&:-webkit-autofill]:[transition:background-color_9999s]";
+    const inputClasses = "w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all placeholder:text-gray-400 font-sans group-hover:border-gray-300";
+    const inputStyle = { color: '#111827', WebkitTextFillColor: '#111827' };
 
     // Estado de éxito: mostrar panel en lugar del formulario
     if (status === 'success') {
@@ -108,6 +109,7 @@ export function ContactForm() {
                             required
                             type="text"
                             className={inputClasses}
+                            style={inputStyle}
                             placeholder={t('form.placeholder_name')}
                         />
                     </div>
@@ -124,6 +126,7 @@ export function ContactForm() {
                             name="phone"
                             type="tel"
                             className={inputClasses}
+                            style={inputStyle}
                             placeholder={t('form.placeholder_phone')}
                         />
                     </div>
@@ -142,6 +145,7 @@ export function ContactForm() {
                         required
                         type="email"
                         className={inputClasses}
+                        style={inputStyle}
                         placeholder={t('form.placeholder_email')}
                     />
                 </div>
@@ -159,6 +163,7 @@ export function ContactForm() {
                         required
                         rows={4}
                         className={`${inputClasses} pl-12 resize-none`}
+                        style={inputStyle}
                         placeholder={t('form.placeholder_message')}
                     />
                 </div>
