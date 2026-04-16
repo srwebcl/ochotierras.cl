@@ -185,6 +185,7 @@ export default function Contacto() {
                                             name="name"
                                             required
                                             type="text"
+                                            style={{ color: '#111827' }}
                                             className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"
                                             placeholder={t('form.placeholder_name')}
                                         />
@@ -194,6 +195,7 @@ export default function Contacto() {
                                         <input
                                             name="phone"
                                             type="tel"
+                                            style={{ color: '#111827' }}
                                             className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"
                                             placeholder={t('form.placeholder_phone')}
                                         />
@@ -206,6 +208,7 @@ export default function Contacto() {
                                         name="email"
                                         required
                                         type="email"
+                                        style={{ color: '#111827' }}
                                         className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"
                                         placeholder={t('form.placeholder_email')}
                                     />
@@ -217,6 +220,7 @@ export default function Contacto() {
                                         name="message"
                                         required
                                         rows={5}
+                                        style={{ color: '#111827' }}
                                         className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all resize-none"
                                         placeholder={t('form.placeholder_message')}
                                     />
