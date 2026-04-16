@@ -53,8 +53,6 @@ const defaultSlides: HeroData[] = [
         subtitle: "En el corazón del Valle del Limarí",
         button_primary_text: "Nuestra Viña",
         button_primary_url: "/nosotros",
-        button_secondary_text: "Tienda Online",
-        button_secondary_url: "/tienda",
         images: ["/images/general/hero-nosotros.jpeg"]
     }
 ];
@@ -150,10 +148,10 @@ export function Hero({ data }: HeroProps) {
         // Title Logic: EN -> titleEn (fallback to title), ES -> title
         title: isEnglish ? (hero.titleEn || hero.title) : (hero.title || "Ochotierras"),
         subtitle: isEnglish ? (hero.subtitleEn || hero.subtitle) : (hero.subtitle || "Valle del Limarí"),
-        button_primary_text: isEnglish ? (hero.buttonTextEn || hero.buttonText) : (hero.buttonText || "Descubrir Colección"),
-        button_primary_url: hero.buttonPrimaryUrl || "/tienda",
-        button_secondary_text: isEnglish ? (hero.buttonSecondaryTextEn || hero.buttonSecondaryText) : (hero.buttonSecondaryText || "Tienda Online"),
-        button_secondary_url: hero.buttonSecondaryUrl || "/tienda",
+        button_primary_text: isEnglish ? (hero.buttonTextEn || hero.buttonText) : (hero.buttonText),
+        button_primary_url: hero.buttonPrimaryUrl,
+        button_secondary_text: isEnglish ? (hero.buttonSecondaryTextEn || hero.buttonSecondaryText) : (hero.buttonSecondaryText),
+        button_secondary_url: hero.buttonSecondaryUrl,
         images: hero.image ? [hero.image] : defaultImages,
     })) : [];
 
@@ -359,28 +357,32 @@ export function Hero({ data }: HeroProps) {
                             transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
                             className="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-6 md:pt-10 w-full items-center justify-center px-6"
                         >
-                            {/* Primary: Liquid Gold */}
-                            <Button
-                                size="lg"
-                                className="relative w-full sm:w-auto min-w-[200px] md:min-w-[240px] h-12 md:h-16 text-xs md:text-sm font-black tracking-[0.2em] uppercase text-black bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] bg-[length:200%_auto] animate-shimmer hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.8)] border border-transparent hover:scale-[1.02] transition-all duration-300 rounded-sm"
-                                asChild
-                            >
-                                <Link href={currentData.button_primary_url || "/nosotros"}>
-                                    {currentData.button_primary_text || "Nuestra Viña"}
-                                </Link>
-                            </Button>
+                            {/* Primary Button */}
+                            {currentData.button_primary_text && (
+                                <Button
+                                    size="lg"
+                                    className="relative w-full sm:w-auto min-w-[200px] md:min-w-[240px] h-12 md:h-16 text-xs md:text-sm font-black tracking-[0.2em] uppercase text-black bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] bg-[length:200%_auto] animate-shimmer hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.8)] border border-transparent hover:scale-[1.02] transition-all duration-300 rounded-sm"
+                                    asChild
+                                >
+                                    <Link href={currentData.button_primary_url || "#"}>
+                                        {currentData.button_primary_text}
+                                    </Link>
+                                </Button>
+                            )}
 
-                            {/* Secondary: Minimalist Sharp */}
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="relative w-full sm:w-auto min-w-[200px] md:min-w-[240px] h-12 md:h-16 text-xs md:text-sm font-bold tracking-[0.25em] uppercase text-white bg-transparent border border-white/60 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] backdrop-blur-[2px] hover:scale-[1.02] transition-all duration-300 rounded-sm"
-                                asChild
-                            >
-                                <Link href={currentData.button_secondary_url || "/tienda"}>
-                                    {currentData.button_secondary_text || "Tienda Online"}
-                                </Link>
-                            </Button>
+                            {/* Secondary Button */}
+                            {currentData.button_secondary_text && (
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    className="relative w-full sm:w-auto min-w-[200px] md:min-w-[240px] h-12 md:h-16 text-xs md:text-sm font-bold tracking-[0.25em] uppercase text-white bg-transparent border border-white/60 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] backdrop-blur-[2px] hover:scale-[1.02] transition-all duration-300 rounded-sm"
+                                    asChild
+                                >
+                                    <Link href={currentData.button_secondary_url || "#"}>
+                                        {currentData.button_secondary_text}
+                                    </Link>
+                                </Button>
+                            )}
                         </motion.div>
                     </motion.div>
                 </AnimatePresence>
