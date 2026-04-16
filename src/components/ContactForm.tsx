@@ -46,7 +46,7 @@ export function ContactForm() {
         }
     }
 
-    const inputClasses = "w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all text-white placeholder:text-gray-500 font-sans backdrop-blur-sm group-hover:border-white/20 [&:-webkit-autofill]:bg-gray-900 [&:-webkit-autofill]:[transition:background-color_9999s] [&:-webkit-autofill]:[-webkit-text-fill-color:white]";
+    const inputClasses = "w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all text-gray-900 placeholder:text-gray-400 font-sans group-hover:border-gray-300 [&:-webkit-autofill]:[-webkit-text-fill-color:#111827] [&:-webkit-autofill]:[transition:background-color_9999s]";
 
     // Estado de éxito: mostrar panel en lugar del formulario
     if (status === 'success') {
