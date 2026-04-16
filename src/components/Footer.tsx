@@ -127,7 +127,8 @@ export function Footer() {
                             <li><IntlLink href="/nuestros-vinos" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('wines')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
                             <li><IntlLink href="/bodega-y-vinedos" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('winery')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
                             <li><IntlLink href="/turismo" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('tourism')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
-                            <li><IntlLink href="/tienda" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('shop')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li>
+                            {/* <li><IntlLink href="/tienda" className="hover:text-white transition-colors flex items-center gap-2 group">{navT('shop')} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></IntlLink></li> */}
+                            {/* 🔒 Tienda oculta hasta aprobación de Getnet producción */}
                         </ul>
                     </div>
                 </div>
