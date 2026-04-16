@@ -46,7 +46,52 @@ export function ContactForm() {
         }
     }
 
-    const inputClasses = "w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all text-white placeholder:text-gray-500 font-sans backdrop-blur-sm group-hover:border-white/20";
+    const inputClasses = "w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all text-white placeholder:text-gray-500 font-sans backdrop-blur-sm group-hover:border-white/20 [&:-webkit-autofill]:bg-gray-900 [&:-webkit-autofill]:[transition:background-color_9999s] [&:-webkit-autofill]:[-webkit-text-fill-color:white]";
+
+    // Estado de éxito: mostrar panel en lugar del formulario
+    if (status === 'success') {
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col items-center justify-center text-center py-16 space-y-6"
+            >
+                <div className="relative">
+                    <div className="w-24 h-24 rounded-full bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center">
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+                            className="text-5xl"
+                        >
+                            ✅
+                        </motion.div>
+                    </div>
+                    <div className="absolute inset-0 rounded-full bg-brand-gold/20 animate-ping opacity-30" />
+                </div>
+
+                <div className="space-y-3">
+                    <h3 className="text-3xl font-serif font-bold text-white">¡Mensaje Enviado!</h3>
+                    <p className="text-gray-400 font-light max-w-sm">
+                        Hemos recibido tu mensaje. Te responderemos a la brevedad posible al correo que indicaste.
+                    </p>
+                </div>
+
+                <div className="flex items-center gap-2 text-brand-gold text-sm font-medium">
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
+                    Revisa tu bandeja de entrada — te enviamos una copia
+                </div>
+
+                <button
+                    onClick={() => setStatus('idle')}
+                    className="mt-4 text-xs text-gray-500 hover:text-brand-gold transition-colors uppercase tracking-widest"
+                >
+                    Enviar otro mensaje
+                </button>
+            </motion.div>
+        )
+    }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -144,20 +189,8 @@ export function ContactForm() {
                 </Button>
             </div>
 
-            {/* Status Messages */}
+            {/* Error Message */}
             <AnimatePresence mode="wait">
-                {status === 'success' && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center gap-3 text-green-400 text-sm font-medium"
-                    >
-                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                        ¡Mensaje enviado con éxito! Nos contactaremos pronto.
-                    </motion.div>
-                )}
-
                 {status === 'error' && (
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
