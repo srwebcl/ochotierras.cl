@@ -35,13 +35,14 @@ export function DiscoverySection() {
             image: "/images/general/nuestros-vinos.jpeg",
             link: "/nuestros-vinos",
         },
-        {
-            id: 3,
-            title: t('items.shop'),
-            subtitle: t('items.shop_subtitle'),
-            image: "/images/general/tienda-ochotierras.jpeg",
-            link: "/tienda",
-        },
+        // 🔒 Tienda oculta hasta aprobación de Getnet producción
+        // {
+        //     id: 3,
+        //     title: t('items.shop'),
+        //     subtitle: t('items.shop_subtitle'),
+        //     image: "/images/general/tienda-ochotierras.jpeg",
+        //     link: "/tienda",
+        // },
         {
             id: 4,
             title: t('items.contact'),
