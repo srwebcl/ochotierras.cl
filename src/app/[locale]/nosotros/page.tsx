@@ -80,9 +80,10 @@ export default function Nosotros() {
                         src="/images/general/valle-limari.jpg"
                         alt="Valle del Limarí"
                         fill
-                        className="object-cover opacity-20"
+                        className="object-cover opacity-60"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/90 to-brand-dark/40" />
+                    {/* Gradiente dinámico: Vertical en móvil, Horizontal en desktop */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/70 to-transparent lg:bg-gradient-to-r lg:from-brand-dark lg:via-brand-dark/80 lg:to-transparent" />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
