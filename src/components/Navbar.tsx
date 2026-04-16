@@ -18,7 +18,7 @@ const navItems = [
     { key: "wines", href: "/nuestros-vinos" },
     { key: "winery", href: "/bodega-y-vinedos" },
     { key: "tourism", href: "/turismo" },
-    { key: "shop", href: "/tienda" },
+    // { key: "shop", href: "/tienda" }, // 🔒 Oculto hasta aprobación de Getnet producción
     { key: "contact", href: "/contacto" },
 ]
 
