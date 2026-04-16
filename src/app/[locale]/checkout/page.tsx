@@ -123,7 +123,7 @@ export default function CheckoutPage() {
                                         name="name"
                                         required
                                         placeholder="Ej: Juan Pérez"
-                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -134,7 +134,7 @@ export default function CheckoutPage() {
                                         name="email"
                                         required
                                         placeholder="ejemplo@email.com"
-                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
                                     name="phone"
                                     required
                                     placeholder="+56 9 1234 5678"
-                                    className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -160,7 +160,7 @@ export default function CheckoutPage() {
                                         name="address"
                                         required
                                         placeholder="Calle y Número, Depto"
-                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -171,7 +171,7 @@ export default function CheckoutPage() {
                                         name="city"
                                         required
                                         placeholder="Ej: La Serena"
-                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -183,7 +183,7 @@ export default function CheckoutPage() {
                                     name="notes"
                                     rows={3}
                                     placeholder="Instrucciones especiales para el envío o regalo..."
-                                    className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm focus:outline-none focus:border-brand-gold transition-colors resize-none"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors resize-none"
                                     onChange={handleInputChange}
                                 />
                             </div>
