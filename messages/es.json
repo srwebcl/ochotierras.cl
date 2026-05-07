@@ -100,7 +100,7 @@
         "subtotal": "Subtotal",
         "total": "Total",
         "checkout": "Ir a Pagar",
-        "shipping_note": "Envíos calculados en el siguiente paso."
+        "shipping_note": "Su compra no tiene costo de envío adicional."
     },
     "ProductDetail": {
         "loading": "Cargando experiencia...",

@@ -100,7 +100,7 @@
         "subtotal": "Subtotal",
         "total": "Total",
         "checkout": "Checkout",
-        "shipping_note": "Shipping calculated at next step."
+        "shipping_note": "Your purchase has no additional shipping cost."
     },
     "ProductDetail": {
         "loading": "Loading experience...",

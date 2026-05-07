@@ -243,9 +243,9 @@ export default function CheckoutPage() {
                                 <span>Subtotal</span>
                                 <span>${cartTotal.toLocaleString('es-CL')}</span>
                             </div>
-                            <div className="flex justify-between text-gray-500">
+                            <div className="flex justify-between items-center text-gray-500">
                                 <span>Envío</span>
-                                <span className="text-xs italic">(Por coordinar)</span>
+                                <span className="text-brand-dark font-bold text-xs uppercase tracking-tight">Su compra no tiene costo de envío adicional</span>
                             </div>
                             <div className="flex justify-between text-xl font-bold text-brand-dark pt-4 border-t border-gray-100 mt-4">
                                 <span>Total</span>
