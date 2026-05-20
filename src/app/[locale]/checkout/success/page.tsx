@@ -8,6 +8,12 @@ import Link from "next/link"
 import { CheckCircle, ShoppingBag } from "lucide-react"
 import { motion } from "framer-motion"
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 function SuccessContent() {
     const searchParams = useSearchParams()
     const orderId = searchParams.get('order')
@@ -16,6 +22,17 @@ function SuccessContent() {
     useEffect(() => {
         if (orderId) {
             clearCart()
+
+            // Push event to GTM dataLayer for conversion tracking
+            if (typeof window !== "undefined") {
+                window.dataLayer = window.dataLayer || []
+                window.dataLayer.push({
+                    event: "purchase",
+                    ecommerce: {
+                        transaction_id: orderId,
+                    }
+                })
+            }
         }
     }, [orderId, clearCart])
 
