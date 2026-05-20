@@ -296,10 +296,10 @@
         "empty_message": "No hay vinos disponibles en este momento.",
         "categories": {
             "reserva_especial": {
-                "description": "Nuestra línea Reserva Especial reune a tres vinos de las variedades Cabernet Sauvignon, Syrah y un ensamblaje (Cabertnet Sauvignon / Syrah). Esta línea de vinos de Viña OchoTierras es única y representa la esvencia del Valle del Limarí. Cada vino es elaborado con uvas provenientes de un solo viñedo, que ha sido cuidadosamente estudiado para determinar aquellos sectores que producirán las uvas requeridas para alcanzar la calidad de nuestros vinos Reserva Especial."
+                "description": "Nuestra línea Reserva Especial reune a tres vinos de las variedades Cabernet Sauvignon, Syrah y un ensamblaje (Cabernet Sauvignon / Syrah). Esta línea de vinos de Viña OchoTierras es única y representa la esencia del Valle del Limarí. Cada vino es elaborado con uvas provenientes de un solo viñedo, que ha sido cuidadosamente estudiado para determinar aquellos sectores que producirán las uvas requeridas para alcanzar la calidad de nuestros vinos Reserva Especial."
             },
             "reserva_privada": {
-                "description": "Nuestra línea de vinos reserva privada esta compuesta de dos variedades Carmenere y syrah. En su elaboración se utilizo uva proveniente de un único viñedo para posteriormente ser guardad en roble francés durante 10 a 12 meses, resultando vinos de gran carácter y sedosidad que representan fielmente a nuestro terruño."
+                "description": "Nuestra línea de vinos reserva privada esta compuesta de dos variedades Carmenere y syrah. En su elaboración se utilizo uva proveniente de un único viñedo para posteriormente ser guardado en roble francés durante 10 a 12 meses, resultando vinos de gran carácter y sedosidad que representan fielmente a nuestro terruño."
             },
             "gran_reserva": {
                 "description": "Nuestros mejores vinos son seleccionados cada año después de una guarda de 14 a 18 meses en barricas de roble francés, con una producción anual de alrededor de 17.000 botellas. Es una línea exclusiva y cada cosecha una edición limitada. Vinos elegantes, exquisitos y complejos. En su etiqueta hemos impreso la cantidad de barricas utilizadas en la elaboración, su acabado lo realizamos a mano, numerando cada botella y finalizando el sellado con lacre."
