@@ -6,6 +6,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 export function ContactForm() {
     const t = useTranslations('Contacto');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,6 +41,15 @@ export function ContactForm() {
 
             setStatus('success');
             (e.target as HTMLFormElement).reset();
+            
+            // Push event to GTM for form submission conversion
+            if (typeof window !== "undefined") {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: "form_submission",
+                    form_name: "contact_form"
+                });
+            }
             
             // Reset status after a few seconds
             setTimeout(() => setStatus('idle'), 5000);

@@ -9,6 +9,12 @@ import { useState, FormEvent } from "react"
 
 import { CinematicHero } from "@/components/CinematicHero"
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 export default function Contacto() {
     const t = useTranslations('Contacto');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,6 +44,15 @@ export default function Contacto() {
 
             setStatus('success');
             (e.target as HTMLFormElement).reset();
+
+            // Push event to GTM for form submission conversion
+            if (typeof window !== "undefined") {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: "form_submission",
+                    form_name: "contacto"
+                });
+            }
         } catch (error) {
             console.error(error);
             setStatus('error');

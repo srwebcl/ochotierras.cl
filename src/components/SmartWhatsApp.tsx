@@ -48,6 +48,15 @@ export function SmartWhatsApp() {
     const whatsappNumber = "56944538170"
 
     const openWhatsApp = (msg: string) => {
+        // Push event to GTM
+        if (typeof window !== "undefined") {
+            window.dataLayer = window.dataLayer || []
+            window.dataLayer.push({
+                event: "whatsapp_click",
+                message: msg
+            })
+        }
+
         const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`
         window.open(url, '_blank')
         setIsOpen(false)

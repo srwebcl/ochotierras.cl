@@ -5,6 +5,12 @@ import { Send, User, Phone, Mail, Loader2, X, Calendar, Users, MapPin } from "lu
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 interface TourismReservationModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -70,6 +76,15 @@ ${extraMessage || 'Sin mensaje adicional'}
 
             setStatus('success');
             (e.target as HTMLFormElement).reset();
+            
+            // Push event to GTM for form submission conversion
+            if (typeof window !== "undefined") {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: "form_submission",
+                    form_name: "tourism_reservation"
+                });
+            }
             
             setTimeout(() => {
                 onClose();
