@@ -5,13 +5,29 @@ import { motion, AnimatePresence } from "framer-motion"
 import { X, Plus, Minus, Trash2, ShoppingBag, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import { useTranslations } from "next-intl"
 
 export function CartSidebar() {
     const t = useTranslations('Cart');
-    const { items, isOpen, toggleCart, removeFromCart, updateQuantity, cartTotal } = useCart()
+    const { items, isOpen, toggleCart, removeFromCart, updateQuantity, cartTotal, addToCart } = useCart()
+    const [recommendations, setRecommendations] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (isOpen && items.length > 0) {
+            fetch('https://api.ochotierras.cl/api/products')
+                .then(res => res.json())
+                .then(data => {
+                    const cartIds = items.map(i => i.id);
+                    const available = data.filter((p: any) => !cartIds.includes(p.id) && p.stock > 0);
+                    // Get 2 random products
+                    const shuffled = available.sort(() => 0.5 - Math.random());
+                    setRecommendations(shuffled.slice(0, 2));
+                })
+                .catch(err => console.error(err));
+        }
+    }, [isOpen, items]);
 
     // Prevent body scroll when cart is open
     useEffect(() => {
@@ -120,6 +136,47 @@ export function CartSidebar() {
                                         </div>
                                     </div>
                                 ))
+                            )}
+
+                            {/* Venta Cruzada */}
+                            {items.length > 0 && recommendations.length > 0 && (
+                                <div className="mt-8 pt-6 border-t border-white/10">
+                                    <h3 className="text-white font-serif font-bold mb-4 text-sm uppercase tracking-widest text-brand-gold">Quizás te interese</h3>
+                                    <div className="space-y-4">
+                                        {recommendations.map(product => (
+                                            <div key={product.id} className="flex gap-4 p-3 rounded-lg bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                                                <div className="relative w-16 h-20 flex-shrink-0 bg-white/5 rounded-md overflow-hidden">
+                                                    <Image
+                                                        src={product.image}
+                                                        alt={product.name}
+                                                        fill
+                                                        unoptimized
+                                                        className="object-cover"
+                                                        sizes="64px"
+                                                    />
+                                                </div>
+                                                <div className="flex-1 flex flex-col justify-between">
+                                                    <div>
+                                                        <h4 className="text-white font-bold text-sm leading-tight">{product.name}</h4>
+                                                        <p className="text-brand-gold text-xs mt-1">${product.price.toLocaleString('es-CL')}</p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => addToCart({
+                                                            id: product.id,
+                                                            name: product.name,
+                                                            price: product.price,
+                                                            image: product.image,
+                                                            quantity: 1
+                                                        })}
+                                                        className="text-xs bg-brand-gold text-brand-dark px-3 py-1 rounded-sm font-bold uppercase mt-2 w-fit hover:bg-white transition-colors"
+                                                    >
+                                                        Añadir
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             )}
                         </div>
 

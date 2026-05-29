@@ -8,6 +8,25 @@ import Link from "next/link"
 import { useState } from "react"
 import { ArrowLeft, MessageCircle } from "lucide-react"
 
+const REGIONES_CHILE = [
+    "Arica y Parinacota",
+    "Tarapacá",
+    "Antofagasta",
+    "Atacama",
+    "Coquimbo",
+    "Valparaíso",
+    "Metropolitana de Santiago",
+    "O'Higgins",
+    "Maule",
+    "Ñuble",
+    "Biobío",
+    "La Araucanía",
+    "Los Ríos",
+    "Los Lagos",
+    "Aysén",
+    "Magallanes"
+];
+
 export default function CheckoutPage() {
     const { items, cartTotal, cartCount } = useCart()
     const [formData, setFormData] = useState({
@@ -16,10 +35,11 @@ export default function CheckoutPage() {
         phone: "",
         address: "",
         city: "",
+        region: "",
         notes: ""
     })
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -28,6 +48,39 @@ export default function CheckoutPage() {
 
 
     const [isProcessing, setIsProcessing] = useState(false)
+    const [couponCode, setCouponCode] = useState("")
+    const [appliedCoupon, setAppliedCoupon] = useState<{code: string, discount: number} | null>(null)
+    const [couponError, setCouponError] = useState("")
+    const [isApplyingCoupon, setIsApplyingCoupon] = useState(false)
+
+    const handleApplyCoupon = async () => {
+        if (!couponCode.trim()) return;
+        setIsApplyingCoupon(true);
+        setCouponError("");
+
+        try {
+            const response = await fetch('/api/coupons/validate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: couponCode, cart_total: cartTotal })
+            });
+            const data = await response.json();
+
+            if (response.ok && data.valid) {
+                setAppliedCoupon({ code: data.code, discount: data.discount });
+            } else {
+                setCouponError(data.error || "Cupón inválido");
+                setAppliedCoupon(null);
+            }
+        } catch (error) {
+            setCouponError("Error al verificar el cupón");
+            setAppliedCoupon(null);
+        } finally {
+            setIsApplyingCoupon(false);
+        }
+    }
+
+    const finalTotal = appliedCoupon ? Math.max(0, cartTotal - appliedCoupon.discount) : cartTotal;
 
     const handleGetnetPayment = async () => {
         setIsProcessing(true)
@@ -39,8 +92,9 @@ export default function CheckoutPage() {
                 },
                 body: JSON.stringify({
                     items,
-                    total: cartTotal,
-                    buyer: formData
+                    total: finalTotal, // sending final total is safer, backend overrides it anyway
+                    buyer: formData,
+                    coupon_code: appliedCoupon?.code || undefined
                 })
             })
 
@@ -70,14 +124,17 @@ export default function CheckoutPage() {
         let message = `*Nueva Orden OchoTierras #${orderId}*\n\n`
 
         message += `*Cliente:*\n${formData.name}\n${formData.email}\n${formData.phone}\n\n`
-        message += `*Dirección:*\n${formData.address}, ${formData.city}\n\n`
+        message += `*Dirección:*\n${formData.address}, ${formData.city}, ${formData.region}\n\n`
         message += `*Pedido:*\n`
 
         items.forEach(item => {
             message += `- ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toLocaleString()})\n`
         })
 
-        message += `\n*TOTAL: $${cartTotal.toLocaleString()}*\n\n`
+        if (appliedCoupon) {
+            message += `Cupón aplicado: ${appliedCoupon.code} (-$${appliedCoupon.discount.toLocaleString()})\n`
+        }
+        message += `\n*TOTAL: $${finalTotal.toLocaleString()}*\n\n`
 
         if (formData.notes) {
             message += `*Notas:*\n${formData.notes}`
@@ -164,13 +221,29 @@ export default function CheckoutPage() {
                                         onChange={handleInputChange}
                                     />
                                 </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-gray-700">Ciudad</label>
+                                    <label className="text-sm font-bold text-gray-700">Región</label>
+                                    <select
+                                        name="region"
+                                        required
+                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
+                                        onChange={handleInputChange}
+                                        value={formData.region}
+                                    >
+                                        <option value="" disabled>Selecciona una región</option>
+                                        {REGIONES_CHILE.map(region => (
+                                            <option key={region} value={region}>{region}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-gray-700">Comuna / Ciudad</label>
                                     <input
                                         type="text"
                                         name="city"
                                         required
-                                        placeholder="Ej: La Serena"
+                                        placeholder="Ej: Ovalle"
                                         className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
                                         onChange={handleInputChange}
                                     />
@@ -191,7 +264,7 @@ export default function CheckoutPage() {
                             <div className="space-y-4 pt-6 border-t border-gray-100">
                                 <Button
                                     onClick={handleGetnetPayment}
-                                    disabled={isProcessing || !formData.name || !formData.email || !formData.phone}
+                                    disabled={isProcessing || !formData.name || !formData.email || !formData.phone || !formData.address || !formData.city || !formData.region}
                                     className="w-full bg-[#E64B56] hover:bg-[#D43A45] text-white font-bold h-14 uppercase tracking-widest shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isProcessing ? 'Procesando...' : 'Pagar con Getnet (Débito/Crédito)'}
@@ -238,18 +311,46 @@ export default function CheckoutPage() {
                             ))}
                         </div>
 
-                        <div className="border-t border-gray-100 pt-4 space-y-2 text-sm">
+                        <div className="border-t border-gray-100 pt-6 mt-4">
+                            <label className="text-sm font-bold text-gray-700 mb-2 block">¿Tienes un cupón de descuento?</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    placeholder="Ingresa tu código"
+                                    value={couponCode}
+                                    onChange={(e) => setCouponCode(e.target.value)}
+                                    className="flex-1 bg-gray-50 border border-gray-200 rounded p-2 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors uppercase"
+                                />
+                                <Button 
+                                    onClick={handleApplyCoupon} 
+                                    disabled={isApplyingCoupon || !couponCode.trim()}
+                                    className="bg-brand-dark text-white hover:bg-black px-4"
+                                >
+                                    {isApplyingCoupon ? '...' : 'Aplicar'}
+                                </Button>
+                            </div>
+                            {couponError && <p className="text-red-500 text-xs mt-2">{couponError}</p>}
+                            {appliedCoupon && <p className="text-green-600 text-xs mt-2">Cupón {appliedCoupon.code} aplicado con éxito.</p>}
+                        </div>
+
+                        <div className="border-t border-gray-100 pt-4 mt-6 space-y-2 text-sm">
                             <div className="flex justify-between text-gray-500">
                                 <span>Subtotal</span>
                                 <span>${cartTotal.toLocaleString('es-CL')}</span>
                             </div>
+                            {appliedCoupon && (
+                                <div className="flex justify-between text-green-600 font-medium">
+                                    <span>Descuento ({appliedCoupon.code})</span>
+                                    <span>-${appliedCoupon.discount.toLocaleString('es-CL')}</span>
+                                </div>
+                            )}
                             <div className="flex justify-between items-center text-gray-500">
                                 <span>Envío</span>
                                 <span className="text-brand-dark font-bold text-xs uppercase tracking-tight">Su compra no tiene costo de envío adicional</span>
                             </div>
                             <div className="flex justify-between text-xl font-bold text-brand-dark pt-4 border-t border-gray-100 mt-4">
                                 <span>Total</span>
-                                <span>${cartTotal.toLocaleString('es-CL')}</span>
+                                <span>${finalTotal.toLocaleString('es-CL')}</span>
                             </div>
                         </div>
                     </div>
