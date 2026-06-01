@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         await resend.emails.send({
             from: 'Ocho Tierras Web <noreply@ochotierras.cl>',
             to: ['info@ochotierras.cl'],
-            cc: ['contacto@ochotierras.cl'],
+            cc: ['rcuellar@ochotierras.cl'],
             replyTo: email,
             subject: `📬 Nuevo mensaje de ${name} — Ocho Tierras`,
             html: `
