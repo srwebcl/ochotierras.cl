@@ -161,13 +161,7 @@ export function CartSidebar() {
                                                         <p className="text-brand-gold text-xs mt-1">${product.price.toLocaleString('es-CL')}</p>
                                                     </div>
                                                     <button
-                                                        onClick={() => addToCart({
-                                                            id: product.id,
-                                                            name: product.name,
-                                                            price: product.price,
-                                                            image: product.image,
-                                                            quantity: 1
-                                                        })}
+                                                        onClick={() => addToCart(product as any, 1)}
                                                         className="text-xs bg-brand-gold text-brand-dark px-3 py-1 rounded-sm font-bold uppercase mt-2 w-fit hover:bg-white transition-colors"
                                                     >
                                                         Añadir
