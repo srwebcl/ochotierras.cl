@@ -224,20 +224,6 @@ export default function CheckoutPage() {
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-gray-700">Tipo de Documento</label>
-                                <div className="flex gap-4">
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="document_type" value="boleta" checked={formData.document_type === 'boleta'} onChange={handleInputChange} className="accent-brand-gold" />
-                                        <span className="text-sm text-gray-700">Boleta</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="document_type" value="factura" checked={formData.document_type === 'factura'} onChange={handleInputChange} className="accent-brand-gold" />
-                                        <span className="text-sm text-gray-700">Factura</span>
-                                    </label>
-                                </div>
-                            </div>
-
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div className="md:col-span-2 space-y-2">
                                     <label className="text-sm font-bold text-gray-700">Dirección</label>
@@ -289,6 +275,20 @@ export default function CheckoutPage() {
                                     className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors resize-none"
                                     onChange={handleInputChange}
                                 />
+                            </div>
+
+                            <div className="space-y-3 pt-4">
+                                <label className="text-sm font-bold text-gray-700">Tipo de Documento</label>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <label className={`cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center justify-center transition-all ${formData.document_type === 'boleta' ? 'border-brand-gold bg-brand-gold/5 shadow-sm' : 'border-gray-200 hover:border-brand-gold/50 bg-white'}`}>
+                                        <input type="radio" name="document_type" value="boleta" checked={formData.document_type === 'boleta'} onChange={handleInputChange} className="sr-only" />
+                                        <span className={`font-bold text-sm ${formData.document_type === 'boleta' ? 'text-brand-dark' : 'text-gray-600'}`}>Boleta</span>
+                                    </label>
+                                    <label className={`cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center justify-center transition-all ${formData.document_type === 'factura' ? 'border-brand-gold bg-brand-gold/5 shadow-sm' : 'border-gray-200 hover:border-brand-gold/50 bg-white'}`}>
+                                        <input type="radio" name="document_type" value="factura" checked={formData.document_type === 'factura'} onChange={handleInputChange} className="sr-only" />
+                                        <span className={`font-bold text-sm ${formData.document_type === 'factura' ? 'text-brand-dark' : 'text-gray-600'}`}>Factura</span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div className="space-y-4 pt-6 border-t border-gray-100">
