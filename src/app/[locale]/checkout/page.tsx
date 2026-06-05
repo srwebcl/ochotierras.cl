@@ -6,7 +6,7 @@ import { Section } from "@/components/ui/Section"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { ArrowLeft, MessageCircle } from "lucide-react"
+import { ArrowLeft, MessageCircle, ChevronDown } from "lucide-react"
 
 const REGIONES_CHILE = [
     "Arica y Parinacota",
@@ -224,34 +224,37 @@ export default function CheckoutPage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div className="md:col-span-2 space-y-2">
-                                    <label className="text-sm font-bold text-gray-700">Dirección</label>
-                                    <input
-                                        type="text"
-                                        name="address"
-                                        required
-                                        placeholder="Calle y Número, Depto"
-                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-gray-700">Dirección</label>
+                                <input
+                                    type="text"
+                                    name="address"
+                                    required
+                                    placeholder="Calle y Número, Depto"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
+                                    onChange={handleInputChange}
+                                />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-gray-700">Región</label>
-                                    <select
-                                        name="region"
-                                        required
-                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
-                                        onChange={handleInputChange}
-                                        value={formData.region}
-                                    >
-                                        <option value="" disabled>Selecciona una región</option>
-                                        {REGIONES_CHILE.map(region => (
-                                            <option key={region} value={region}>{region}</option>
-                                        ))}
-                                    </select>
+                                    <div className="relative">
+                                        <select
+                                            name="region"
+                                            required
+                                            className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors appearance-none pr-10"
+                                            onChange={handleInputChange}
+                                            value={formData.region}
+                                        >
+                                            <option value="" disabled>Selecciona una región</option>
+                                            {REGIONES_CHILE.map(region => (
+                                                <option key={region} value={region}>{region}</option>
+                                            ))}
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                            <ChevronDown size={16} />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-gray-700">Comuna / Ciudad</label>
