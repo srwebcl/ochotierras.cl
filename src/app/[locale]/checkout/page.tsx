@@ -33,6 +33,8 @@ export default function CheckoutPage() {
         name: "",
         email: "",
         phone: "",
+        rut: "",
+        document_type: "boleta",
         address: "",
         city: "",
         region: "",
@@ -197,16 +199,43 @@ export default function CheckoutPage() {
                                 </div>
                             </div>
 
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-gray-700">Teléfono</label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        required
+                                        placeholder="+56 9 1234 5678"
+                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-gray-700">RUT</label>
+                                    <input
+                                        type="text"
+                                        name="rut"
+                                        required
+                                        placeholder="Ej: 12345678-9"
+                                        className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                            </div>
+
                             <div className="space-y-2">
-                                <label className="text-sm font-bold text-gray-700">Teléfono</label>
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    required
-                                    placeholder="+56 9 1234 5678"
-                                    className="w-full bg-gray-50 border border-gray-200 rounded p-3 text-sm text-gray-900 focus:outline-none focus:border-brand-gold transition-colors"
-                                    onChange={handleInputChange}
-                                />
+                                <label className="text-sm font-bold text-gray-700">Tipo de Documento</label>
+                                <div className="flex gap-4">
+                                    <label className="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="document_type" value="boleta" checked={formData.document_type === 'boleta'} onChange={handleInputChange} className="accent-brand-gold" />
+                                        <span className="text-sm text-gray-700">Boleta</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="document_type" value="factura" checked={formData.document_type === 'factura'} onChange={handleInputChange} className="accent-brand-gold" />
+                                        <span className="text-sm text-gray-700">Factura</span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -265,7 +294,7 @@ export default function CheckoutPage() {
                             <div className="space-y-4 pt-6 border-t border-gray-100">
                                 <Button
                                     onClick={handleGetnetPayment}
-                                    disabled={isProcessing || !formData.name || !formData.email || !formData.phone || !formData.address || !formData.city || !formData.region}
+                                    disabled={isProcessing || !formData.name || !formData.email || !formData.phone || !formData.rut || !formData.address || !formData.city || !formData.region}
                                     className="w-full bg-[#E64B56] hover:bg-[#D43A45] text-white font-bold h-14 uppercase tracking-widest shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isProcessing ? 'Procesando...' : 'Pagar con Getnet (Débito/Crédito)'}
