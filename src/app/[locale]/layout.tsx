@@ -88,19 +88,6 @@ export default async function LocaleLayout({
             })(window,document,'script','dataLayer','GTM-P98QWP9G');
           `}
         </Script>
-        {/* Google tag (gtag.js) */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-RKFG1ZG3VL"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-RKFG1ZG3VL');
-          `}
-        </Script>
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-brand-dark text-white`}

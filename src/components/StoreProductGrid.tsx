@@ -42,7 +42,7 @@ export function StoreProductGrid({ filterCategory }: StoreProductGridProps) {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/products`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/products`, { next: { revalidate: 3600, tags: ['products'] } })
             .then(res => {
                 if (!res.ok) throw new Error("Error al cargar vinos")
                 return res.json()

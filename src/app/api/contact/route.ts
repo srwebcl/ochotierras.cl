@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
     try {
+        if (!process.env.RESEND_API_KEY) {
+            console.error('RESEND_API_KEY no está configurada.');
+            return NextResponse.json({ error: 'Servicio de correo no disponible' }, { status: 500 });
+        }
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
         const body = await request.json();
         const { name, phone, email, message } = body;
 
@@ -12,13 +16,22 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return NextResponse.json({ error: 'Email inválido' }, { status: 400 });
+        }
+
+        const safeName = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const safePhone = phone ? phone.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
+        const safeMessage = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
         // 1. Email de notificación al equipo
         await resend.emails.send({
             from: 'Ocho Tierras Web <noreply@ochotierras.cl>',
             to: ['info@ochotierras.cl'],
             cc: ['rcuellar@ochotierras.cl'],
             replyTo: email,
-            subject: `📬 Nuevo mensaje de ${name} — Ocho Tierras`,
+            subject: `📬 Nuevo mensaje de ${safeName} — Ocho Tierras`,
             html: `
                 <!DOCTYPE html>
                 <html lang="es">
@@ -32,15 +45,15 @@ export async function POST(request: Request) {
                       <tr><td style="padding:40px;">
                         <table width="100%" style="background:#fff8e7;border-left:4px solid #D4AF37;padding:20px;border-radius:0 8px 8px 0;margin-bottom:32px;">
                           <tr><td>
-                            <p style="margin:0 0 4px;font-size:22px;font-weight:700;color:#1a1a2e;">${name}</p>
-                            <p style="margin:0;color:#888;font-size:13px;">${email}${phone ? ' · ' + phone : ''}</p>
+                            <p style="margin:0 0 4px;font-size:22px;font-weight:700;color:#1a1a2e;">${safeName}</p>
+                            <p style="margin:0;color:#888;font-size:13px;">${email}${safePhone ? ' · ' + safePhone : ''}</p>
                           </td></tr>
                         </table>
                         <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#D4AF37;text-transform:uppercase;letter-spacing:2px;">Mensaje</p>
-                        <p style="background:#f9f9f6;padding:20px;border-radius:8px;color:#333;font-size:14px;line-height:1.7;margin:0;">${message.replace(/\n/g, '<br>')}</p>
+                        <p style="background:#f9f9f6;padding:20px;border-radius:8px;color:#333;font-size:14px;line-height:1.7;margin:0;">${safeMessage.replace(/\n/g, '<br>')}</p>
                       </td></tr>
                       <tr><td style="background:#1a1a2e;padding:16px 40px;text-align:center;">
-                        <p style="margin:0;color:#ffffff50;font-size:11px;">Responde directamente a este email para contactar a ${name}</p>
+                        <p style="margin:0;color:#ffffff50;font-size:11px;">Responde directamente a este email para contactar a ${safeName}</p>
                       </td></tr>
                     </table>
                   </td></tr>
@@ -71,12 +84,12 @@ export async function POST(request: Request) {
                         <p style="margin:0;color:#1a1a2e99;font-size:14px;">Nos pondremos en contacto contigo a la brevedad</p>
                       </td></tr>
                       <tr><td style="padding:40px;">
-                        <p style="margin:0 0 16px;color:#333;font-size:16px;">Hola <strong>${name}</strong>,</p>
+                        <p style="margin:0 0 16px;color:#333;font-size:16px;">Hola <strong>${safeName}</strong>,</p>
                         <p style="margin:0 0 24px;color:#555;font-size:14px;line-height:1.7;">Hemos recibido tu mensaje correctamente. Nuestro equipo lo revisará y te responderá a la brevedad posible.</p>
                         <table width="100%" style="background:#f9f9f6;border-radius:8px;padding:20px;">
                           <tr><td>
                             <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#D4AF37;text-transform:uppercase;letter-spacing:2px;">Tu mensaje</p>
-                            <p style="margin:0;color:#555;font-size:14px;line-height:1.7;">${message.replace(/\n/g, '<br>')}</p>
+                            <p style="margin:0;color:#555;font-size:14px;line-height:1.7;">${safeMessage.replace(/\n/g, '<br>')}</p>
                           </td></tr>
                         </table>
                       </td></tr>

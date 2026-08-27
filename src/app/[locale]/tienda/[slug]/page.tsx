@@ -9,6 +9,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useTranslations, useLocale } from "next-intl"
+import DOMPurify from "isomorphic-dompurify"
 
 interface Wine {
     id: number;
@@ -59,7 +60,7 @@ export default function ProductPage() {
         if (!slug) return;
 
         setIsLoading(true)
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/products`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/products`, { next: { revalidate: 3600, tags: ['products'] } })
             .then(res => res.json())
             .then((products: any[]) => {
                 const found = products.find((p: any) => p.slug === slug)
@@ -68,7 +69,7 @@ export default function ProductPage() {
                     setActiveImage(found.image)
                 } else {
                     // Fallback to categories (legacy)
-                    return fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/categories-wines`)
+                    return fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/categories-wines`, { next: { revalidate: 3600, tags: ['products'] } })
                         .then(res => res.json())
                         .then((categories: any[]) => {
                             const allWines = categories.flatMap(c => c.wines)
@@ -246,10 +247,35 @@ export default function ProductPage() {
                                 </h3>
                                 <div
                                     className="prose prose-lg text-gray-600 font-light border-l-4 border-brand-gold pl-6 py-2"
-                                    dangerouslySetInnerHTML={{ __html: localizedTastingNotes }}
+                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(localizedTastingNotes) }}
                                 />
                             </section>
                         )}
+
+                        <script
+                            type="application/ld+json"
+                            dangerouslySetInnerHTML={{
+                                __html: JSON.stringify({
+                                    "@context": "https://schema.org",
+                                    "@type": "Product",
+                                    "name": localizedName,
+                                    "image": activeImage || product.image,
+                                    "description": localizedDescription,
+                                    "sku": product.id.toString(),
+                                    "offers": {
+                                        "@type": "Offer",
+                                        "url": typeof window !== 'undefined' ? window.location.href : '',
+                                        "priceCurrency": "CLP",
+                                        "price": product.stock === 0 ? "0" : product.price.toString(),
+                                        "availability": product.stock === 0 ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"
+                                    },
+                                    "brand": {
+                                        "@type": "Brand",
+                                        "name": "Ocho Tierras"
+                                    }
+                                })
+                            }}
+                        />
 
                         {product.technical_details?.awards && product.technical_details.awards.length > 0 && (
                             <section>

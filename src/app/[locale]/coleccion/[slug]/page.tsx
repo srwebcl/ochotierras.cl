@@ -8,6 +8,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useTranslations, useLocale } from "next-intl"
+import DOMPurify from "isomorphic-dompurify"
 
 interface Wine {
     id: number;
@@ -223,7 +224,7 @@ export default function CollectionPage() {
                                 </h3>
                                 <div
                                     className="prose prose-lg text-gray-600 font-light border-l-4 border-brand-gold pl-6 py-2"
-                                    dangerouslySetInnerHTML={{ __html: localizedTastingNotes }}
+                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(localizedTastingNotes) }}
                                 />
                             </section>
                         )}

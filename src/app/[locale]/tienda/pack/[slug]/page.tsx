@@ -10,6 +10,7 @@ import { Section } from "@/components/ui/Section"
 import { ShoppingCart, Check, Info, ArrowLeft } from "lucide-react"
 import { motion } from "framer-motion"
 import { PackBottleGrid } from "@/components/PackBottleGrid"
+import DOMPurify from "isomorphic-dompurify"
 
 interface PackItem {
     id: number;
@@ -107,7 +108,7 @@ const PackItemCard = ({ item, isEnglish }: { item: PackItem, isEnglish: boolean 
                             className="overflow-hidden"
                         >
                             <div className="pt-2 pb-4 px-2 prose prose-sm max-w-none text-gray-600 text-center leading-relaxed bg-gray-50/50 rounded-xl my-2">
-                                <div dangerouslySetInnerHTML={{ __html: isEnglish ? (item.tasting_notes_en || item.tasting_notes || '') : (item.tasting_notes || '') }} />
+                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(isEnglish ? (item.tasting_notes_en || item.tasting_notes || '') : (item.tasting_notes || '')) }} />
                             </div>
                         </motion.div>
                     </div>

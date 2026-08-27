@@ -1,7 +1,7 @@
 export async function getHeroSection() {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/hero`, {
-            next: { revalidate: 60 },
+            next: { revalidate: 3600, tags: ['heroes'] },
         });
 
         if (!res.ok) {
