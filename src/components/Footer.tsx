@@ -1,15 +1,36 @@
-"use client"
-
-import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { getTranslations, getLocale } from "next-intl/server"
 import { Link as IntlLink } from "@/i18n/routing"
+import { getSiteSettings } from "@/lib/site-settings-api"
 
-export function Footer() {
-    const t = useTranslations('Footer')
-    const navT = useTranslations('Navbar')
-    const tContact = useTranslations('Contacto.info') // Reuse navbar keys for links if needed or generic
+// Deja solo dígitos, para armar links de wa.me/tel de forma confiable
+// aunque en el panel se haya escrito el número con espacios o el "+".
+function onlyDigits(value: string | null | undefined): string {
+    return (value ?? "").replace(/\D/g, "")
+}
+
+export async function Footer() {
+    const t = await getTranslations('Footer')
+    const navT = await getTranslations('Navbar')
+    const tContact = await getTranslations('Contacto.info')
+    const locale = await getLocale()
+    const settings = await getSiteSettings()
+
+    const isEnglish = locale === 'en'
+
+    // Si la API no responde, se cae a los valores que había hardcodeados antes.
+    const schedule = (isEnglish ? settings?.scheduleEn : settings?.schedule) || tContact('schedule_val')
+    const location = (isEnglish ? settings?.locationEn : settings?.location) || tContact('location_val')
+    const phoneWhatsapp = settings?.phoneWhatsapp || '56944538170'
+    const whatsappOnly = settings?.whatsappOnly || '56532626211'
+    const email = settings?.email || 'contacto@ochotierras.cl'
+    const salesContacts = settings?.salesContacts?.length
+        ? settings.salesContacts
+        : [
+            { title: tContact('sales_title'), titleEn: tContact('sales_title'), phone: '56995422781', email: 'contacto@ochotierras.cl' },
+            { title: tContact('china_title'), titleEn: tContact('china_title'), phone: '56966552222', email: 'yinguowen1979@gmail.com' },
+        ]
 
     return (
         <footer className="bg-[#050505] text-white pt-20 pb-10 border-t border-white/10">
@@ -49,7 +70,7 @@ export function Footer() {
                             {/* Horario */}
                             <li>
                                 <p className="text-white font-bold text-sm mb-1">{tContact('schedule_title')}</p>
-                                <p className="text-gray-400 text-sm">{tContact('schedule_val')}</p>
+                                <p className="text-gray-400 text-sm whitespace-pre-line">{schedule}</p>
                             </li>
                             {/* Ubicación */}
                             <li className="flex items-start gap-2">
@@ -57,7 +78,7 @@ export function Footer() {
                                     <p className="text-white font-bold text-sm mb-1">{tContact('location_title')}</p>
                                     <div className="flex gap-2 text-gray-400 text-sm">
                                         <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
-                                        <span className="whitespace-pre-line">{tContact('location_val')}</span>
+                                        <span className="whitespace-pre-line">{location}</span>
                                     </div>
                                 </div>
                             </li>
@@ -71,26 +92,26 @@ export function Footer() {
                             {/* Teléfono / WhatsApp */}
                             <li>
                                 <p className="text-xs text-gray-500 font-bold uppercase mb-1">{tContact('phone_title')}</p>
-                                <a href="https://wa.me/56944538170" className="hover:text-brand-gold transition-colors flex items-center gap-2 text-white font-medium">
-                                    <Phone className="w-4 h-4" /> {tContact('phone_val_1')}
+                                <a href={`https://wa.me/${onlyDigits(phoneWhatsapp)}`} className="hover:text-brand-gold transition-colors flex items-center gap-2 text-white font-medium">
+                                    <Phone className="w-4 h-4" /> +{onlyDigits(phoneWhatsapp)}
                                 </a>
                             </li>
                             {/* WhatsApp Only */}
                             <li>
                                 <p className="text-xs text-gray-500 font-bold uppercase mb-1">{tContact('whatsapp_label')}</p>
-                                <a href="https://wa.me/56532626211" className="hover:text-brand-gold transition-colors flex items-center gap-2 text-white font-medium">
+                                <a href={`https://wa.me/${onlyDigits(whatsappOnly)}`} className="hover:text-brand-gold transition-colors flex items-center gap-2 text-white font-medium">
                                     <div className="relative">
                                         <Phone className="w-4 h-4" />
                                         <div className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-green-500 rounded-full"></div>
                                     </div>
-                                    {tContact('phone_val_2')}
+                                    +{onlyDigits(whatsappOnly)}
                                 </a>
                             </li>
                             {/* Email */}
                             <li>
                                 <p className="text-xs text-gray-500 font-bold uppercase mb-1">{tContact('email_title')}</p>
-                                <a href="mailto:contacto@ochotierras.cl" className="hover:text-brand-gold transition-colors flex items-center gap-2 text-white font-medium">
-                                    <Mail className="w-4 h-4" /> contacto@ochotierras.cl
+                                <a href={`mailto:${email}`} className="hover:text-brand-gold transition-colors flex items-center gap-2 text-white font-medium">
+                                    <Mail className="w-4 h-4" /> {email}
                                 </a>
                             </li>
                         </ul>
@@ -100,22 +121,24 @@ export function Footer() {
                     <div>
                         <h4 className="text-brand-gold uppercase tracking-widest text-xs font-bold mb-8">{t('sales')}</h4>
                         <ul className="space-y-6 text-gray-300 font-light">
-                            {/* Nacional */}
-                            <li>
-                                <span className="block text-xs text-gray-500 font-bold uppercase mb-1">{tContact('sales_title')}</span>
-                                <a href="https://wa.me/56995422781" className="block text-white font-bold hover:text-brand-gold transition-colors text-sm mb-1 flex items-center gap-2">
-                                    +56 9 9542 2781
-                                </a>
-                                <a href="mailto:contacto@ochotierras.cl" className="text-gray-400 hover:text-brand-gold transition-colors text-sm">contacto@ochotierras.cl</a>
-                            </li>
-                            {/* China */}
-                            <li>
-                                <span className="block text-xs text-gray-500 font-bold uppercase mb-1">{tContact('china_title')}</span>
-                                <a href="tel:+56966552222" className="block text-white font-bold hover:text-brand-gold transition-colors text-sm mb-1">
-                                    +56 9 6655 2222
-                                </a>
-                                <a href="mailto:yinguowen1979@gmail.com" className="text-gray-400 hover:text-brand-gold transition-colors text-sm">yinguowen1979@gmail.com</a>
-                            </li>
+                            {salesContacts.map((contact, index) => {
+                                const title = (isEnglish ? contact.titleEn : contact.title) || contact.title
+                                const digits = onlyDigits(contact.phone)
+
+                                return (
+                                    <li key={`${contact.email ?? contact.phone ?? title}-${index}`}>
+                                        <span className="block text-xs text-gray-500 font-bold uppercase mb-1">{title}</span>
+                                        {digits && (
+                                            <a href={`https://wa.me/${digits}`} className="block text-white font-bold hover:text-brand-gold transition-colors text-sm mb-1 flex items-center gap-2">
+                                                +{digits}
+                                            </a>
+                                        )}
+                                        {contact.email && (
+                                            <a href={`mailto:${contact.email}`} className="text-gray-400 hover:text-brand-gold transition-colors text-sm">{contact.email}</a>
+                                        )}
+                                    </li>
+                                )
+                            })}
                         </ul>
                     </div>
 
