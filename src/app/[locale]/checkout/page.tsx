@@ -300,7 +300,7 @@ export default function CheckoutPage() {
                                     disabled={isProcessing || !formData.name || !formData.email || !formData.phone || !formData.rut || !formData.address || !formData.city || !formData.region}
                                     className="w-full bg-[#E64B56] hover:bg-[#D43A45] text-white font-bold h-14 uppercase tracking-widest shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {isProcessing ? 'Procesando...' : 'Pagar con Getnet (Débito/Crédito)'}
+                                    {isProcessing ? 'Procesando...' : 'Pagar con Tarjeta (Débito o Crédito)'}
                                 </Button>
 
                                 <div className="text-center text-xs text-gray-500 font-medium">O si prefieres coordinar manualmente</div>

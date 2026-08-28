@@ -48,10 +48,10 @@ export async function Footer() {
                             {t('quote')}
                         </p>
                         <div className="flex gap-4">
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-gold hover:text-black transition-all duration-300">
+                            <a href="https://www.instagram.com/ochotierras.cl/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-gold hover:text-black transition-all duration-300">
                                 <Instagram size={18} />
                             </a>
-                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-gold hover:text-black transition-all duration-300">
+                            <a href="https://www.facebook.com/ochotierras.cl/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-gold hover:text-black transition-all duration-300">
                                 <Facebook size={18} />
                             </a>
                         </div>
