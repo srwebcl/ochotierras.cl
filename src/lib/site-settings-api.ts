@@ -16,6 +16,12 @@ export interface SiteSettings {
     salesContacts: SalesContact[];
 }
 
+// Deja solo dígitos, para armar links de wa.me/tel de forma confiable
+// aunque en el panel se haya escrito el número con espacios o el "+".
+export function onlyDigits(value: string | null | undefined): string {
+    return (value ?? "").replace(/\D/g, "")
+}
+
 export async function getSiteSettings(): Promise<SiteSettings | null> {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/site-settings`, {

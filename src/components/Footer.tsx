@@ -2,13 +2,7 @@ import Image from "next/image"
 import { Facebook, Instagram, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react"
 import { getTranslations, getLocale } from "next-intl/server"
 import { Link as IntlLink } from "@/i18n/routing"
-import { getSiteSettings } from "@/lib/site-settings-api"
-
-// Deja solo dígitos, para armar links de wa.me/tel de forma confiable
-// aunque en el panel se haya escrito el número con espacios o el "+".
-function onlyDigits(value: string | null | undefined): string {
-    return (value ?? "").replace(/\D/g, "")
-}
+import { getSiteSettings, onlyDigits } from "@/lib/site-settings-api"
 
 export async function Footer() {
     const t = await getTranslations('Footer')
