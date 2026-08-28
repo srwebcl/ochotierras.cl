@@ -252,30 +252,9 @@ export default function ProductPage() {
                             </section>
                         )}
 
-                        <script
-                            type="application/ld+json"
-                            dangerouslySetInnerHTML={{
-                                __html: JSON.stringify({
-                                    "@context": "https://schema.org",
-                                    "@type": "Product",
-                                    "name": localizedName,
-                                    "image": activeImage || product.image,
-                                    "description": localizedDescription,
-                                    "sku": product.id.toString(),
-                                    "offers": {
-                                        "@type": "Offer",
-                                        "url": typeof window !== 'undefined' ? window.location.href : '',
-                                        "priceCurrency": "CLP",
-                                        "price": product.stock === 0 ? "0" : product.price.toString(),
-                                        "availability": product.stock === 0 ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"
-                                    },
-                                    "brand": {
-                                        "@type": "Brand",
-                                        "name": "Ocho Tierras"
-                                    }
-                                })
-                            }}
-                        />
+                        {/* El JSON-LD de este producto se renderiza en layout.tsx (servidor),
+                            no acá — esta página trae los datos con useEffect en el cliente,
+                            así que si viviera solo acá no estaría en el HTML inicial. */}
 
                         {product.technical_details?.awards && product.technical_details.awards.length > 0 && (
                             <section>

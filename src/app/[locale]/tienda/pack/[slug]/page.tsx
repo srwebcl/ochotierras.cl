@@ -170,6 +170,7 @@ export default function PackPage({ params }: { params: Promise<{ slug: string, l
 
     return (
         <div className="bg-white min-h-screen pt-20">
+            {/* El JSON-LD de este pack se renderiza en layout.tsx (servidor) */}
             {/* Back Button */}
             <div className="container mx-auto px-4 py-8">
                 <Link href={`/${locale}/tienda`} className="inline-flex items-center text-gray-500 hover:text-brand-dark transition-colors">

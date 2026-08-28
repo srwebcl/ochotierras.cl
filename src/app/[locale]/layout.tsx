@@ -15,6 +15,7 @@ const playfair = Playfair_Display({
 });
 
 import { getTranslations } from 'next-intl/server';
+import { buildAlternates } from '@/lib/seo';
 
 export async function generateMetadata({
   params
@@ -31,13 +32,10 @@ export async function generateMetadata({
       default: t('title.default'),
     },
     description: t('description'),
-    alternates: {
-      canonical: '/',
-      languages: {
-        'es': '/es',
-        'en': '/en',
-      },
-    },
+    // Este es el fallback para el home de cada idioma. Cada página interna
+    // define su propio alternates (ver src/lib/seo.ts) — antes esto quedaba
+    // fijo en '/' para todo el sitio y rompía el canonical de cada ficha.
+    alternates: buildAlternates('', locale),
     openGraph: {
       title: t('og.title'),
       description: t('og.description'),
@@ -76,9 +74,34 @@ export default async function LocaleLayout({
   const { locale } = await params;
   const messages = await getMessages();
 
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Winery',
+    name: 'Viña Ochotierras',
+    url: 'https://www.ochotierras.cl',
+    logo: 'https://www.ochotierras.cl/images/logos/logo-white.webp',
+    image: 'https://www.ochotierras.cl/images/general/hero-nosotros.jpeg',
+    email: 'contacto@ochotierras.cl',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Ruta D 505, km 11 desde Ovalle',
+      addressLocality: 'Valle del Limarí',
+      addressRegion: 'Coquimbo',
+      addressCountry: 'CL',
+    },
+    sameAs: [
+      'https://www.instagram.com/ochotierras.cl/',
+      'https://www.facebook.com/ochotierras.cl/',
+    ],
+  };
+
   return (
     <html lang={locale} suppressHydrationWarning className="scroll-smooth">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

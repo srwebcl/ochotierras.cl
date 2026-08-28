@@ -1,6 +1,24 @@
+import { Metadata } from "next"
 import { getTranslations, getLocale } from "next-intl/server"
 import { getSiteSettings, onlyDigits } from "@/lib/site-settings-api"
+import { buildAlternates } from "@/lib/seo"
 import ContactoClient from "./ContactoClient"
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params
+    const isEnglish = locale === 'en'
+    const title = isEnglish ? 'Contact Us | Ocho Tierras' : 'Contacto | Ocho Tierras'
+    const description = isEnglish
+        ? 'Get in touch with Viña Ochotierras: visits, wholesale and export sales, or general inquiries about our wines from Limarí Valley, Chile.'
+        : 'Contáctanos: visitas a la viña, ventas nacionales y de exportación, o consultas generales sobre nuestros vinos del Valle del Limarí, Chile.'
+
+    return {
+        title,
+        description,
+        alternates: buildAlternates('/contacto', locale),
+        openGraph: { title, description },
+    }
+}
 
 export default async function Contacto() {
     const tContact = await getTranslations('Contacto.info')
