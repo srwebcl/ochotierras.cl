@@ -22,6 +22,7 @@ interface PackProduct {
     slug?: string;
     description?: string;
     stock?: number;
+    badgeText?: string;
     includes: PackItem[];
 }
 
@@ -66,7 +67,7 @@ export function PackCard({ product, locale = 'es' }: PackCardProps) {
                 {/* Floating Badge */}
                 <div className="absolute top-3 right-3 z-20">
                     <span className="text-[9px] uppercase tracking-wider font-bold text-white bg-brand-gold px-2 py-0.5 rounded-full shadow-sm">
-                        PACK MIX
+                        {product.badgeText || 'PACK MIX'}
                     </span>
                 </div>
 

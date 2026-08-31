@@ -23,6 +23,7 @@ interface Product {
     type?: string;
     stock?: number;
     description?: string;
+    badgeText?: string;
 }
 
 interface CompactProductCardProps {
@@ -77,7 +78,7 @@ export function CompactProductCard({ product, locale = 'es', priority = false }:
     const accentColor = isWhiteWine ? 'text-brand-gold' : 'text-brand-red';
 
     // Badge Content
-    const badgeText = product.category_name || product.type || 'Vino';
+    const badgeText = product.badgeText || product.category_name || product.type || 'Vino';
 
     return (
         <motion.div
