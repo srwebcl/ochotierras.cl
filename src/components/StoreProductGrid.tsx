@@ -1,11 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { AddToCartButton } from "@/components/AddToCartButton"
 import { CompactProductCard } from "@/components/CompactProductCard"
-import { Button } from "@/components/ui/button"
 
 import { useLocale, useTranslations } from "next-intl"
 
@@ -28,36 +23,13 @@ interface Wine {
 }
 
 interface StoreProductGridProps {
+    products: Wine[];
     filterCategory?: string | null;
 }
 
-export function StoreProductGrid({ filterCategory }: StoreProductGridProps) {
+export function StoreProductGrid({ products, filterCategory }: StoreProductGridProps) {
     const t = useTranslations('Tienda.status');
     const locale = useLocale();
-    const isEnglish = locale === 'en';
-
-    const [products, setProducts] = useState<Wine[]>([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-
-    useEffect(() => {
-        setIsLoading(true)
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/products`, { next: { revalidate: 3600, tags: ['products'] } })
-            .then(res => {
-                if (!res.ok) throw new Error("Error al cargar vinos")
-                return res.json()
-            })
-            .then(data => {
-                if (Array.isArray(data)) {
-                    setProducts(data)
-                }
-            })
-            .catch(err => {
-                console.error("Failed to load products:", err)
-                setError(t('error'))
-            })
-            .finally(() => setIsLoading(false))
-    }, [t])
 
     const filteredProducts = filterCategory && filterCategory !== 'todos'
         ? products.filter(product => {
@@ -66,24 +38,6 @@ export function StoreProductGrid({ filterCategory }: StoreProductGridProps) {
                 product.type?.toLowerCase() === filterCategory.toLowerCase();
         })
         : products;
-
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center min-h-[400px]">
-                <div className="animate-pulse text-brand-dark font-serif text-xl">{t('loading')}</div>
-            </div>
-        )
-    }
-
-    if (error) {
-        return (
-            <div className="flex justify-center items-center min-h-[400px]">
-                <div className="text-red-500 font-bold border border-red-200 p-8 rounded-xl bg-red-50">
-                    {error}
-                </div>
-            </div>
-        )
-    }
 
     if (filteredProducts.length === 0) {
         return (

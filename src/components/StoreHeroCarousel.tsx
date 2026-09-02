@@ -1,45 +1,26 @@
 "use client"
 
 import * as React from "react"
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
-import { cn } from "@/lib/utils"
 
-export function StoreHeroCarousel() {
-    interface Banner {
-        id: number
-        image: string
-        mobile_image?: string | null
-        title: string
-        highlighted_text?: string
-        subtitle?: string
-        pre_title?: string
-        cta_text?: string
-        cta_link?: string
-    }
+interface Banner {
+    id: number
+    image: string
+    mobile_image?: string | null
+    title: string
+    highlighted_text?: string
+    subtitle?: string
+    pre_title?: string
+    cta_text?: string
+    cta_link?: string
+}
 
-    const [banners, setBanners] = useState<Banner[]>([])
-    const [isLoading, setIsLoading] = useState(true)
+export function StoreHeroCarousel({ banners }: { banners: Banner[] }) {
     const [index, setIndex] = useState(0)
     const [isMobile, setIsMobile] = useState(false)
-
-    // Fetch banners
-    useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/store-banners`)
-            .then(res => res.json())
-            .then(data => {
-                if (Array.isArray(data) && data.length > 0) {
-                    setBanners(data)
-                }
-                setIsLoading(false)
-            })
-            .catch(err => {
-                console.error("Failed to fetch banners:", err)
-                setIsLoading(false)
-            })
-    }, [])
 
     // Handle resize
     useEffect(() => {
@@ -66,7 +47,6 @@ export function StoreHeroCarousel() {
         return () => clearInterval(timer);
     }, [index, banners.length]);
 
-    if (isLoading) return <div className="w-full h-[600px] flex items-center justify-center text-gray-400">Cargando experiencia...</div>
     if (banners.length === 0) return null
 
     const currentBanner = banners[index];

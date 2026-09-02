@@ -1,30 +1,13 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useRef } from "react"
 import { PackCard } from "./PackCard"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-export function PackList({ locale }: { locale: string }) {
-    const [packs, setPacks] = useState<any[]>([])
+export function PackList({ packs, locale }: { packs: any[], locale: string }) {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
-    const [isLoading, setIsLoading] = useState(true)
-
-    useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.ochotierras.cl'}/api/packs`)
-            .then(res => res.json())
-            .then(data => {
-                if (Array.isArray(data)) {
-                    setPacks(data)
-                }
-                setIsLoading(false)
-            })
-            .catch(err => {
-                console.error("Error fetching packs:", err)
-                setIsLoading(false)
-            })
-    }, [])
 
     const scroll = (direction: 'left' | 'right') => {
         if (scrollContainerRef.current) {
@@ -36,18 +19,6 @@ export function PackList({ locale }: { locale: string }) {
             });
         }
     };
-
-    if (isLoading) {
-        return (
-            <div className="relative w-full h-[500px] flex items-center justify-center">
-                <div className="animate-pulse flex gap-6 w-full overflow-hidden">
-                    {[1, 2, 3].map((i) => (
-                        <div key={i} className="min-w-[85vw] md:min-w-[calc(33.333%-1rem)] h-[450px] bg-white/5 rounded-lg border border-white/10" />
-                    ))}
-                </div>
-            </div>
-        )
-    }
 
     if (packs.length === 0) return null;
 
