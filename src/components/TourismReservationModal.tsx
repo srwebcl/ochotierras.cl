@@ -48,7 +48,7 @@ export function TourismReservationModal({ isOpen, onClose }: TourismReservationM
         const guests = formData.get('guests');
         const extraMessage = formData.get('message');
 
-        const reservationMessage = `SOLICITUD DE RESERVA DE TOUR
+        const reservationMessage = `SOLICITUD DE VISITA
         
 Tipo de Tour: ${tourType}
 Fecha solicitada: ${date}
@@ -127,8 +127,8 @@ ${extraMessage || 'Sin mensaje adicional'}
                             >
                                 <X className="w-5 h-5" />
                             </button>
-                            <h2 className="text-2xl font-serif font-bold mb-1">Reserva tu Experiencia</h2>
-                            <p className="text-white/70 text-sm font-light">Completa el formulario y nos contactaremos para confirmar tu visita.</p>
+                            <h2 className="text-2xl font-serif font-bold mb-1">Solicita tu Visita</h2>
+                            <p className="text-white/70 text-sm font-light">Completa el formulario y nos contactaremos para coordinar tu visita.</p>
                         </div>
 
                         {/* Body */}
