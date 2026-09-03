@@ -50,6 +50,7 @@ export function StoreHeroCarousel({ banners }: { banners: Banner[] }) {
     if (banners.length === 0) return null
 
     const currentBanner = banners[index];
+    const nextBanner = banners.length > 1 ? banners[(index + 1) % banners.length] : null;
 
     // Helper to split title with highlight
     const renderTitle = (title: string, highlight?: string) => {
@@ -79,6 +80,28 @@ export function StoreHeroCarousel({ banners }: { banners: Banner[] }) {
 
     return (
         <div className="relative w-full overflow-hidden bg-brand-dark pb-12 pt-0 md:pt-4">
+            {/* Precarga silenciosa de la próxima foto del carrusel. Antes, cada
+                foto recién empezaba a descargarse en el momento en que el
+                auto-avance (cada 8s) la mostraba — en una conexión lenta eso
+                significaba arrancar una descarga desde cero a mitad de la
+                visita. Usa el mismo componente Image con los mismos "sizes"
+                para que sea exactamente la misma URL que se va a mostrar
+                después, y el navegador la sirva desde caché en vez de pedirla
+                de nuevo. No ocupa espacio ni se ve — está clippeada a 1px. */}
+            {nextBanner && (
+                <div aria-hidden="true" className="absolute w-px h-px overflow-hidden opacity-0 pointer-events-none">
+                    <div className="relative w-screen h-screen">
+                        <Image
+                            src={isMobile ? (nextBanner.mobile_image || nextBanner.image) : nextBanner.image}
+                            alt=""
+                            fill
+                            sizes="100vw"
+                            className="object-cover"
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* Cinematic Wrapper */}
             <div className="relative w-full md:w-[98%] mx-auto h-[600px] md:h-[650px] 2xl:h-[750px] md:rounded-3xl overflow-hidden shadow-2xl group">
 

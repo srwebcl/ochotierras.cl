@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
+import Image from "next/image"
 
 export function AgeVerification() {
     const t = useTranslations('AgeVerification');
@@ -46,8 +47,19 @@ export function AgeVerification() {
                     transition={{ duration: 0.8 }}
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md"
                 >
-                    {/* Background Texture/Image (Optional) */}
-                    <div className="absolute inset-0 bg-[url('/images/general/hero-nosotros.jpeg')] bg-cover bg-center opacity-20 pointer-events-none" />
+                    {/* Background Texture/Image (Optional) — decorativa, va detrás de una
+                        capa negra semitransparente + blur, al 20% de opacidad: la calidad
+                        baja no se nota acá, y ahorra la mayor parte del peso del archivo. */}
+                    <div className="absolute inset-0 opacity-20 pointer-events-none">
+                        <Image
+                            src="/images/general/hero-nosotros.jpeg"
+                            alt=""
+                            fill
+                            quality={20}
+                            sizes="100vw"
+                            className="object-cover"
+                        />
+                    </div>
 
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
