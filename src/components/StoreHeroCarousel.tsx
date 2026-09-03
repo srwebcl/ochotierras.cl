@@ -96,6 +96,7 @@ export function StoreHeroCarousel({ banners }: { banners: Banner[] }) {
                             alt=""
                             fill
                             sizes="100vw"
+                            loading="eager"
                             className="object-cover"
                         />
                     </div>

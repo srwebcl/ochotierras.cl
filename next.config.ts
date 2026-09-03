@@ -5,6 +5,13 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   images: {
+    // Next.js exige declarar de antemano qué valores de "quality" se pueden
+    // pedir; si no está en esta lista, usa 75 sin avisar (así quedó el fondo
+    // del modal de edad en 82KB en vez de bajar más, con quality={20} puesto
+    // en el componente pero ignorado). 75 es el que ya usa el resto del
+    // sitio por defecto — se agrega 20 para las imágenes puramente
+    // decorativas (fondos difuminados/semitransparentes).
+    qualities: [20, 75],
     remotePatterns: [
       {
         protocol: "http",
