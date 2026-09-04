@@ -20,6 +20,10 @@ interface Wine {
     descriptionEn?: string;
     stock?: number;
     slug?: string;
+    badgeText?: string;
+    badgeBgColor?: string;
+    badgeTextColor?: string;
+    badgeSize?: 'small' | 'medium' | 'large';
 }
 
 interface StoreProductGridProps {

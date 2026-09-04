@@ -23,6 +23,9 @@ interface PackProduct {
     description?: string;
     stock?: number;
     badgeText?: string;
+    badgeBgColor?: string;
+    badgeTextColor?: string;
+    badgeSize?: 'small' | 'medium' | 'large';
     includes: PackItem[];
 }
 
@@ -30,6 +33,15 @@ interface PackCardProps {
     product: PackProduct
     locale?: string
 }
+
+// Mismo criterio que CompactProductCard, pero con la base propia de esta
+// tarjeta (que ya era más chica que la de un vino individual) — "medium"
+// es el tamaño de siempre, para no mover nada en los packs existentes.
+const packBadgeSizeClasses: Record<string, string> = {
+    small: 'text-[7px] px-1.5 py-0.5',
+    medium: 'text-[9px] px-2 py-0.5',
+    large: 'text-[11px] px-3 py-1',
+};
 
 export function PackCard({ product, locale = 'es' }: PackCardProps) {
     const isEnglish = locale === 'en';
@@ -66,7 +78,16 @@ export function PackCard({ product, locale = 'es' }: PackCardProps) {
 
                 {/* Floating Badge */}
                 <div className="absolute top-3 right-3 z-20">
-                    <span className="text-[9px] uppercase tracking-wider font-bold text-white bg-brand-gold px-2 py-0.5 rounded-full shadow-sm">
+                    <span
+                        className={cn(
+                            "uppercase tracking-wider font-bold text-white bg-brand-gold rounded-full shadow-sm",
+                            packBadgeSizeClasses[product.badgeSize || 'medium'] || packBadgeSizeClasses.medium
+                        )}
+                        style={{
+                            ...(product.badgeBgColor ? { backgroundColor: product.badgeBgColor } : {}),
+                            ...(product.badgeTextColor ? { color: product.badgeTextColor } : {}),
+                        }}
+                    >
                         {product.badgeText || 'PACK MIX'}
                     </span>
                 </div>

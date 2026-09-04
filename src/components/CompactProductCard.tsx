@@ -24,7 +24,19 @@ interface Product {
     stock?: number;
     description?: string;
     badgeText?: string;
+    badgeBgColor?: string;
+    badgeTextColor?: string;
+    badgeSize?: 'small' | 'medium' | 'large';
 }
+
+// Tamaños predefinidos (clases fijas, no generadas dinámicamente, para que
+// Tailwind las detecte al compilar) — el admin elige uno de estos 3 desde
+// el panel, no un valor libre.
+const badgeSizeClasses: Record<string, string> = {
+    small: 'text-[8px] px-2 py-0.5',
+    medium: 'text-[10px] px-3 py-1',
+    large: 'text-xs px-4 py-1.5',
+};
 
 interface CompactProductCardProps {
     product: Product
@@ -79,6 +91,14 @@ export function CompactProductCard({ product, locale = 'es', priority = false }:
 
     // Badge Content
     const badgeText = product.badgeText || product.category_name || product.type || 'Vino';
+    const badgeSizeClass = badgeSizeClasses[product.badgeSize || 'medium'] || badgeSizeClasses.medium;
+    // El estilo en línea solo pisa el color por defecto (blanco sobre
+    // brand-dark) cuando el admin eligió uno propio — si no, quedan las
+    // clases de siempre, sin cambiar nada para los productos existentes.
+    const badgeStyle: React.CSSProperties = {
+        ...(product.badgeBgColor ? { backgroundColor: product.badgeBgColor } : {}),
+        ...(product.badgeTextColor ? { color: product.badgeTextColor } : {}),
+    };
 
     return (
         <motion.div
@@ -92,7 +112,10 @@ export function CompactProductCard({ product, locale = 'es', priority = false }:
 
                 {/* 1. Floating Badge (Top Right) */}
                 <div className="absolute top-4 right-4 z-20">
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-white bg-brand-dark/90 px-3 py-1 rounded-full shadow-sm">
+                    <span
+                        className={cn("uppercase tracking-wider font-bold text-white bg-brand-dark/90 rounded-full shadow-sm", badgeSizeClass)}
+                        style={badgeStyle}
+                    >
                         {badgeText}
                     </span>
                 </div>
