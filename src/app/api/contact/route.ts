@@ -28,8 +28,7 @@ export async function POST(request: Request) {
         // 1. Email de notificación al equipo
         await resend.emails.send({
             from: 'Ocho Tierras Web <noreply@ochotierras.cl>',
-            to: ['info@ochotierras.cl'],
-            cc: ['rcuellar@ochotierras.cl'],
+            to: ['info@ochotierras.cl', 'contacto@ochotierras.cl', 'rcuellar@ochotierras.cl'],
             replyTo: email,
             subject: `📬 Nuevo mensaje de ${safeName} — Ocho Tierras`,
             html: `
